@@ -485,7 +485,7 @@ background: #fff;
 
                  <div class="showback">
                     <button class="btn btn-primary btn-lg btn-block" type="submit"> 
-                      Agregar Detalles sobre el parqueo</button>
+                      Agregar Ubicación del parqueo</button>
                   </div>
            
               </form>

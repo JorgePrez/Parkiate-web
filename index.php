@@ -115,6 +115,26 @@ else{
               while ($row = pg_fetch_row($result)) {
               $nombrecompleto= $row[0];
               }
+
+              //ver si tiene asociado parqueo
+
+
+  $query = "select * from duenio,parqueo where duenio.id_duenio=parqueo.id_duenio AND duenio.id_duenio='$id_usuario'";
+$result = pg_query($conn, $query) or die('ERROR AL OBTENER DATOS: ' . pg_last_error());
+$tuplasaafectadas = pg_affected_rows($result);
+
+$valorlisttile=0;
+
+
+
+if($tuplasaafectadas==1){
+
+ $valorlisttile=1;
+  
+  
+  }
+
+
               
               ?>
               

@@ -295,153 +295,54 @@ pg_free_result($result);
         <div class="row mt">
           <div class="col-lg-12">
             <div class="form-panel">
-              <h4 class="mb"><i class="fa fa-angle-right"></i> Estas conseguirán que su parqueo sea más atractivo para clientes potenciales</h4>
+              <h4 class="mb"><i class="fa fa-angle-right"></i> </h4>
 
 
 
-                 
+                 <br>
+           <br>
+           <br>
+
+           <br>
+           <br>
+           <br>
+
+           <br>
+           <br>
+           <br>
+
+           <br>
+           <br>
+           <br>
+
+           <br>
+           <br>
+           <br>
+
            
+           <br>
+           <br>
+           <br>
 
+          
+           <br>
+           <br>
+           
+          
+ 
+          
                         
-              <div class="checkbox">
+           
+               <!-- <div class="checkbox">
                 
-                <label>
-                    <input type="checkbox" name="banios5" value="1">
-                     Baños          
-                    </label>
-                </div> 
-
-
-                        
-              <div class="checkbox">
-                
-                <label>
-                    <input type="checkbox" name="banios6" value="1">
-                     Baños          
-                    </label>
-                </div> 
-
-
-                        
-              <div class="checkbox">
-                
-                <label>
-                    <input type="checkbox" name="banios7" value="1">
-                     Baños          
-                    </label>
-                </div> 
-
-                        
-              <div class="checkbox">
-                
-                <label>
-                    <input type="checkbox" name="banios8" value="1">
-                     Baños          
-                    </label>
-                </div> 
-
-                        
-              <div class="checkbox">
-                
-                <label>
-                    <input type="checkbox" name="banios9" value="1">
-                     Baños          
-                    </label>
-                </div> 
-
-                        
-              <div class="checkbox">
-                
-                <label>
-                    <input type="checkbox" name="banios10" value="1">
-                     Baños          
-                    </label>
-                </div> 
-
-
-                        
-              <div class="checkbox">
-                
-                <label>
-                    <input type="checkbox" name="banios11" value="1">
-                     Baños          
-                    </label>
-                </div> 
-
-
-                        
-              <div class="checkbox">
-                
-                <label>
-                    <input type="checkbox" name="banios12" value="1">
-                     Baños          
-                    </label>
-                </div> 
-
-
-                        
-              <div class="checkbox">
-                
-                <label>
-                    <input type="checkbox" name="banios13" value="1">
-                     Baños          
-                    </label>
-                </div> 
-
-
-                        
-              <div class="checkbox">
-                
-                <label>
-                    <input type="checkbox" name="banios14" value="1">
-                     Baños          
-                    </label>
-                </div> 
-
-                <div class="checkbox">
-                
-                <label>
-                    <input type="checkbox" name="banios15" value="1">
-                     Baños          
-                    </label>
-                </div> 
-
-                <div class="checkbox">
-                
-                <label>
-                    <input type="checkbox" name="banios16" value="1">
-                     Baños          
-                    </label>
-                </div> 
-
-                <div class="checkbox">
-                
-                <label>
-                    <input type="checkbox" name="banios17" value="1">
-                     Baños          
-                    </label>
-                </div> 
-
-                <div class="checkbox">
-                
-                <label>
-                    <input type="checkbox" name="banios18" value="1">
-                     Baños          
-                    </label>
-                </div> 
-
-                <div class="checkbox">
-                
-                <input type="hidden" name="id_parqueo" value="<?php echo $key; ?>">
+                <input type="hidden" name="id_parqueo" value="/*<?php /*echo $key; */?>*/">
                 <label>
                     <input type="checkbox" name="banios" value="1">
-                     Baños        
+                     .        
                     </label>
-                </div> 
+                </div> -->
 
 
-
-       
 
             
 
@@ -465,7 +366,7 @@ pg_free_result($result);
 
                 <!-- ////////////////////////////////////// -->
 
-
+                
 
          
               <div class="checkbox">
@@ -492,6 +393,7 @@ pg_free_result($result);
            
 
 
+              
 
               <div class="showback">
 

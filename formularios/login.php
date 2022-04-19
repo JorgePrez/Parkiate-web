@@ -51,7 +51,7 @@ setcookie("id_usuario",$id_usuario,time()+(60*60*24*31),"/");
 
 echo "id: entrara ";
 
-
+//session_start();  session_destroy()
 
 $url="Location: ./../index.php";
 

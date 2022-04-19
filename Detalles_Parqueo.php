@@ -26,8 +26,6 @@ else{
 
 
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,12 +52,22 @@ else{
   <link rel="stylesheet" type="text/css" href="lib/bootstrap-daterangepicker/daterangepicker.css" />
   <link rel="stylesheet" type="text/css" href="lib/bootstrap-timepicker/compiled/timepicker.css" />
   <link rel="stylesheet" type="text/css" href="lib/bootstrap-datetimepicker/datertimepicker.css" />
+
+
+
   <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/to-do.css">
   <script src="lib/chart-master/Chart.js"></script>
 
- 
+
+  <!-- =======================================================
+    Template Name: Dashio
+    Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
+    Author: TemplateMag.com
+    License: https://templatemag.com/license/
+  ======================================================= -->
 </head>
 
 <body>
@@ -102,89 +110,88 @@ else{
         MAIN SIDEBAR MENU
         *********************************************************************************************************************************************************** -->
     <!--sidebar start-->
-
     <?php
               
-    $query = "select nombre from duenio where id_duenio='$id_usuario'";
-    //                       $query = "select * from prospectos_template";
-    
-    $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
-    $nombrecompleto = '';
-    
-    
-    while ($row = pg_fetch_row($result)) {
-    $nombrecompleto= $row[0];
-    }
-    
-    ?>
-    
-
-
-    <aside>
-      <div id="sidebar" class="nav-collapse ">
-        <!-- sidebar menu start-->
-        <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><img src="img/ui-user.jpg" class="img-circle" width="80"></a></p>
-          <h5 class="centered">
-        
-          
-        <?php
-              echo $nombrecompleto;
-    
+              $query = "select nombre from duenio where id_duenio='$id_usuario'";
+              //                       $query = "select * from prospectos_template";
+              
+              $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
+              $nombrecompleto = '';
+              
+              
+              while ($row = pg_fetch_row($result)) {
+              $nombrecompleto= $row[0];
+              }
+              
               ?>
-            
-            </h5>
-            
-            <li class="mt">
-            <a href="index.php">
-              <i class="fa fa-dashboard"></i>
-              <span>Dashboard</span>
-              </a>
-          </li>
-
-          <li class="mt">
-            <a href="opcione.php">
-              <i class="fa fa-home"></i>
-              <span>Menú Principal</span>
-              </a>
-          </li>
-
-          <li class="mt">
-            <a href="micuenta.php">
-              <i class="fa fa-desktop"></i>
-              <span>Mi cuenta</span>
-              </a>
-        
-          </li>
-          <li class="mt">
-            <a href="MisParqueos.php">
-              <i class="fa fa-truck"></i>
-              <span>Mis parqueos</span>
-              </a>
+              
           
-          </li>
-          <li class="mt">
-            <a href="RegistrarParqueo1.php">
-              <i class="fa fa-book"></i>
-              <span>Agregar parqueos</span>
-              </a>
-         
-          </li>
           
-          <li class="mt">
-            <a  href="escanearQR.php">
-              <i class="fa fa-qrcode"></i>
-              <span>Escanear QR de usuario</span>
-              </a>
-         
-          </li>
-  
-             </ul>
-        <!-- sidebar menu end-->
-      </div>
-    </aside>
+              <aside>
+                <div id="sidebar" class="nav-collapse ">
+                  <!-- sidebar menu start-->
+                  <ul class="sidebar-menu" id="nav-accordion">
+                    <p class="centered"><img src="img/ui-user.jpg" class="img-circle" width="80"></a></p>
+                    <h5 class="centered">
+                  
+                    
+                  <?php
+                        echo $nombrecompleto;
+              
+                        ?>
+                      
+                      </h5>
+                      
+                      <li class="mt">
+                      <a href="index.php">
+                        <i class="fa fa-dashboard"></i>
+                        <span>Dashboard</span>
+                        </a>
+                    </li>
+          
+                    <li class="mt">
+                      <a href="opcione.php">
+                        <i class="fa fa-home"></i>
+                        <span>Menú Principal</span>
+                        </a>
+                    </li>
+          
+                    <li class="mt">
+                      <a href="micuenta.php">
+                        <i class="fa fa-desktop"></i>
+                        <span>Mi cuenta</span>
+                        </a>
+                  
+                    </li>
+                    <li class="mt">
+                      <a href="MisParqueos.php">
+                        <i class="fa fa-truck"></i>
+                        <span>Mis parqueos</span>
+                        </a>
+                    
+                    </li>
+                    <li class="mt">
+                      <a href="RegistrarParqueo1.php">
+                        <i class="fa fa-book"></i>
+                        <span>Agregar parqueos</span>
+                        </a>
+                   
+                    </li>
+                    
+                    <li class="mt">
+                      <a  href="escanearQR.php">
+                        <i class="fa fa-qrcode"></i>
+                        <span>Escanear QR de usuario</span>
+                        </a>
+                   
+                    </li>
+            
+                       </ul>
+                  <!-- sidebar menu end-->
+                </div>
+              </aside>
 
-
+              
     <?php
 
 $id_parqueo=$_GET["id_parqueo"];
@@ -258,8 +265,6 @@ while ($row = pg_fetch_row($result)) {
 }
 
 ?>
-
-
     <!--sidebar end-->
     <!-- **********************************************************************************************************************************************************
         MAIN CONTENT
@@ -267,19 +272,29 @@ while ($row = pg_fetch_row($result)) {
     <!--main content start-->
     <section id="main-content">
       <section class="wrapper">
-        <h3><i class="fa fa-angle-right"></i> Datos del parqueo <?php echo $id_parqueo;?>  </h3>
-        <!-- BASIC FORM ELELEMNTS -->
+        <h3><i class="fa fa-angle-right"></i> Información Del Parqueo <?php echo $id_parqueo;?> </h3>
+  
+        <!-- COMPLEX TO DO LIST -->
         <div class="row mt">
-          <div class="col-lg-12">
-            <div class="form-panel">
-              <h4 class="mb"><i class="fa fa-angle-right"></i> Datos Principales </h4>
-              <form class="form-horizontal style-form" action="RegistrarParqueo2.php">
+          <div class="col-md-12">
+            <section class="task-panel tasks-widget">
+              <div class="panel-heading">
+                <div class="pull-left">
+                  <h4><i class="fa fa-tasks"></i> Datos Principales y Tárifas</h4>
+                </div>
+                <br>
+              </div>
+              <div class="panel-body">
+
+              <form class="form-horizontal style-form">
+
+                
                 <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label"> Nombre del Parqueo: 
                 </label>
                   <div class="col-sm-8">
                <!--     <input type="text" name="nombre_empresa" placeholder="Introduzca el nombre oficial registrado" class="form-control"> -->
-                    <p class="form-control-static"> <?php echo $nombreparqueo;?></p>
+                    <p class="form-control-static"> <b> <?php echo $nombreparqueo;?> </b> </p>
                   </div>
                 </div>
 
@@ -287,7 +302,7 @@ while ($row = pg_fetch_row($result)) {
                 <div class="form-group">
                   <label class="col-sm-2 col-sm-2 control-label">Dirección:</label>
                   <div class="col-sm-8"> 
-                  <p class="form-control-static"> <?php echo $direccion;?></p>
+                  <p class="form-control-static"> <b> <?php echo $direccion;?></b> </p>
                   </div>
                 </div>
 
@@ -297,36 +312,28 @@ while ($row = pg_fetch_row($result)) {
                   <div class="col-sm-1">
                   
 
-                  <p class="form-control-static"> <?php echo $capacidad;?></p>
+                  <p class="form-control-static"> <b> <?php echo $capacidad;?> </b> </p>
                   </div>
-                </div>
 
 
 
-                <h4 class="mb"><i class="fa fa-angle-right"></i> Tarifas Registrar: </h4>
-            <!--  <form class="form-horizontal style-form" method="get"> -->
-       
-               
-                <div class="form-group">
-                  <label class="col-sm-2 col-sm-2 control-label">1/2 hora: (Q)</label>
+                  <label class="col-sm-1 col-sm-1 control-label">1/2 hora:</label>
                   <div class="col-sm-1">
                   
-                  <p class="form-control-static"> <?php echo $tarifa1;?></p> 
+                  <p class="form-control-static"> <b>  Q<?php echo $tarifa1;?>.00  </p>  </b>
                   </div>
-                </div>
+               
 
                 
-                <div class="form-group">
-                  <label class="col-sm-2 col-sm-2 control-label">Hora: (Q) </label>
+                  <label class="col-sm-1 col-sm-1 control-label">Hora:</label>
                   <div class="col-sm-1">
-                  <p class="form-control-static"> <?php echo $tarifa2;?></p> 
+                  <p class="form-control-static"> <b> Q<?php echo $tarifa2;?>.00 </p> </b> 
 
-                  </div>
+                  
                 </div>
 
                 
-                <div class="form-group">
-                  <label class="col-sm-2 col-sm-2 control-label">Día: (Q) </label>
+                  <label class="col-sm-1 col-sm-1 control-label">Día:</label>
                   <div class="col-sm-1">
 
 
@@ -334,12 +341,12 @@ while ($row = pg_fetch_row($result)) {
 
                   if($tarifa3==0){
 
-                    echo "<p class='form-control-static'>N/A</p>";
+                    echo "<p class='form-control-static'> <b>N/A</b></p>";
 
                   }
                   else{
                     
-                    echo "<p class='form-control-static'>$tarifa3</p>";
+                    echo "<p class='form-control-static'><b> Q$tarifa3.00 </b> </p>";
 
 
                   }
@@ -352,22 +359,22 @@ while ($row = pg_fetch_row($result)) {
                   ?>
 
                 </div>
-                </div>
+              
 
                 
-                <div class="form-group">
-                  <label class="col-sm-2 col-sm-2 control-label">Mes: (Q)</label>
+            
+                  <label class="col-sm-1 col-sm-1 control-label">Mes:</label>
                   <div class="col-sm-1">
 
 
                   <?php
 
 if($tarifa4==0){
-  echo "<p class='form-control-static'>N/A</p>";
+  echo "<p class='form-control-static'><b> N/A </b> </p>";
 }
 else{
  
-  echo "<p class='form-control-static'>$tarifa4</p>";
+  echo "<p class='form-control-static'><b> Q$tarifa4.00 </b> </p>";
 }
 
 
@@ -378,363 +385,534 @@ else{
                   </div>
                 </div>
 
-
-
-                
-                <h4 class="mb"><i class="fa fa-angle-right"></i> Ubicación Geográfica </h4>
-
-
-
-                <div class="form-group">
-                  <label class="control-label col-md-3">Latitud</label>
-                  <div class="col-md-4">
-                    <div class="input-group bootstrap-timepicker">
-                    <p class="form-control-static"> <?php echo $latitude;?></p> 
-                    
-                    </div>
-                  </div>
-                </div>
+               </form>
         
-                  <div class="form-group">
-                    <label class="control-label col-md-3">Longidut</label>
-                    <div class="col-md-4">
-                      <div class="input-group bootstrap-timepicker">
-                      <p class="form-control-static"> <?php echo $longitude;?></p>                         
-                      </div>
-                    </div>
-                  </div>
 
+                <div class=" add-task-row">
 
-                <h4 class="mb"><i class="fa fa-angle-right"></i> Lunes </h4>
-
-
-
-                <div class="form-group">
-                  <label class="control-label col-md-3">Horario de apertura</label>
-                  <div class="col-md-4">
-                    <div class="input-group bootstrap-timepicker">
-                    <p class="form-control-static"> <?php echo $lunes_entrada;?></p> 
-                    
-                    </div>
-                  </div>
-                </div>
-        
-                  <div class="form-group">
-                    <label class="control-label col-md-3">Horario de Cierre</label>
-                    <div class="col-md-4">
-                      <div class="input-group bootstrap-timepicker">
-                      <p class="form-control-static"> <?php echo $lunes_salida;?></p>                         
-                      </div>
-                    </div>
-                  </div>
-
-
-                  <h4 class="mb"><i class="fa fa-angle-right"></i> Martes </h4>
-
-
-
-<div class="form-group">
-  <label class="control-label col-md-3">Horario de apertura</label>
-  <div class="col-md-4">
-    <div class="input-group bootstrap-timepicker">
-    <p class="form-control-static"> <?php echo $martes_entrada;?></p> 
-    
-    </div>
-  </div>
-</div>
-
-  <div class="form-group">
-    <label class="control-label col-md-3">Horario de Cierre</label>
-    <div class="col-md-4">
-      <div class="input-group bootstrap-timepicker">
-      <p class="form-control-static"> <?php echo $martes_salida;?></p>                         
-      </div>
-    </div>
-  </div>
-
-
-  <h4 class="mb"><i class="fa fa-angle-right"></i> Miercoles </h4>
-
-
-
-<div class="form-group">
-  <label class="control-label col-md-3">Horario de apertura</label>
-  <div class="col-md-4">
-    <div class="input-group bootstrap-timepicker">
-    <p class="form-control-static"> <?php echo $miercoles_entrada;?></p> 
-    
-    </div>
-  </div>
-</div>
-
-  <div class="form-group">
-    <label class="control-label col-md-3">Horario de Cierre</label>
-    <div class="col-md-4">
-      <div class="input-group bootstrap-timepicker">
-      <p class="form-control-static"> <?php echo $miercoles_salida;?></p>                         
-      </div>
-    </div>
-  </div>
-
-
-  
-  <h4 class="mb"><i class="fa fa-angle-right"></i> Jueves </h4>
-
-
-
-<div class="form-group">
-  <label class="control-label col-md-3">Horario de apertura</label>
-  <div class="col-md-4">
-    <div class="input-group bootstrap-timepicker">
-    <p class="form-control-static"> <?php echo $jueves_entrada;?></p> 
-    
-    </div>
-  </div>
-</div>
-
-  <div class="form-group">
-    <label class="control-label col-md-3">Horario de Cierre</label>
-    <div class="col-md-4">
-      <div class="input-group bootstrap-timepicker">
-      <p class="form-control-static"> <?php echo $jueves_salida;?></p>                         
-      </div>
-    </div>
-  </div>
-
-
-  <h4 class="mb"><i class="fa fa-angle-right"></i> Viernes </h4>
-
-
-
-<div class="form-group">
-  <label class="control-label col-md-3">Horario de apertura</label>
-  <div class="col-md-4">
-    <div class="input-group bootstrap-timepicker">
-    <p class="form-control-static"> <?php echo $viernes_entrada;?></p> 
-    
-    </div>
-  </div>
-</div>
-
-  <div class="form-group">
-    <label class="control-label col-md-3">Horario de Cierre</label>
-    <div class="col-md-4">
-      <div class="input-group bootstrap-timepicker">
-      <p class="form-control-static"> <?php echo $viernes_salida;?></p>                         
-      </div>
-    </div>
-  </div>
-
-
-
-  <?php
-
-$time_from1 = strtotime($sabado_entrada);
-  $time_to1 = strtotime($sabado_salida);
-
-
-?>   
-
-<h4 class="mb"><i class="fa fa-angle-right"></i> Sabado </h4>
-
-<div class="form-group">
-<label class="control-label col-md-3">Horario de apertura</label>
-<div class="col-md-4">
-<div class="input-group bootstrap-timepicker">
-
-<?php
-
-
-if($time_from1 == $time_to1){
-   
-echo "<p class='form-control-static'>N/A</p>";
-
-
-}
-else {
-
-echo "<p class='form-control-static'>$sabado_entrada</p>";
-
-
-
-
-}            
-
-?>
-
-        
-    </div>
-      
-</div>
-</div>
-
-<div class="form-group">
- <label class="control-label col-md-3">Horario de Cierre</label>
- <div class="col-md-4">
- <div class="input-group bootstrap-timepicker">
-
- <?php
-
-
-if($time_from1 == $time_to1){
-
-echo "<p class='form-control-static'>N/A</p>";
-}
-else {
-echo "<p class='form-control-static'>$sabado_salida</p>";
-
-}            
-?>
-
-
-      
-    </div>
- </div>
-</div>
-
-
-
-                  <?php
-
-                  $time_from = strtotime($domingo_entrada);
-                    $time_to = strtotime($domingo_salida);
-
-
-                  ?>   
-
-                  <h4 class="mb"><i class="fa fa-angle-right"></i> Domingo </h4>
-             
-               <div class="form-group">
-                 <label class="control-label col-md-3">Horario de apertura</label>
-                 <div class="col-md-4">
-                 <div class="input-group bootstrap-timepicker">
 
                 <?php
 
+
+      echo "<a class='btn btn-success btn-sm pull-left' href=Editar_principales.php?id_parqueo=$id_parqueo>Editar Datos principales y tarifas</a>";
+
+
+
+       ?>
+
+                </div>
+              </div>
+            </section>
+
+
+
+        
+          </div>
+          <!-- /col-md-12-->
+        </div>
+        <!-- /row -->
+
+
+
+        <div class="row mt">
+          <div class="col-md-12">
+            <section class="task-panel tasks-widget">
+              <div class="panel-heading">
+                <div class="pull-left">
+                  <h4><i class="fa fa-calendar"></i> Horarios entre Semana</h4>
+                </div>
+                <br>
+              </div>
+              <div class="panel-body">
+
+              <form class="form-horizontal style-form">
+
+                <div class="form-group">
+                <label class="col-sm-2 col-sm-2 control-label">Lunes </label>
+                  <div class="col-sm-2">
+
+                  <?php
+                  $lunese = substr($lunes_entrada, 0, -3);  // devuelve "abcde"
+
+
+                  $lunesex = substr($lunes_salida, 0, -3);  
+
+                  $lunes = $lunese . " - " . $lunesex;
+
+                  ?>
+
+                  <p class="form-control-static"><b><?php echo $lunes?></b></p> 
+
+                  
+                </div>
+
                 
-if($time_from == $time_to){
+                <label class="col-sm-2 col-sm-2 control-label">Martes</label>
+                  <div class="col-sm-2">
+                  <?php
+                  $martese = substr($martes_entrada, 0, -3);  // devuelve "abcde"
+
+
+                  $martesex = substr($martes_salida, 0, -3);  
+
+                  $martes = $martese . " - " . $martesex;
+
+                  ?>
+
+                  <p class="form-control-static"><b><?php echo $martes?></b></p> 
+
+                  
+                </div>
+
+
+                <label class="col-sm-2 col-sm-2 control-label">Miercoles</label>
+                  <div class="col-sm-2">
+
+
+                  <?php
+                  $miercolese = substr($miercoles_entrada, 0, -3);  // devuelve "abcde"
+
+
+                  $miercolesex = substr($miercoles_salida, 0, -3);  
+
+                  $miercoles = $miercolese . " - " . $miercolesex;
+
+                  ?>
+
+                  <p class="form-control-static"><b><?php echo $miercoles?></b></p> 
+                  
+                </div>
+
+                </div>
+
+                <div class="form-group">
+
+
+
+
+                <label class="col-sm-2 col-sm-2 control-label">Jueves</label>
+                  <div class="col-sm-2">
+
+                  <?php
+                  $juevese = substr($jueves_entrada, 0, -3);  // devuelve "abcde"
+
+
+                  $juevesex = substr($jueves_salida, 0, -3);  
+
+                  $jueves = $juevese . " - " . $juevesex;
+
+                  ?>
+
+                  <p class="form-control-static"><b><?php echo $jueves?></b></p>
+                  
+                </div>
+
+                <label class="col-sm-2 col-sm-2 control-label">Viernes</label>
+                  <div class="col-sm-2">
+                  <?php
+                  $viernese = substr($viernes_entrada, 0, -3);  // devuelve "abcde"
+
+
+                  $viernesex = substr($viernes_salida, 0, -3);  
+
+                  $viernes = $viernese . " - " . $viernesex;
+
+                  ?>
+
+                  <p class="form-control-static"><b><?php echo $viernes?></b></p>
+                  
+                </div>
+                </div>
+
+
+                    <h4><i class="fa fa-calendar-o"></i> Horarios de Fin de Semana</h4>
+
+
+                <div class="form-group">
+
+
+                <label class="col-sm-2 col-sm-2 control-label">Sabado</label>
+                  <div class="col-sm-2">
+
+                  <?php
+
+if($sabado_entrada == $sabado_salida){
                      
-  echo "<p class='form-control-static'>N/A</p>";
+  echo "<p class='form-control-static'><b>N/A</b></p>";
+
+
 
 
 }
 else {
 
-  echo "<p class='form-control-static'>$domingo_entrada</p>";
+  $sabadoen = substr($sabado_entrada, 0, -3);  // devuelve "abcde"
+
+
+  $sabadoex = substr($sabado_salida, 0, -3);  
+
+  $sabado = $sabadoen . " - " . $sabadoex;
+
+
+
+  echo "<p class='form-control-static'><b>$sabado</b></p>";
+
 
                   
 
   
-}            
+}   
 
-                ?>
+               
+                  ?>
 
-                          
-                      </div>
-                        
-                 </div>
-               </div>
-       
-                 <div class="form-group">
-                   <label class="control-label col-md-3">Horario de Cierre</label>
-                   <div class="col-md-4">
-                   <div class="input-group bootstrap-timepicker">
                   
-                   <?php
+                </div>
+
+
+
+                <label class="col-sm-2 col-sm-2 control-label">Domingo</label>
+                  <div class="col-sm-2">
+              
+
+                  <?php
+
+if($domingo_entrada == $domingo_salida){
+                     
+  echo "<p class='form-control-static'><b>N/A</b></p>";
+
+
+
+
+}
+else {
+
+  $domingoen = substr($domingo_entrada, 0, -3);  // devuelve "abcde"
+
+
+  $domingoex = substr($domingo_salida, 0, -3);  
+
+  $domingo = $domingoen . " - " . $domingoex;
+
+
+
+  echo "<p class='form-control-static'><b>$domingo</b></p>";
+
+
+                  
+
+  
+}   
+
+               
+                  ?>
+                  
+                </div>
+
+           
+
+
+             
+
+             
+
+                </div>
+
+
+           
+
+
 
                 
-if($time_from == $time_to){
+
+        
              
-  echo "<p class='form-control-static'>N/A</p>";
-}
-else {
-  echo "<p class='form-control-static'>$domingo_salida</p>";
-         
-}            
-                ?>
 
 
-                        
-                      </div>
-                   </div>
-                 </div>
+        
+
+                <div class=" add-task-row">
 
 
-                 <h4 class="mb"><i class="fa fa-angle-right"></i> Detalles del parqueo </h4>
+
+                <?php
 
 
-                 <div class="form-group">
-
-                 <div class="col-md-4">
+echo "<a class='btn btn-success btn-sm pull-left' href=Editar_horarios.php?id_parqueo=$id_parqueo>Editar Horarios</a>";
 
 
-                 <ul>
+
+ ?>
+
+                </div>
+            
+
+            
+
+               
+
+
+               </form>
+        
+
+           
+              </div>
+            </section>
+
+
+
+        
+          </div>
+          <!-- /col-md-12-->
+        </div>
+        <!-- /row -->
+
+
+
+        
+        <div class="row mt">
+          <div class="col-md-12">
+            <section class="task-panel tasks-widget">
+              <div class="panel-heading">
+                <div class="pull-left">
+                  <h4><i class="fa fa-location-arrow"></i> Ubicación</h4>
+                </div>
+                <br>
+              </div>
+              <div class="panel-body">
+
+              <form class="form-horizontal style-form">
+
+
+
+
+               
   
-<?php
+                  
+                
+                  <div class="form-group">
+  
+  
+  
+  
+                  <label class="col-sm-2 col-sm-2 control-label">Latitud</label>
+                    <div class="col-sm-2">
+  
+                
+  
+                    <p class="form-control-static"><b><?php echo $latitude?></b></p>
+                    
+                  </div>
+  
+                  <label class="col-sm-2 col-sm-2 control-label">Longitud</label>
+                    <div class="col-sm-2">
+                
+  
+                    <p class="form-control-static"><b><?php echo $longitude?></b></p>
+                    
+                  </div>
+                  </div>
+  
+  
+                  <div class=" add-task-row">
+
+                  <?php
+
+
+echo "<a class='btn btn-success btn-sm pull-left' href=EditarUbicacion.php?id_parqueo=$id_parqueo>Editar Ubicación</a>";
+
+
+
+ ?>                  </div>
+              
+  
+              
+  
+                 
+  
+
+              
+
+              
+
+               
+
+
+               </form>
+        
+
+           
+              </div>
+            </section>
+
+
+
+        
+          </div>
+          <!-- /col-md-12-->
+        </div>
+
+
+
+
+
+  
+
+          <!-- COMPLEX TO DO LIST -->
+          <div class="row mt mb">
+          <div class="col-md-12">
+            <section class="task-panel tasks-widget">
+              <div class="panel-heading">
+                <div class="pull-left">
+                  <h4><i class="fa fa-tasks"></i> Características del parqueo</h4>
+                </div>
+                <br>
+              </div>
+              <div class="panel-body">
+                <div class="task-list">
+                  <ul id="sortable" class="task-list">
+
+
+ 
+                  <?php
              if (str_contains($detalles, '1')) {
-    echo '<li>-Baños</li>';} 
+    echo '<li class="list-primary"><i class=" fa fa-pause"></i><div class="task-title"><span class="task-title-sp"><b>Baños</b></span></div></li>';
+  
+  
+  
+  } 
 
 
     if (str_contains($detalles, '2')) {
-      echo '<li>-Bajo techo</li>';} 
+      echo ' <li class="list-danger"><i class=" fa fa-home"></i><div class="task-title"><span class="task-title-sp"> <b> Bajo Techo</b></span></div></li>';
+    } 
 
 
       if (str_contains($detalles, '3')) {
-        echo '<li>-Asfalto</li>';} 
+        echo '<li class="list-success"><i class=" fa fa-road"></i><div class="task-title"><span class="task-title-sp"><b>Asfaltado.</b> </span></div></li>';
+      } 
 
 
         if (str_contains($detalles, '4')) {
-          echo '<li>-Seguridad privada</li>';} 
+
+         echo' <li class="list-warning"><i class=" fa fa-eye"></i><div class="task-title"><span class="task-title-sp"><b> Seguridad Privada </b> </span></div></li>';
+        } 
 
 
           if (str_contains($detalles, '5')) {
-            echo '<li>-Espacio para Furgoneta o camión</li>';} 
+
+            echo '<li class="list-info"><i class=" fa fa-truck"></i><div class="task-title"><span class="task-title-sp"><b> Espacio para furgoneta o camión </b></span></div></li>';
+
+          
+          } 
 
             if (str_contains($detalles, '6')) {
-              echo '<li>-Lavado de autos</li>';} 
+
+              echo '<li class="list-primary"><i class=" fa fa-ellipsis-v"></i><div class="task-title"><span class="task-title-sp"><b> Lavado de Autos </b></span></div></li>';
+            
+            
+            } 
 
               if (str_contains($detalles, '7')) {
-                echo '<li>-Iluminado </li>';} 
+echo '<li class="list-primary"><i class=" fa fa-lightbulb-o"></i><div class="task-title"><span class="task-title-sp"><b> Iluminado </b> </span></div></li>';
+              
+              } 
 
                 if (str_contains($detalles, '8')) {
-                  echo '<li>-Puerta de seguridad </li>';} 
+
+
+ echo '<li class="list-danger"><i class=" fa fa-shield"></i><div class="task-title"><span class="task-title-sp"> <b> Puerta de Seguridad </b> </span></div></li>';                 
+                } 
 
                   if (str_contains($detalles, '9')) {
-                    echo '<li>-Apto para discapacitados</li>';} 
+
+ echo '<li class="list-success"><i class=" fa fa-wheelchair"></i><div class="task-title"><span class="task-title-sp"><b> Apto para discapacitados. </b> </span></div></li>';
+
+                  } 
 
                     if (str_contains($detalles, 'A')) {
-                      echo '<li>-Cámara de Seguridad</li>';} 
+
+  echo '<li class="list-warning"><i class=" fa fa-camera-retro"></i><div class="task-title"><span class="task-title-sp"><b> Cámara de seguridad </b></span></div></li>';                    
+
+
+                    } 
 
                       if (str_contains($detalles, 'B')) {
-                        echo '<li>-Amplio Espacio</li>';} 
+        
+   echo '<li class="list-info"><i class=" fa fa-expand"></i><div class="task-title"><span class="task-title-sp"><b>Amplio Espacio  </b> </span></div></li>';
+
+
+                      } 
 
 
                         if (str_contains($detalles, 'C')) {
-                          echo '<li>-Sótano</li>';} 
+
+       echo '<li class="list-danger"><i class=" fa fa-arrow-circle-down"></i><div class="task-title"><span class="task-title-sp"><b> Sótano </b> </span></div></li>';
+
+
+
+
+
+                        } 
 
                           if (str_contains($detalles, 'D')) {
-                            echo '<li>-Pago con Tarjeta</li>';}
+
+
+      echo  '<li class="list-success"><i class=" fa fa-credit-card"></i><div class="task-title"><span class="task-title-sp"><b>  Pago con tarjeta. </b> </span></div></li>';
+                      
+
+                          }
                             
                         
   ?>
 
 
-</ul>  
-
-</div>
-
-
-
-
-
-</div>
+                   
+             
+                  
+                  </ul>
+                </div>
 
 
+                <div class=" add-task-row">
 
-<h4 class="mb"><i class="fa fa-angle-right"></i> Imagen del parqueo: </h4>
+                <?php
+
+
+echo "<a class='btn btn-success btn-sm pull-left' href=Editar_cara.php?id_parqueo=$id_parqueo>Editar Carácteristicas del parqueo</a>";
 
 
 
+ ?> 
+
+              </div>
+
+
+           
+              </div>
+            </section>
+          </div>
+          <!--/col-md-12 -->
+        </div>
+        <!-- /row -->
+
+
+
+        <div class="row mt">
+          <div class="col-md-12">
+            <section class="task-panel tasks-widget">
+              <div class="panel-heading">
+                <div class="pull-left">
+                  <h4><i class="fa fa-pircture-o"></i> Imagen del parqueo</h4>
+                </div>
+                <br>
+              </div>
+              <div class="panel-body">
+
+              <form class="form-horizontal style-form">
+
+
+              
 <div class="project-wrapper">
                               <div class="project">
                                 <div class="photo-wrapper">
@@ -749,42 +927,61 @@ else {
                             </div>
 
 
-
-                     
-                            
-                            <div class="span6">
-                  
-                  <a href="index.php" class="btn btn-compose">
-                 <!-- <a href="contactformprospecto.html" class="btn btn-compose">  -->
-
-                  <i class="fa fa-pencil"></i> Regresar </a>
-
-                          
-                  </div>
+                            <div class=" add-task-row">
 
 
 
+                            <?php
 
 
+echo "<a class='btn btn-success btn-sm pull-left' href=Editar_imagen.php?id_parqueo=$id_parqueo>Editar Imagen</a>";
+
+
+
+ ?>                 </div>
+
+
+
+
+               
+  
+         
+
+               </form>
+        
 
            
-              </form>
-            </div>
+              </div>
+            </section>
+
+
+
+        
           </div>
-          <!-- col-lg-12-->
+          <!-- /col-md-12-->
         </div>
+        
+
+     
 
 
 
-   
-        <!-- /row -->
+
+
+
+
+
+
+
+
+       
       </section>
       <!-- /wrapper -->
     </section>
     <!-- /MAIN CONTENT -->
     <!--main content end-->
     <!--footer start-->
-
+   
     <!--footer end-->
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
@@ -796,29 +993,18 @@ else {
   <!--common script for all pages-->
   <script src="lib/common-scripts.js"></script>
   <!--script for this page-->
-  <script src="lib/jquery-ui-1.9.2.custom.min.js"></script>
-  <!--custom switch-->
-  <script src="lib/bootstrap-switch.js"></script>
-  <!--custom tagsinput-->
-  <script src="lib/jquery.tagsinput.js"></script>
-  <!--custom checkbox & radio-->
-  <script type="text/javascript" src="lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-  <script type="text/javascript" src="lib/bootstrap-daterangepicker/date.js"></script>
-  <script type="text/javascript" src="lib/bootstrap-daterangepicker/daterangepicker.js"></script>
-  <script type="text/javascript" src="lib/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
-  <script type="text/javascript" src="lib/bootstrap-fileupload/bootstrap-fileupload.js"></script>
-  <script type="text/javascript" src="lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-  <script type="text/javascript" src="lib/bootstrap-daterangepicker/moment.min.js"></script>
-  <script type="text/javascript" src="lib/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-  <script src="lib/advanced-form-components.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script src="lib/tasks.js" type="text/javascript"></script>
+  <script>
+    jQuery(document).ready(function() {
+      TaskList.initTaskWidget();
+    });
 
-  <?php
-                  pg_free_result($result);
-                  pg_close($conn);
-                  ?>
-
-
-
+    $(function() {
+      $("#sortable").sortable();
+      $("#sortable").disableSelection();
+    });
+  </script>
 
 </body>
 

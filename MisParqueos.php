@@ -138,6 +138,9 @@ else{
               </a>
           </li>
 
+          
+
+     
           <li class="mt">
             <a href="micuenta.php">
               <i class="fa fa-desktop"></i>
@@ -146,12 +149,24 @@ else{
         
           </li>
           <li class="mt">
-            <a class="active" href="MisParqueos.php">
+            <a href="MisParqueos.php">
               <i class="fa fa-truck"></i>
               <span>Mis parqueos</span>
               </a>
           
           </li>
+
+
+
+          <!--
+          <li class="mt">
+            <a class="active" href="Slots.php">
+              <i class="fa fa-table"></i>
+              <span>Espacios (Slots)</span>
+              </a>
+          
+          </li> -->
+
           <li class="mt">
             <a href="RegistrarParqueo1.php">
               <i class="fa fa-book"></i>
@@ -212,7 +227,7 @@ else{
 
                     <th>Tarifa 1/2 Hora (Q)</th>
                     <th>Tarfia Hora (Q)</th>
-                    <th>Tarifa Mes (Q)</th>
+                    <th>Espacios</th>
                     
              
                     <th>Detalles</th>
@@ -300,13 +315,7 @@ else{
 
               
 
-                    if($tarifa4==0){
-
-                      echo	"<td>No disponible</td>";
-                    }
-                    else{
-                      echo	"<td>$tarifa4</td>";
-                    }
+              
 
 
 /*
@@ -327,7 +336,10 @@ else{
                       }         */           
                  
                    
-
+                     
+                      echo "<td><a href=Slots.php?id_parqueo=$idparqueo>Estado </a></td>\n";     
+ 
+                      
                     echo "<td><a href=Detalles_Parqueo.php?id_parqueo=$idparqueo>Ver detalles </a></td>\n";     
                     
                     echo "<td><a href=MisServicios.php?id_parqueo=$idparqueo>Ver servicios</a></td>\n";    

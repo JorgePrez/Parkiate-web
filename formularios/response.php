@@ -15,15 +15,13 @@ for($i=0;$i < 6;$i++){
   
  
   $nombre= $_GET['nombre'];
-  $dpi= $_GET['dpi']; 
-  $nit= $_GET['nit']; 
+
   $contrasenia= $_GET['contrasenia']; 
   $correo=  $_GET['email'];
 
 //  $correo= 'uncorreo.gmail.com';
 
 
-  $telefono= $_GET['telefono']; 
 
   $correo1= urldecode($correo);
 
@@ -43,7 +41,7 @@ if (!$conn){
 }
 
 
-$query = "Insert into duenio values ('$id','$nombre',$dpi,$nit,$telefono,'$correo','$contrasenia')";
+$query = "Insert into duenio values ('$id','$nombre','$correo','$contrasenia')";
 $result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
 $tuplasaafectadas = pg_affected_rows($result);
 pg_free_result($result);

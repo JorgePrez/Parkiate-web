@@ -129,9 +129,28 @@ if (!$conn){
 
 $ref_tabla="contacts";
 
-$postRef_result = $database->getReference('parqueos')->push($postData);
 
-if($postRef_result){
+// ESTA LINEA PERMITE EDITAR $postRef_result = $database->getReference('/parqueos/-N-imtkQJtXmGswIev8Q')->set($postData);
+
+$id_firebase = $database->getReference('/parqueos')->push($postData)->getKey();
+
+print_r($id_firebase);
+
+
+if($id_firebase){
+
+    
+ 
+
+      
+   $query= "UPDATE parqueo SET id_firebase='$id_firebase' WHERE id_parqueo = '$id_parqueo'";
+
+   $result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
+   $tuplasaafectadas = pg_affected_rows($result);
+   pg_free_result($result);
+
+
+
 
     echo "momoland_thumbs_up";
 }
