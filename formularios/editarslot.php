@@ -125,8 +125,11 @@ $estado_boolean = false;
 
 $postData = ['id_slot'=>$id_slot,
 'codigo'=>$codigoE,
-'estado' => $estado_boolean 
+'estado' => $estado_boolean,
+'reservas'=> $reservasE  
 ];
+
+
 
 // editar en ParkingStatus/-id_parqueo/-id_slot/
 

@@ -196,7 +196,7 @@ else{
     <section id="main-content">
       <section class="wrapper">
 
-      <h3><i class="fa fa-table"></i> Espacios de estacionamientosss</h3>
+      <h3><i class="fa fa-table"></i> Espacios de estacionamientos</h3>
 
 
         <div class="row mb">

@@ -83,7 +83,8 @@ while ($row = pg_fetch_row($result)) {
 
 $postData = ['id_slot'=>$id_slot,
 'codigo'=>$codigo,
-'estado' => false 
+'estado' => false,
+'reservas'=> $reservas 
 ];
 
 $ref_tabla="/Parking_Status/".$id_firebase."/";

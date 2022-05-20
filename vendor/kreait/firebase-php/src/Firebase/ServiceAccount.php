@@ -49,7 +49,7 @@ class ServiceAccount
     public function asArray(): array
     {
         $array = $this->data;
-        $array['type'] = $array['type'] ?? 'service_account';
+        $array['type'] ??= 'service_account';
 
         return $array;
     }
@@ -58,8 +58,6 @@ class ServiceAccount
      * @param self|string|array|mixed $value
      *
      * @throws InvalidArgumentException
-     *
-     * @return ServiceAccount
      */
     public static function fromValue($value): self
     {

@@ -14,7 +14,6 @@ use Kreait\Firebase\Exception\AuthApiExceptionConverter;
 use Kreait\Firebase\Exception\AuthException;
 use Kreait\Firebase\Request;
 use Kreait\Firebase\Util\JSON;
-use Kreait\Firebase\Value\Provider;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
@@ -63,7 +62,7 @@ class ApiClient
     {
         return $this->requestApi('https://identitytoolkit.googleapis.com/v1/accounts:update', [
             'localId' => $uid,
-            'customAttributes' => JSON::encode($claims, JSON_FORCE_OBJECT),
+            'customAttributes' => JSON::encode((object) $claims),
         ]);
     }
 
@@ -95,7 +94,7 @@ class ApiClient
      */
     public function downloadAccount(?int $batchSize = null, ?string $nextPageToken = null): ResponseInterface
     {
-        $batchSize = $batchSize ?? 1000;
+        $batchSize ??= 1000;
 
         return $this->requestApi('downloadAccount', \array_filter([
             'maxResults' => $batchSize,
@@ -191,12 +190,14 @@ class ApiClient
     }
 
     /**
-     * @param array<int, string|Provider> $providers
+     * @param array<int, \Stringable|string> $providers
      *
      * @throws AuthException
      */
     public function unlinkProvider(string $uid, array $providers): ResponseInterface
     {
+        $providers = \array_map('strval', $providers);
+
         return $this->requestApi('setAccountInfo', [
             'localId' => $uid,
             'deleteProvider' => $providers,
