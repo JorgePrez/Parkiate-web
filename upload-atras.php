@@ -56,6 +56,10 @@ $uploader = $cloudinary->uploadApi();
 //$url =  'http://192.168.1.15/picture';
 
 
+date_default_timezone_set('America/Guatemala');
+
+$id_parqueo =$_GET['id_parqueo'];
+
 
 
 
@@ -64,6 +68,8 @@ $received = file_get_contents('http://192.168.1.15/picture');
 
 $img = 'camaratrasera.jpeg';
 file_put_contents($img, $received);
+
+
 
 //$imagen->attachData($received, 'nombre.jpeg');
 
@@ -133,13 +139,20 @@ for($i=0;$i < 6;$i++){
 
 $link_salida=$imagen_subida->secure_url; 
 
+$now = new Datetime('now');
+
+
+
+// Output the date with microseconds.
+$now = $now->format('Y-m-d H:i:s.u');
+
 
 
 
 
 //$query = "Insert into placas_entrada values ('$id','$id_duenio','$nombre','$direccion','$capacidad_maxima','$media_hora','$hora','$dia','$mes','$lunes_entrada','$lunes_salida','$domingo_entrada','$domingo_salida','$detalles','$imagenes','$latitude','$longitude','$martes_entrada','$martes_salida','$miercoles_entrada','$miercoles_salida','$jueves_entrada','$jueves_salida','$viernes_entrada','$viernes_salida','$sabado_entrada','$sabado_salida','$control_pagos')";
 
-$query = "INSERT INTO placas_salida(id_placa_salida, hora_deteccion_salida, link_salida, deteccion_salida) VALUES ('$id_placa_salida',  now(),'$link_salida', 'Por definir')";
+$query = "INSERT INTO placas_salida(id_placa_salida, hora_deteccion_salida, link_salida, deteccion_salida,id_parqueo) VALUES ('$id_placa_salida',  '$now','$link_salida', 'Por definir','$id_parqueo')";
 $result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
 $tuplasaafectadas = pg_affected_rows($result);
 pg_free_result($result);

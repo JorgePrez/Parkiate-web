@@ -127,7 +127,9 @@ echo $imagen_subida->secure_url;
 
 //select imagen from users where actualizado = (select max(actualizado) from users)
 
+date_default_timezone_set('America/Guatemala');
 
+$id_parqueo =$_GET['id_parqueo'];
  
 $key = '';
 $pattern = '1234567890ABCDEFGH123456789';
@@ -142,13 +144,18 @@ for($i=0;$i < 6;$i++){
 
 $link_entrada=$imagen_subida->secure_url; 
 
+$now = new Datetime('now');
 
+
+
+// Output the date with microseconds.
+$now = $now->format('Y-m-d H:i:s.u');
 
 
 
 //$query = "Insert into placas_entrada values ('$id','$id_duenio','$nombre','$direccion','$capacidad_maxima','$media_hora','$hora','$dia','$mes','$lunes_entrada','$lunes_salida','$domingo_entrada','$domingo_salida','$detalles','$imagenes','$latitude','$longitude','$martes_entrada','$martes_salida','$miercoles_entrada','$miercoles_salida','$jueves_entrada','$jueves_salida','$viernes_entrada','$viernes_salida','$sabado_entrada','$sabado_salida','$control_pagos')";
 
-$query = "INSERT INTO placas_entrada(id_placa_entrada, hora_deteccion_entrada, link_entrada, deteccion_entrada) VALUES ('$id_placa_entrada',  now(),'$link_entrada', 'Por definir')";
+$query = "INSERT INTO placas_entrada(id_placa_entrada, hora_deteccion_entrada, link_entrada, deteccion_entrada, id_parqueo) VALUES ('$id_placa_entrada',  '$now','$link_entrada', 'Por definir','$id_parqueo')";
 $result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
 $tuplasaafectadas = pg_affected_rows($result);
 pg_free_result($result);
