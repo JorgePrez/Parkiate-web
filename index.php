@@ -210,7 +210,7 @@ if($tuplasaafectadas==1){
     <!--main content start-->
     <section id="main-content">
       <section class="wrapper">
-        <div class="row">
+        <div class="row mt">
           <div class="col-lg-9 main-chart">
             <!--CUSTOM CHART START -->
             <div class="border-head">
@@ -232,6 +232,139 @@ if($tuplasaafectadas==1){
             <!--custom chart end-->
             <div class="row mt">
               <!-- SERVER STATUS PANELS -->
+
+
+              <div class="col-md-4 col-sm-4 mb">
+                <div class="darkblue-panel pn">
+                  <div class="darkblue-header">
+                    <h5>ESTADO GENERAL</h5>
+                  </div>
+                  <canvas id="serverstatus02" height="120" width="120"></canvas>
+                  <script>
+                    var doughnutData = [{
+                        value: 60,
+                        color: "#1c9ca7"
+                      },
+                      {
+                        value: 40,
+                        color: "#f68275"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus02").getContext("2d")).Doughnut(doughnutData);
+                  </script>
+                  <p>23 de Marzo, 2022</p>
+                  <footer>
+                    <div class="pull-left">
+                      <h5><i class="fa fa-hdd-o"></i> 30/50</h5>
+                    </div>
+                    <div class="pull-right">
+                      <h5>60% Ocupado</h5>
+                    </div>
+                  </footer>
+                </div>
+                <!--  /darkblue panel -->
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-sm-4 mb">
+                <div class="content-panel pn">
+                  <div id="spotify">
+
+                  <div class="col-xs-4 col-xs-offset-8">
+                      <button class="btn btn-sm btn-clear-g">VER DETALLES</button>
+                    </div>
+                 
+                    <div class="sp-title">
+                      <h3>
+                      Placa:
+
+                      <?php
+        //  echo $nombrecompleto;
+
+          
+        $query3 = "select foto_auto_entrada,deteccion_entrada from placas_entrada where hora_deteccion_entrada = (select max(hora_deteccion_entrada) from placas_entrada) AND id_parqueo='2CE369'";
+        //                       $query = "select * from prospectos_template";
+        
+        $resultadp1 = pg_query($conn, $query3) or die('ERROR : ' . pg_last_error());
+        $foto_auto_entrada = '';
+        $deteccion_entrada='';
+        
+
+        while ($row = pg_fetch_row($resultadp1)) {
+        $foto_auto_entrada= $row[0];
+        $deteccion_entrada=$row[1];
+        }
+
+        echo $deteccion_entrada;
+
+
+        pg_free_result($resultadp1);
+
+
+          ?>
+
+                      </h3>
+                    </div>
+                  
+                  </div>
+                  <p class="followers"><i class="fa fa-arrow-right"></i>  Último auto en llegar
+                 </p>
+                </div>
+              </div>
+
+              
+              <div class="col-lg-4 col-md-4 col-sm-4 mb">
+                <div class="content-panel pn">
+                  <div id="spotify2">
+
+                  <div class="col-xs-4 col-xs-offset-8">
+                      <button class="btn btn-sm btn-clear-g">VER DETALLES</button>
+                    </div>
+              
+                    <div class="sp-title">
+                      <h3> Placa:
+
+
+                      <?php
+        //  echo $nombrecompleto;
+
+        $query3 = "select foto_auto_salida,deteccion_salida from placas_salida where hora_deteccion_salida = (select max(hora_deteccion_salida) from placas_salida) AND id_parqueo='2CE369'";
+        //                       $query = "select * from prospectos_template";
+        
+        $resultadp = pg_query($conn, $query3) or die('ERROR : ' . pg_last_error());
+        $foto_auto_salida = '';
+        $deteccion_salida='';
+        
+
+        while ($row = pg_fetch_row($resultadp)) {
+        $foto_auto_salida= $row[0];
+        $deteccion_salida=$row[1];
+        }
+
+
+
+            echo $deteccion_salida;
+
+          ?>
+
+                      </h3>
+                    </div>
+                  
+                  </div>
+                  <p class="followers"><i class="fa fa-arrow-left"></i> Último auto en irse </p>
+                </div>
+              </div>
+            
+              
+             
+            </div>
+            <!-- /row -->
+
+
+             <!--custom chart end-->
+          
+             <div class="row mt">
+              <!-- SERVER STATUS PANELS -->
+
               <div class="col-md-4 col-sm-4 mb">
                 <div class="grey-panel pn donut-chart">
                   <div class="grey-header">
@@ -265,38 +398,9 @@ if($tuplasaafectadas==1){
                 <!-- /grey-panel -->
               </div>
               <!-- /col-md-4-->
-              <div class="col-md-4 col-sm-4 mb">
-                <div class="darkblue-panel pn">
-                  <div class="darkblue-header">
-                    <h5>ESTADO GENERAL</h5>
-                  </div>
-                  <canvas id="serverstatus02" height="120" width="120"></canvas>
-                  <script>
-                    var doughnutData = [{
-                        value: 60,
-                        color: "#1c9ca7"
-                      },
-                      {
-                        value: 40,
-                        color: "#f68275"
-                      }
-                    ];
-                    var myDoughnut = new Chart(document.getElementById("serverstatus02").getContext("2d")).Doughnut(doughnutData);
-                  </script>
-                  <p>23 de Marzo, 2022</p>
-                  <footer>
-                    <div class="pull-left">
-                      <h5><i class="fa fa-hdd-o"></i> 30/50</h5>
-                    </div>
-                    <div class="pull-right">
-                      <h5>60% Ocupado</h5>
-                    </div>
-                  </footer>
-                </div>
-                <!--  /darkblue panel -->
-              </div>
-              <!-- /col-md-4 -->
-              <div class="col-md-4 col-sm-4 mb">
+
+               <!-- /col-md-4 -->
+               <div class="col-md-4 col-sm-4 mb">
                 <!-- REVENUE PANEL -->
                 <div class="green-panel pn">
                   <div class="green-header">
@@ -309,6 +413,29 @@ if($tuplasaafectadas==1){
                 </div>
               </div>
               <!-- /col-md-4 -->
+            
+            
+            
+           
+
+               <!--  /col-md-4 -->
+               <div class="col-md-4 col-sm-4 mb">
+                <div class="darkblue-panel pn">
+                  <div class="darkblue-header">
+                    <h5>SITE STATICS</h5>
+                  </div>
+                  <h1 class="mt"><i class="fa fa-user fa-3x"></i></h1>
+                  <p>+ 1,789 NEW VISITS</p>
+                  <footer>
+                    <div class="centered">
+                      <h5><i class="fa fa-trophy"></i> 17,988</h5>
+                    </div>
+                  </footer>
+                </div>
+                <!--  /darkblue panel -->
+              </div>
+              <!-- /col-md-4 -->
+              
             </div>
             <!-- /row -->
            

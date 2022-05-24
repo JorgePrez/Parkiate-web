@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__.'/vendor/autoload.php';
+//require __DIR__.'/vendor/autoload.php';
 
 
 use Kreait\Firebase\Factory;
@@ -14,12 +14,12 @@ $database = $factory->createDatabase();
 
 //echo "my love is waitinn for you";
 
-
+/*
 \Cloudinary::config([ 
     "cloud_name" => "parkiate-ki", 
     "api_key" => "794241658481217", 
     "api_secret" => "qRQnXnrfL-xqXug4sfFlMgGfeAY", 
-    "secure" => false]);
+    "secure" => false]);*/
 
 
 
