@@ -1,6 +1,8 @@
 <?php
 
 
+
+
  
 $key = '';
 $pattern = '1234567890ABCDEFGH123456789';
@@ -14,19 +16,24 @@ for($i=0;$i < 6;$i++){
   
   
  
-  $nombre= $_GET['nombre'];
+  $nombre= $_POST['nombre'];
 
-  $contrasenia= $_GET['contrasenia']; 
-  $correo=  $_GET['email'];
+  $contrasenia= $_POST['password']; 
+  $correo=  $_POST['email'];
 
 //  $correo= 'uncorreo.gmail.com';
 
+  $contrasenia_hash=md5($contrasenia);
 
 
-  $correo1= urldecode($correo);
+//  $correo1= urldecode($correo);
+
+  $id_parqueo ="N";
 
 
-var_dump( explode( '@', $correo1 ) );
+
+//var_dump( explode( '@', $correo1 ) );
+
 
 
 
@@ -41,7 +48,7 @@ if (!$conn){
 }
 
 
-$query = "Insert into duenio values ('$id','$nombre','$correo','$contrasenia')";
+$query = "Insert into duenio values ('$id','$nombre','$correo','$contrasenia_hash','$id_parqueo')";
 $result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
 $tuplasaafectadas = pg_affected_rows($result);
 pg_free_result($result);
@@ -55,7 +62,6 @@ setcookie("id_usuario",$id,time()+(60*60*24*31),"/");
 $url="Location: ./../index.php";
 
 header($url);
-
 
 
 

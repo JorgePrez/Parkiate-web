@@ -1,3 +1,4 @@
+
 <?php
 
 
@@ -13,49 +14,80 @@ if (!$conn){
 
 $correo=$_POST['correo'];
 
-$contrasenia=$_POST['contrasenia'];
+$contrasenia_recibida=$_POST['password'];
 
 
 $correo1= urldecode($correo);
 
-echo "correo: $correo ";
-
-echo "contrasenia: $contrasenia ";
+$contrasenia_hash=md5($contrasenia_recibida);
 
 
 
-
-
-
-$query = "SELECT * from DUENIO WHERE correoo= '$correo1' AND contrasenia='$contrasenia' ";
+$query = "SELECT * from DUENIO WHERE correoo= '$correo1'";
 $result = pg_query($conn, $query) or die('ERROR AL OBTENER DATOS: ' . pg_last_error());
 $tuplasaafectadas = pg_affected_rows($result);
 
-echo "numero: $tuplasaafectadas lo  ";
+//echo "numero: $tuplasaafectadas lo  ";
 
-$id_usuario=0;
+$id_usuario="";
+$nombre="";
+$correoo="";
+$contrasenia="";
+$id_parqueo="";
 
 
 if($tuplasaafectadas>0){
 
 
 while ($row = pg_fetch_row($result)) {
- $id_usuario= $row[0];   
+ $id_usuario= $row[0]; 
+$nombre=$row[1];
+$correoo=$row[2];
+$contrasenia=$row[3];
+$id_parqueo=$row[4];  
 }
 
-echo "id: $id_usuario ";
+
+if (str_contains($contrasenia, $contrasenia_hash)) {
+echo "Contraseñia coincide";
 
 
 setcookie("id_usuario",$id_usuario,time()+(60*60*24*31),"/");
 
 
-echo "id: entrara ";
+if(strlen($id_parqueo) >1){
+  setcookie("id_parqueo",$id_parqueo,time()+(60*60*24*31),"/");
+
+}
+else{
+
+}
+
+
+}
+else {
+
+  
+  $url="Location: ./../login.php?resultado=2";
+
+   header($url);
+
+
+
+}
+/*echo "id: $id_usuario ";
+
+
+setcookie("id_usuario",$id_usuario,time()+(60*60*24*31),"/");
+*/
+
+
 
 //session_start();  session_destroy()
 
-$url="Location: ./../index.php";
+//$url="Location: ./../index.php";
 
-header($url);
+//header($url);
 
 
 
@@ -64,14 +96,11 @@ header($url);
 
 else{
 
-  echo "id: $id_vendedor ";
-
-
-  echo "no entrara ";
 
 
 
-  $url="Location: ./../login.html";
+
+  $url="Location: ./../login.php?resultado=1";
 
    header($url);
 

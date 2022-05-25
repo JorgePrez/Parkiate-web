@@ -2,26 +2,8 @@
 <?php
 
 
+include 'database_cookie.php';
 
-
-$conn = pg_connect("host=db-instancia.ccwm7dhw4cau.us-east-1.rds.amazonaws.com port=5432 user=postgres password=56721449 dbname=postgres");
-if (!$conn){
-    die("PostgreSQL connection failed");
-   
-}
-
-
-if(!isset($_COOKIE["id_usuario"])){
-  header("Location: login.html");
-
-}
-
-
-
-else{    
-  $id_usuario= $_COOKIE["id_usuario"];
-
-}  
 ?>
 
 <!DOCTYPE html>
@@ -91,11 +73,12 @@ else{
         </ul>
         <!--  notification end -->
       </div>
-      <div class="top-menu">
-        <ul class="nav pull-right top-menu">
-          <li><a class="logout" href="formularios/logout.php">Cerrar Sesión</a></li>
-        </ul>
-      </div>
+      <?php
+
+
+include 'logout.php';
+
+?>
     </header>
     <!--header end-->
     <!-- **********************************************************************************************************************************************************

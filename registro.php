@@ -1,3 +1,21 @@
+
+<?php
+
+
+if(!isset($_COOKIE["id_usuario"])){
+
+}
+
+
+
+else{    
+  header("Location: index.php");
+
+}  
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,12 +40,7 @@
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
   
-  <!-- =======================================================
-    Template Name: Dashio
-    Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
-    Author: TemplateMag.com
-    License: https://templatemag.com/license/
-  ======================================================= -->
+
 </head>
 
 <body>
@@ -40,22 +53,22 @@
         <div class="col-lg-12">
           <div class="form-panel">
 
-            <h4><i class="fa fa-angle-right"></i> Datos Personales</h4>
+            <h4><i class="fa fa-angle-right"></i> Ingrese los siguientes datos para crear una cuenta</h4>
 
             <div class="form">
-              <form class="cmxform form-horizontal style-form" id="signupForm" method="get" action="formularios/response.php">
+              <form class="cmxform form-horizontal style-form" id="signupForm" method="POST" action="formularios/response.php" onsubmit ="return matchPassword()" > <!-- action="formularios/response.php"-->
                 <div class="form-group ">
-                  <label for="firstname" class="control-label col-lg-2">Nombre Completo</label>
-                  <div class="col-lg-10">
-                    <input class=" form-control" id="firstname" name="nombre" type="text" />
+                  <label for="firstname" class="control-label col-lg-3">Nombre:</label>
+                  <div class="col-lg-8">
+                    <input class=" form-control" id="firstname" name="nombre" minlength="2" type="text" required />
                   </div>
                 </div>
             
 
                 <div class="form-group ">
-                  <label for="email" class="control-label col-lg-2">Email</label>
-                  <div class="col-lg-10">
-                    <input class="form-control " id="email" name="email" type="email" />
+                  <label for="email" class="control-label col-lg-3">Email:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" id="email" name="email" type="email" required />
                   </div>
                 </div>
         
@@ -63,22 +76,28 @@
 
 
 
-                <div class="form-group ">
-                  <label for="password" class="control-label col-lg-2">Contraseña</label>
-                  <div class="col-lg-10">
-                    <input class="form-control " id="password" name="contrasenia" type="password" />
+                <div class="form-group" id="contrasenia_input">
+                  <label for="password" class="control-label col-lg-3">Contraseña</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" id="password" name="password" minlength="8" type="password" required />
                   </div>
+
+               
                 </div>
-                <div class="form-group ">
-                  <label for="confirm_password" class="control-label col-lg-2">Confirmar Contraseña</label>
-                  <div class="col-lg-10">
-                    <input class="form-control " id="confirm_password" name="confirm_password" type="password" />
+                <div class="form-group" id="contrasenia_input2">
+                  <label for="confirm_password" class="control-label col-lg-3">Confirmar Contraseña</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" id="confirm_password" name="confirm_password" minlength="8" type="password" required />
+
+                    <p class="help-block" id="mensaje"></p>
+
+
                   </div>
                 </div>
               
           
                 <div class="form-group">
-                  <div class="col-lg-offset-2 col-lg-10">
+                  <div class="col-lg-offset-3 col-lg-8"> 
                     <button class="btn btn-theme" type="submit">Confirmar</button>
                     <button class="btn btn-theme01" type="button">
                       
@@ -101,15 +120,53 @@
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>
   <script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
   <!--BACKSTRETCH-->
+  
+  <script src="lib/jquery.scrollTo.min.js"></script>
+  <script src="lib/jquery.nicescroll.js" type="text/javascript"></script>
   <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+  
+  
   <script type="text/javascript" src="lib/jquery.backstretch.min.js"></script>
   <script src="lib/common-scripts.js"></script>
   <script src="lib/form-validation-script.js"></script>
+
+ 
+ 
+
 
   <script>
     $.backstretch("img/fondo.jpg", {
       speed: 500
     });
+
+
+      
+function matchPassword() {  
+
+  
+  var pw1 = document.getElementById("password").value;  
+
+  console.log(pw1);
+  var pw2 = document.getElementById("confirm_password").value;  
+
+  console.log(pw2);
+  if(pw1 != pw2)  
+  {   
+    document.getElementById("contrasenia_input").className = "form-group has-error";
+    document.getElementById("contrasenia_input2").className = "form-group has-error";
+    document.getElementById("mensaje").innerHTML = "Las contraseñas NO coinciden";
+
+    return false 
+  } 
+
+ 
+  alert("Usuario creado correctamente");  
+
+
+ 
+}  
+
+
   </script>
 </body>
 
