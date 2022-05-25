@@ -63,6 +63,11 @@ else{
 
 }
 
+//session_start();  session_destroy()
+
+$url="Location: ./../index.php";
+
+header($url);
 
 }
 else {
@@ -75,21 +80,6 @@ else {
 
 
 }
-/*echo "id: $id_usuario ";
-
-
-setcookie("id_usuario",$id_usuario,time()+(60*60*24*31),"/");
-*/
-
-
-
-//session_start();  session_destroy()
-
-//$url="Location: ./../index.php";
-
-//header($url);
-
-
 
 
 }
@@ -97,19 +87,15 @@ setcookie("id_usuario",$id_usuario,time()+(60*60*24*31),"/");
 else{
 
 
-
-
-
   $url="Location: ./../login.php?resultado=1";
 
    header($url);
 
 
-
 }
 
 
-//pg_free_result($result);
+//
 
 //echo '$tuplasaafectadas'
 

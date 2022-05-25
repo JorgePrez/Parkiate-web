@@ -22,4 +22,21 @@ else{
   $id_usuario= $_COOKIE["id_usuario"];
 
 }  
+
+
+if(!isset($_COOKIE["id_parqueo"])){
+
+   $id_parqueo='N';
+   $id_pagina_side_no='1';
+   header("Location: Registrar_parqueo_index.php");
+
+
+}
+
+else{
+
+  $id_parqueo= $_COOKIE["id_parqueo"];
+
+
+}
 ?>

@@ -1,6 +1,4 @@
 
-
-
 <?php
 
 
@@ -14,7 +12,7 @@ if (!$conn){
 
 
 if(!isset($_COOKIE["id_usuario"])){
-  header("Location: login.html");
+  header("Location: login.php");
 
 }
 
@@ -24,10 +22,24 @@ else{
   $id_usuario= $_COOKIE["id_usuario"];
 
 }  
+
+
+if(!isset($_COOKIE["id_parqueo"])){
+
+   $id_parqueo='N';
+   $id_pagina_side_no='2';
+
+
+}
+
+else{
+
+  $id_parqueo= $_COOKIE["id_parqueo"];
+
+
+}
+
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,6 +54,7 @@ else{
 
   <!-- Favicons -->
   <link href="img/favicon1.png" rel="icon">
+
   <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Bootstrap core CSS -->
@@ -50,12 +63,21 @@ else{
   <link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="css/zabuto_calendar.css">
   <link rel="stylesheet" type="text/css" href="lib/gritter/css/jquery.gritter.css" />
+  <link rel="stylesheet" href="lib/xchart/xcharts.css">
+
   <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
+
+
+
   <script src="lib/chart-master/Chart.js"></script>
 
- 
+
+<!-- Incluir la versión minificada MD5 -->
+<script src="js/md5.min.js"></script>
+
+
 </head>
 
 <body>
@@ -85,16 +107,21 @@ else{
         </ul>
         <!--  notification end -->
       </div>
-      <div class="top-menu">
-        <ul class="nav pull-right top-menu">
-          <li><a class="logout" href="formularios/logout.php">Cerrar Sesión</a></li>
-        </ul>
-      </div>
+      <?php
+
+
+include 'logout.php';
+
+?>
     </header>
+    <!--header end-->
+    <!-- **********************************************************************************************************************************************************
+        MAIN SIDEBAR MENU
+        *********************************************************************************************************************************************************** -->
 
 
-    <?php
-              
+        <?php
+     /*         
               $query = "select nombre from duenio where id_duenio='$id_usuario'";
               //                       $query = "select * from prospectos_template";
               
@@ -106,78 +133,69 @@ else{
               $nombrecompleto= $row[0];
               }
 
+              //ver si tiene asociado parqueo
 
-              pg_free_result($result);
+
+  $query = "select * from duenio,parqueo where duenio.id_duenio=parqueo.id_duenio AND duenio.id_duenio='$id_usuario'";
+$result = pg_query($conn, $query) or die('ERROR AL OBTENER DATOS: ' . pg_last_error());
+$tuplasaafectadas = pg_affected_rows($result);
+
+$valorlisttile=0;
 
 
-              
+
+if($tuplasaafectadas==1){
+
+ $valorlisttile=1;
+  
+  
+  }*/
+
+
               
               ?>
               
-    <!--header end-->
-    <!-- **********************************************************************************************************************************************************
-        MAIN SIDEBAR MENU
-        *********************************************************************************************************************************************************** -->
     <!--sidebar start-->
     <aside>
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><img src="img/ui-user.jpg" class="img-circle" width="80"></a></p>
+          <p class="centered"><img src="img/park_icon2.jpg" class="img-circle" width="80"></a></p>
           <h5 class="centered">
         
           
     <?php
-          echo $nombrecompleto;
+          if(strlen($id_parqueo) >1)
+          {
+            echo 'Parqueo la sexta';
+          }
+          else{
+            echo 'Parece que áun no has registrado todos los detalles de tu parqueo, hazlo para poder ver todas nuestras opciones';
+
+          }
+     
 
           ?>
         
-        </h5>
-        <li class="mt">
-            <a  href="index.php">
-              <i class="fa fa-dashboard"></i>
-              <span>Dashboard</span>
-              </a>
-          </li>
-
-          <li class="mt">
-            <a href="opcione.php">
-              <i class="fa fa-home"></i>
-              <span>Menú Principal</span>
-              </a>
-          </li>
-
-          <li class="mt">
-            <a class="active" href="micuenta.php">
-              <i class="fa fa-desktop"></i>
-              <span>Mi cuenta</span>
-              </a>
+        </h5> 
         
-          </li>
-          <li class="mt">
-            <a href="MisParqueos.php">
-              <i class="fa fa-truck"></i>
-              <span>Mis parqueos</span>
-              </a>
-          
-          </li>
-          <li class="mt">
-            <a href="RegistrarParqueo1.php">
-              <i class="fa fa-book"></i>
-              <span>Agregar parqueos</span>
-              </a>
+        <?php 
+
+if(strlen($id_parqueo) >1)
+{
+  include 'normal_sidebar.php';
+}
+else{
+
+include 'side_bar_nopark_controller.php';
+}
          
-          </li>
-          
-          <li class="mt">
-            <a href="escanearQR.php">
-              <i class="fa fa-qrcode"></i>
-              <span>Escanear QR de usuario</span>
-              </a>
-         
-          </li>
-          
-             </ul>
+
+
+         ?>
+
+
+        </ul>
         <!-- sidebar menu end-->
       </div>
     </aside>
@@ -193,22 +211,30 @@ else{
 $query = "select * from duenio where id_duenio='$id_usuario'";
 $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
 
-$nombrecompleto = '';
 
-$dpi=0;
-$nit=0;
-$telefono=0;
+$id_duenio="";
+$nombre="";
 $correo="";
 $contrasenia="";
+
               
               
 while ($row = pg_fetch_row($result)) {
-$nombrecompleto= $row[1];
-$dpi=$row[2];
-$nit=$row[3];
-$telefono=$row[4];
-$correo=$row[5];
-$contrasenia=$row[6];
+$id_duenio= $row[0];
+$nombre=$row[1];
+$correo=$row[2];
+$contrasenia=$row[3];
+
+
+}
+
+if(strlen($id_parqueo) >1)
+{
+  $id_parqueo_show=$id_parqueo;
+}
+else{
+
+  $id_parqueo_show='Aún no registrado( Finaliza la pestaña de Registrar mi parqueo)';
 }
 
 
@@ -217,62 +243,62 @@ $contrasenia=$row[6];
 
     <section id="main-content">
       <section class="wrapper">
-        <h3><i class="fa fa-angle-right"></i> Mi Cuenta</h3>
+        <h3><i class="fa fa-edit"></i> Editar Información de Cuenta</h3>
         <!-- BASIC FORM ELELEMNTS -->
 
         <div class="col-lg-8 col-lg-offset-2 detailed mt">
                         <h4 class="mb">Información de contacto</h4>
-                        <form role="form" class="form-horizontal" method="get" action="formularios/micuenta.php">
+                        <form role="form" class="form-horizontal" method="get" action="formularios/micuenta.php" onsubmit ="return matchPassword()">
                           <div class="form-group">
                             <label class="col-lg-2 control-label">Id de Usuario</label>
                             <div class="col-lg-8">
                               <input class="form-control" id="disabledInput" type="text" name="id" value="<?php echo $id_usuario ?> "  disabled>
+                               
+                            
+                              <input type="hidden" name="real_password" id="real_password" class="form-control" value="<?php echo $contrasenia ?>" required>
+
 
                             </div>
                           </div>
                           <div class="form-group">
-                            <label class="col-lg-2 control-label">Nombre Completo</label>
+                            <label class="col-lg-2 control-label">Nombre:</label>
                             <div class="col-lg-8">
-                              <input type="text" placeholder=" " id="addr2" name="nombre" class="form-control" value="<?php echo $nombrecompleto ?> ">
+                              <input type="text" placeholder=" " name="nombre" id="nombre" class="form-control" minlength="2" value="<?php echo $nombre ?> " required>
                             </div>
                           </div>
-                          <div class="form-group">
-                            <label class="col-lg-2 control-label">DPI</label>
-                            <div class="col-lg-8">
-                              <input class="form-control" id="disabledInput" type="text" name="dpi" value="<?php echo $dpi ?> "  disabled>
-
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <label class="col-lg-2 control-label">NIT</label>
-                            <div class="col-lg-8">
-                              <input class="form-control" id="disabledInput" type="text" name="nit" value="<?php echo $nit ?> "  disabled>
-
-                            </div>
-                          </div>
-
-
-                          <div class="form-group">
-                            <label class="col-lg-2 control-label">Telefono</label>
-                            <div class="col-lg-8">
-                              <input type="blocked" placeholder=" " id="cell" name="telefono" class="form-control" value="<?php echo $telefono?>" >
-                            </div>
-                          </div>
+               
                        
                           <div class="form-group">
                             <label class="col-lg-2 control-label">Email</label>
                             <div class="col-lg-8">
-                            <input type="blocked" placeholder=" " id="cell" name="correo" class="form-control" value="<?php echo $correo?>" >
+                            <input type="email" placeholder=" " name="correo" id="correo" class="form-control" value="<?php echo $correo?>" required>
                             </div>
                           </div>
 
-                          <div class="form-group">
+                      
+
+                          <div class="form-group" id="contrasenia_input2">
                             <label class="col-lg-2 control-label">Contraseña</label>
                             <div class="col-lg-8">
-                              <input type="password" placeholder="Escriba su contraseña para confirmar cambios" name="contrasenia" class="form-control">
+                              <input type="password" placeholder="Escriba su contraseña para confirmar cambios" name="password" id="password" class="form-control" required>
+                              <p class="help-block" id="mensaje"></p>
+
                             </div>
                           </div>
+
+
+                          <div class="form-group">
+                            <label class="col-lg-2 control-label">Id de Parqueo</label>
+                            <div class="col-lg-8">
+                              <input class="form-control" id="disabledInput" type="text" name="id" value="<?php echo $id_parqueo_show ?> "  disabled>
+
+                            </div>
+
+                            <br>
+                            <br>
+                            <br>
+
+
                           <div class="form-group">
                             <div class="col-lg-offset-2 col-lg-12">
                               <button class="btn btn-theme" type="submit">Guardar Cambios</button>
@@ -330,7 +356,43 @@ $contrasenia=$row[6];
   <script type="text/javascript" src="lib/bootstrap-daterangepicker/daterangepicker.js"></script>
   <script type="text/javascript" src="lib/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
   <script src="lib/form-component.js"></script>
+  <script type="text/javascript" src="js/md5.min.js"></script>
 
+  <script>
+  function matchPassword() {  
+
+  
+var contrasenia_real = document.getElementById("real_password").value;  
+
+var tohash=document.getElementById("password").value;
+
+var contrasenia_enviada = md5(tohash);
+
+
+console.log(contrasenia_real);
+
+console.log(contrasenia_enviada);
+
+ 
+
+
+
+if(contrasenia_real != contrasenia_enviada)  
+{   
+  document.getElementById("contrasenia_input2").className = "form-group has-error";
+  document.getElementById("mensaje").innerHTML = "Contraseña incorrecta";
+
+  return false 
+} 
+
+
+
+alert("Cambios realizados correctamente");  
+
+
+
+}  
+</script>
 
 
 </body>

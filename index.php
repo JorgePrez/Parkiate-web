@@ -30,20 +30,22 @@ include 'database_cookie.php';
   <link rel="stylesheet" type="text/css" href="lib/gritter/css/jquery.gritter.css" />
   <link rel="stylesheet" href="lib/xchart/xcharts.css">
 
+
+  <link rel="stylesheet" type="text/css" href="lib/bootstrap-fileupload/bootstrap-fileupload.css" />
+  <link rel="stylesheet" type="text/css" href="lib/bootstrap-datepicker/css/datepicker.css" />
+  <link rel="stylesheet" type="text/css" href="lib/bootstrap-daterangepicker/daterangepicker.css" />
+  <link rel="stylesheet" type="text/css" href="lib/bootstrap-timepicker/compiled/timepicker.css" />
+  <link rel="stylesheet" type="text/css" href="lib/bootstrap-datetimepicker/datertimepicker.css" />
+
   <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
-
+  <link rel="stylesheet" href="css/to-do.css">
 
 
   <script src="lib/chart-master/Chart.js"></script>
 
-  <!-- =======================================================
-    Template Name: Dashio
-    Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
-    Author: TemplateMag.com
-    License: https://templatemag.com/license/
-  ======================================================= -->
+
 </head>
 
 <body>
@@ -126,61 +128,40 @@ if($tuplasaafectadas==1){
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><img src="img/ui-user.jpg" class="img-circle" width="80"></a></p>
+          <p class="centered"><img src="img/park_icon2.jpg" class="img-circle" width="80"></a></p>
           <h5 class="centered">
         
           
     <?php
-          echo $nombrecompleto;
+          if(strlen($id_parqueo) >1)
+          {
+            echo 'Parqueo la sexta';
+          }
+          else{
+            echo 'Parece que no áun no has todos los detalles agregado tu parqueo, hazlo para poder ver todas nuestras opciones';
+
+          }
+     
 
           ?>
         
-        </h5>
-
-
-          <li class="mt">
-            <a class="active" href="index.php">
-              <i class="fa fa-dashboard"></i>
-              <span>Dashboard</span>
-              </a>
-          </li>
-
-          <li class="mt">
-            <a href="opcione.php">
-              <i class="fa fa-home"></i>
-              <span>Menú Principal</span>
-              </a>
-          </li>
-
-          <li class="mt">
-            <a href="micuenta.php">
-              <i class="fa fa-desktop"></i>
-              <span>Mi cuenta</span>
-              </a>
+        </h5> 
         
-          </li>
-          <li class="mt">
-            <a href="MisParqueos.php">
-              <i class="fa fa-truck"></i>
-              <span>Mis parqueos</span>
-              </a>
-          
-          </li>
-          <li class="mt">
-            <a href="RegistrarParqueo1.php">
-              <i class="fa fa-book"></i>
-              <span>Agregar parqueos</span>
-              </a>
+        <?php 
+
+if(strlen($id_parqueo) >1)
+{
+  include 'normal_sidebar.php';
+}
+else{
+
+include 'side_bar_nopark_controller.php';
+}
          
-          </li>
-          
-          <li class="mt">
-            <a href="escanearQR.php">
-              <i class="fa fa-qrcode"></i>
-              <span>Escanear QR de usuario</span>
-              </a>
-         
-          </li>
+
+
+         ?>
+
 
         </ul>
         <!-- sidebar menu end-->
