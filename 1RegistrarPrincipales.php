@@ -16,7 +16,6 @@ if (!$conn){
 if(!isset($_COOKIE["id_parqueo"])){
 
    $id_parqueo='N';
-   $id_pagina_side_no='1';
 
 }
 
@@ -80,12 +79,12 @@ else{
   <script src="lib/chart-master/Chart.js"></script>
 
 
-  <!-- =======================================================
-    Template Name: Dashio
-    Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
-    Author: TemplateMag.com
-    License: https://templatemag.com/license/
-  ======================================================= -->
+
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.js"></script>
+
+
+
 </head>
 
 <body>
@@ -169,20 +168,17 @@ else{
         
         </h5> 
         
-        <?php 
+        
+        <li class="mt">
+<a class="active" >
+  <i class="fa fa-columns"></i>
+  <span>Registrar mi parqueo</span>
+  </a>
 
-if(strlen($id_parqueo) >1)
-{
-  include 'normal_sidebar.php';
-}
-else{
+</li>
 
-include 'side_bar_nopark_controller.php';
-}
+
          
-
-
-         ?>
 
 
         </ul>
@@ -252,41 +248,6 @@ include 'side_bar_nopark_controller.php';
         </div>
         <!-- /row -->
 
-
-
-            
-
-               
-
-
-           
-
-
-
-        
-       
-
-
-
-
-
-  
-
-        
-
-
-     
-
-
-
-
-
-
-
-
-
-
-
        
       </section>
       <!-- /wrapper -->
@@ -309,6 +270,34 @@ include 'side_bar_nopark_controller.php';
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <script src="lib/tasks.js" type="text/javascript"></script>
   <script>
+
+//navigator.geolocation.getCurrentPosition(showPosition);
+
+
+latitude = position.coords.latitude;
+    longitude =  position.coords.longitude; 
+
+
+
+
+
+/*if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    longitude=-90.51053;
+    
+     latitude=14.63406
+  
+  }*/
+
+  function showPosition(position) {
+    latitude = position.coords.latitude;
+    longitude =  position.coords.longitude; 
+ 
+}
+
+ 
+
     jQuery(document).ready(function() {
       TaskList.initTaskWidget();
     });

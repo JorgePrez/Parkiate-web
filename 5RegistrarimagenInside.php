@@ -42,7 +42,6 @@ else{
 ?>
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,32 +51,22 @@ else{
   <meta name="description" content="">
   <meta name="author" content="Dashboard">
   <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  
   <title>Parkiate-ki (Administrador)</title>
 
-  <!-- Favicons -->
-  <link href="img/favicon1.png" rel="icon">
-  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+<!-- Favicons -->
+<link href="img/favicon1.png" rel="icon">
+<link href="img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Bootstrap core CSS -->
   <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!--external css-->
   <link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
-  <link rel="stylesheet" type="text/css" href="css/zabuto_calendar.css">
-  <link rel="stylesheet" type="text/css" href="lib/gritter/css/jquery.gritter.css" />
-  <link rel="stylesheet" type="text/css" href="lib/bootstrap-fileupload/bootstrap-fileupload.css" />
   <link rel="stylesheet" type="text/css" href="lib/bootstrap-datepicker/css/datepicker.css" />
   <link rel="stylesheet" type="text/css" href="lib/bootstrap-daterangepicker/daterangepicker.css" />
-  <link rel="stylesheet" type="text/css" href="lib/bootstrap-timepicker/compiled/timepicker.css" />
-  <link rel="stylesheet" type="text/css" href="lib/bootstrap-datetimepicker/datertimepicker.css" />
-
-
-
   <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/to-do.css">
-  <script src="lib/chart-master/Chart.js"></script>
-
 
   <!-- =======================================================
     Template Name: Dashio
@@ -92,60 +81,43 @@ else{
     <!-- **********************************************************************************************************************************************************
         TOP BAR CONTENT & NOTIFICATIONS
         *********************************************************************************************************************************************************** -->
-    <!--header start-->
-    <header class="header black-bg">
-      <div class="sidebar-toggle-box">
-        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
-      </div>
-      <!--logo start-->
-      <a href="index.html" class="logo"><b><span>PARK</span>IATE<span>-KI</span></b></a>
-      <!--logo end-->
-      <div class="nav notify-row" id="top_menu">
-        <!--  notification start -->
-        <ul class="nav top-menu">
-          <!-- settings start -->
-         
 
-    
-          <!-- inbox dropdown end -->
-          <!-- notification dropdown start-->
+        <header class="header black-bg">
+            <div class="sidebar-toggle-box">
+              <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+            </div>
+            <!--logo start-->
+            <a href="index.html" class="logo"><b><span>PARK</span>IATE<span>-KI</span></b></a>
+            <!--logo end-->
+            <div class="nav notify-row" id="top_menu">
+              <!--  notification start -->
+              <ul class="nav top-menu">
+                <!-- settings start -->
+               
       
-          <!-- notification dropdown end -->
-        </ul>
-        <!--  notification end -->
-      </div>
-         
-      <div class="top-menu">
-        <ul class="nav pull-right top-menu">
-          <li><a class="logout" href="formularios/logout.php">Cerrar Sesión</a></li>
-        </ul>
-      </div>
+          
+                <!-- inbox dropdown end -->
+                <!-- notification dropdown start-->
+            
+                <!-- notification dropdown end -->
+              </ul>
+              <!--  notification end -->
+            </div>
+              
+        <div class="top-menu">
+          <ul class="nav pull-right top-menu">
+            <li><a class="logout" href="formularios/logout.php">Cerrar Sesión</a></li>
+          </ul>
+        </div>
+          </header>
 
-    </header>
-    <!--header end-->
     <!-- **********************************************************************************************************************************************************
         MAIN SIDEBAR MENU
         *********************************************************************************************************************************************************** -->
-    <!--sidebar start-->
-    <?php
+        
     
-              
-         /*     $query = "select nombre from duenio where id_duenio='$id_usuario'";
-              //                       $query = "select * from prospectos_template";
-              
-              $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
-              $nombrecompleto = '';
-              
-              
-              while ($row = pg_fetch_row($result)) {
-              $nombrecompleto= $row[0];
-              }*/
-              
-              ?>
-              
-          
-          
-              <aside>
+
+<aside>
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
@@ -182,105 +154,97 @@ else{
       </div>
     </aside>
 
-              
-  
-    <!--sidebar end-->
+
+<?php
+
+$id_parqueo = $_GET['id_parqueo'];
+
+
+?>
+
+
     <!-- **********************************************************************************************************************************************************
         MAIN CONTENT
         *********************************************************************************************************************************************************** -->
     <!--main content start-->
     <section id="main-content">
       <section class="wrapper">
-      <h3><i class="fa fa-columns"></i> Agregar la información de tu parqueo </h3>
-  
+      <h3><i class="fa fa-columns"></i> Agrega la información de tu parqueo </h3>
+        <!-- BASIC FORM ELELEMNTS -->
 
-        <div class="showback">
-              <h4><i class="fa fa-angle-right"></i> 2.Presiona el botón "Agregar Horarios"</h4>
-              <div class="progress progress-striped active">
-                <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                  <span class="sr-only">20% Complete</span>
-                </div>
-              </div>
-            </div>
-      
 
+        <!-- /row -->
+       
+        <!-- /row -->
+        <!-- INPUT MESSAGES -->
+         
+        <form action="formularios/detalles.php" method="get">
 
 
         <div class="row mt">
-          <div class="col-md-12">
-            <section class="task-panel tasks-widget">
-              <div class="panel-heading">
-                <div class="pull-left">
-                  <h4><i class="fa fa-calendar"></i> Horarios entre Semana/ Fin de Semana</h4>
-                </div>
-                <br>
-              </div>
-              <div class="panel-body">
+          <div class="col-lg-12">
+            <div class="form-panel">
+            
+                     <h4 class="mb"><i class="fa fa-picture-o"></i> Agregue alguna foto para que sus clientes tengan una mejor referencia</h4>
 
-              <form class="form-horizontal style-form">
+
+
 
              
-                <div class=" add-task-row">
+               <div class="form-group"> 
 
 
+               <input type="hidden" name="id_parqueo" id="id_parqueo" value="<?php echo $id_parqueo; ?>">
 
-                <?php
-                  $id_parqueo_recibido= $_COOKIE["id_parqueo_registrando"];
-
-
-
-echo "<a class='btn btn-success btn-sm pull-left' href=2RegistrarHorariosInside.php?id_parqueo=$id_parqueo_recibido>Agregar Horarios</a>";
-
+                         <!--  <div class="col-lg-6">
+                              <input type="file" name="fotografia" id="exampleInputFile" class="file-pos">
+                            </div>  --> 
+                     <!--       <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 desc"> -->
 
 
- ?>
+                            <div class="project-wrapper">
+                              <div class="project">
+                                <div class="photo-wrapper">
+                                  <div class="photo">
+                                        <img id=user-photo class="img-responsive" src="img/portfolio/Portrait_Placeholder.png" alt="">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
 
-                </div>
+                            <button type="button" class="btn btn-success" id="btn-foto" >Subir foto</button>
+
+                            </div>
+
+                            
+    
+
+
+        <div class="showback">
+
             
 
-            
+<button class="btn btn-primary btn-lg btn-block" type="button" onclick="retornar()"> 
+  Registrar Parqueo</button>
+</div>
 
-               
 
 
-               </form>
-        
 
            
-              </div>
-            </section>
+              </form>
 
-
-
-        
+    
+            
+       
+            </div>
+            <!-- /form-panel -->
           </div>
-          <!-- /col-md-12-->
+          <!-- /col-lg-12 -->
+          <!-- CUSTOM TOGGLES -->
+          
         </div>
         <!-- /row -->
-
-
-
-        
-        
-
-  
-
-
-        
-
-     
-
-
-
-
-
-
-
-
-
-
-
-       
       </section>
       <!-- /wrapper -->
     </section>
@@ -299,18 +263,50 @@ echo "<a class='btn btn-success btn-sm pull-left' href=2RegistrarHorariosInside.
   <!--common script for all pages-->
   <script src="lib/common-scripts.js"></script>
   <!--script for this page-->
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-  <script src="lib/tasks.js" type="text/javascript"></script>
-  <script>
-    jQuery(document).ready(function() {
-      TaskList.initTaskWidget();
-    });
+  <script src="lib/jquery-ui-1.9.2.custom.min.js"></script>
+  <!--custom switch-->
+  <script src="lib/bootstrap-switch.js"></script>
+  <!--custom tagsinput-->
+  <script src="lib/jquery.tagsinput.js"></script>
+  <!--custom checkbox & radio-->
+  <script type="text/javascript" src="lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+  <script type="text/javascript" src="lib/bootstrap-daterangepicker/date.js"></script>
+  <script type="text/javascript" src="lib/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <script type="text/javascript" src="lib/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+  <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+  <script src="js/servicio-imagen.js"></script>
+  <script src="lib/form-component.js"></script>
+  
+  <script type="text/javascript">
 
-    $(function() {
-      $("#sortable").sortable();
-      $("#sortable").disableSelection();
-    });
-  </script>
+
+   
+
+function retornar() {
+
+
+  var id_parqueo = document.getElementById("id_parqueo");
+
+  const foto= document.querySelector('#user-photo');
+
+
+  var linkimagen= foto.src;
+
+
+  response="formularios/detalles_crear.php?id_parqueo="+id_parqueo.value+"&fotografia="+linkimagen;
+
+//response="formularios/detalles.php?imagen="+"+linkimagen;
+window.location.href = response;
+
+}
+
+
+
+
+</script>
+
+
+
 
 </body>
 

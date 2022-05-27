@@ -1,4 +1,5 @@
 
+
 <?php
 
 
@@ -11,8 +12,23 @@ if (!$conn){
 }
 
 
+if(!isset($_COOKIE["id_parqueo"])){
+
+   $id_parqueo='N';
+
+}
+
+else{
+
+  $id_parqueo= $_COOKIE["id_parqueo"];
+
+
+}
+
+
+
 if(!isset($_COOKIE["id_usuario"])){
-  header("Location: login.html");
+  header("Location: login.php");
 
 }
 
@@ -23,6 +39,7 @@ else{
 
 }  
 ?>
+
 
 
 <!DOCTYPE html>
@@ -137,137 +154,49 @@ background: #fff;
         
         ?>
 
-        <aside>
-            <div id="sidebar" class="nav-collapse ">
-              <!-- sidebar menu start-->
-              <ul class="sidebar-menu" id="nav-accordion">
-                <p class="centered"><img src="img/ui-user.jpg" class="img-circle" width="80"></a></p>
-                <h5 class="centered">
+<aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" id="nav-accordion">
+          <p class="centered"><img src="img/park_icon2.jpg" class="img-circle" width="80"></a></p>
+          <h5 class="centered">
+        
           
-            
-          <?php
-                echo $nombrecompleto;
+    <?php
+          if(strlen($id_parqueo) >1)
+          {
+            echo 'Parqueo la sexta'; //TODO: modificar el nombre del parqueo
+          }
+          else{
+            echo 'Parece que áun no has registrado todos los detalles de tu parqueo, hazlo para poder ver todas nuestras opciones';
+
+          }
+     
+
+          ?>
+        
+        </h5> 
+        
       
-                ?>
-              
-              </h5>
-  
-              <li class="mt">
-            <a href="index.php">
-              <i class="fa fa-dashboard"></i>
-              <span>Dashboard</span>
-              </a>
-          </li>
+        <li class="mt">
+<a class="active" >
+  <i class="fa fa-columns"></i>
+  <span>Registrar mi parqueo</span>
+  </a>
 
-          <li class="mt">
-            <a href="opcione.php">
-              <i class="fa fa-home"></i>
-              <span>Menú Principal</span>
-              </a>
-          </li>
+</li>
 
-          <li class="mt">
-            <a href="micuenta.php">
-              <i class="fa fa-desktop"></i>
-              <span>Mi cuenta</span>
-              </a>
-        
-          </li>
-          <li class="mt">
-            <a href="MisParqueos.php">
-              <i class="fa fa-truck"></i>
-              <span>Mis parqueos</span>
-              </a>
-          
-          </li>
-          <li class="mt">
-            <a class="active" href="RegistrarParqueo1.php">
-              <i class="fa fa-book"></i>
-              <span>Agregar parqueos</span>
-              </a>
-         
-          </li>
-          
-          <li class="mt">
-            <a href="escanearQR.php">
-              <i class="fa fa-qrcode"></i>
-              <span>Escanear QR de usuario</span>
-              </a>
-         
-          </li>
-        
-                   </ul>
-              <!-- sidebar menu end-->
-            </div>
-          </aside>
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
 
 
           <?php
 
-
- 
-$key = '';
-$pattern = '1234567890ABCDEFGH123456789';
-$max = strlen($pattern)-1;
-for($i=0;$i < 6;$i++){
-     $key .= $pattern[mt_rand(0,$max)]; 
-    } 
+$id_parqueo=$_GET["id_parqueo"];
 
 
-  $id=$key; 
-  $id_duenio=   $_COOKIE["id_usuario"];
- 
- 
-  $nombre= $_GET['nombre_empresa'];
-  $direccion= $_GET['direccion'];
-  $capacidad_maxima = $_GET['capacidad_maxima'];
-
-
-  $media_hora = $_GET['media_hora'];
-
-  $hora = $_GET['hora'];
-
-  $dia = $_GET['dia'];
-
-  $mes = $_GET['mes'];
-
-
-  $lunes_entrada=$_GET['lunes_apertura'];;
-
-  $lunes_salida=$_GET['lunes_cierre'];;
-
-  $domingo_entrada=$_GET['domingo_apertura'];;
-
-  $domingo_salida=$_GET['domingo_cierre'];; 
-
-  $detalles='Pendiente';
-  $imagenes='Pendiente';
-  $latitude=0;
-  $longitude=0;
-
-  $martes_entrada=$_GET['martes_apertura'];;
-  $martes_salida=$_GET['martes_cierre'];;
-  $miercoles_entrada=$_GET['miercoles_apertura'];;
-  $miercoles_salida=$_GET['miercoles_cierre'];;
-  $jueves_entrada=$_GET['jueves_apertura'];;
-  $jueves_salida=$_GET['jueves_cierre'];;
-  $viernes_entrada=$_GET['viernes_apertura'];;
-  $viernes_salida=$_GET['viernes_cierre'];;
-  $sabado_entrada=$_GET['sabado_apertura'];;
-  $sabado_salida=$_GET['sabado_cierre'];;
-
-  $control_pagos='Pendiente';
-
-
-  // base de datols
-          
-$query = "Insert into parqueo values ('$id','$id_duenio','$nombre','$direccion','$capacidad_maxima','$media_hora','$hora','$dia','$mes','$lunes_entrada','$lunes_salida','$domingo_entrada','$domingo_salida','$detalles','$imagenes','$latitude','$longitude','$martes_entrada','$martes_salida','$miercoles_entrada','$miercoles_salida','$jueves_entrada','$jueves_salida','$viernes_entrada','$viernes_salida','$sabado_entrada','$sabado_salida','$control_pagos')";
-$result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
-$tuplasaafectadas = pg_affected_rows($result);
-pg_free_result($result);
-
-          
-          
           
           
           ?>
@@ -280,7 +209,7 @@ pg_free_result($result);
     <!--main content start-->
     <section id="main-content">
       <section class="wrapper">
-        <h3><i class="fa fa-angle-right"></i> Coordenadas de su parqueo (puede seleccionar en el mapa o introducir manualmente)  </h3>
+        <h3><i class="fa fa-angle-right"></i> Agrega las coordenadas de tu parqueo (puedes seleccionar en el mapa o introducir manualmente)  </h3>
         <!-- BASIC FORM ELELEMNTS -->
 
 
@@ -289,7 +218,7 @@ pg_free_result($result);
         <!-- /row -->
         <!-- INPUT MESSAGES -->
          
-        <form action="RegistrarParqueo21.php" method="get">
+        <form action="formularios/editarubicacion_crear.php" method="get">
 
 
         <div class="row mt">
@@ -333,14 +262,11 @@ pg_free_result($result);
           
                         
            
-               <!-- <div class="checkbox">
+        <div class="checkbox">
                 
-                <input type="hidden" name="id_parqueo" value="/*<?php /*echo $key; */?>*/">
-                <label>
-                    <input type="checkbox" name="banios" value="1">
-                     .        
-                    </label>
-                </div> -->
+                <input type="hidden" name="id_parqueo" value="<?php echo $id_parqueo; ?>">
+         
+                </div> 
 
 
 
@@ -348,18 +274,31 @@ pg_free_result($result);
 
                 <h4 class="mb"><i class="fa fa-angle-right"></i> Ubicación Geógrafica </h4>
                 <div class="form-group">
-                  <label class="col-sm-2 col-sm-2 control-label">Latitud:</label>
-                  <div class="col-sm-1">
-                  <input type="text" name="latitude" id="latitude" class="form-control">
+                  <label class="col-sm-3 col-sm-3 control-label">Latitud:</label>
+                  <div class="col-sm-3">
+                  <input type="text" name="latitude" id="latitude" class="form-control" >
                   </div>
                 </div>
 
 
                 <div class="form-group">
-                  <label class="col-sm-2 col-sm-2 control-label">                Longitud:</label>
-                  <div class="col-sm-1"> 
-                  <input type="text" name="longitude" id="longitude" class="form-control">
+                  <label class="col-sm-3 col-sm-3 control-label">                Longitud:</label>
+                  <div class="col-sm-3"> 
+                  <input type="text" name="longitude" id="longitude" class="form-control" >
                   </div>
+
+
+
+                  <div class="form-group">
+                 
+<button type="submit" class="btn btn-success">Registrar Ubicación</button>
+
+
+
+
+
+
+
 
 
 
@@ -368,13 +307,7 @@ pg_free_result($result);
 
                 
 
-         
-              <div class="checkbox">
-                
-              <input type="hidden" name="id_parqueo" value="<?php echo $key; ?>">
-              
-              </div>
-
+     
    
 
               
@@ -388,20 +321,25 @@ pg_free_result($result);
 
               <div id="map"></div>
 
-              <pre id="info"></pre> 
+             <pre id="info"></pre> 
+
+
+              <div class=" add-task-row">
+
+
+
+          
+
+
+
+
+                </div>
 
            
 
 
               
 
-              <div class="showback">
-
-            
-
-                    <button class="btn btn-primary btn-lg btn-block" type="submit"> 
-                      Siguiente</button>
-                  </div>
 
 
 
@@ -457,26 +395,17 @@ pg_free_result($result);
   <script src="lib/form-component.js"></script>
 
   <script>
-
-    var longitude=-90.51053;
+     longitude=-90.51053;
     
-    var latitude=14.63406
-
-if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else { 
-
-    latitude = position.coords.latitude;
-    longitude =  position.coords.longitude; 
-  }
+    latitude=14.63406;
 
 
-  mapboxgl.accessToken = 'pk.eyJ1Ijoiam9yZ2VwcmV6IiwiYSI6ImNrdmNwM3JybzBjYXoyb21sNHByYXRieTcifQ.bH-U8gRuDNY_JAAMMCr19A';
+mapboxgl.accessToken = 'pk.eyJ1Ijoiam9yZ2VwcmV6IiwiYSI6ImNrdmNwM3JybzBjYXoyb21sNHByYXRieTcifQ.bH-U8gRuDNY_JAAMMCr19A';
 const map = new mapboxgl.Map({
 container: 'map', // container id
 style: 'mapbox://styles/mapbox/streets-v11',
 center: [longitude, latitude], // starting position , longitude, latitude
-zoom: 14//9 // starting zoom
+zoom: 12//9 // starting zoom
 });
  
 map.on('style.load', function() {
@@ -549,7 +478,12 @@ inputF2.setAttribute('value', longitud_string);
 
 
 
-</script>
+  </script>
+
+
+
+
+
 
 </body>
 

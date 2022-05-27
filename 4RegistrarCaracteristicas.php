@@ -16,6 +16,7 @@ if (!$conn){
 if(!isset($_COOKIE["id_parqueo"])){
 
    $id_parqueo='N';
+   $id_pagina_side_no='1';
 
 }
 
@@ -145,6 +146,7 @@ else{
               
           
           
+            
               <aside>
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
@@ -168,9 +170,7 @@ else{
         
         </h5> 
         
-        
-
-<li class="mt">
+        <li class="mt">
 <a class="active" >
   <i class="fa fa-columns"></i>
   <span>Registrar mi parqueo</span>
@@ -179,16 +179,13 @@ else{
 </li>
 
 
-        
-
 
         </ul>
         <!-- sidebar menu end-->
       </div>
     </aside>
-
               
-
+   
     <!--sidebar end-->
     <!-- **********************************************************************************************************************************************************
         MAIN CONTENT
@@ -198,148 +195,74 @@ else{
       <section class="wrapper">
       <h3><i class="fa fa-columns"></i> Agregar la información de tu parqueo </h3>
   
-        <!-- COMPLEX TO DO LIST -->
-        <div class="row mt">
+
+        <div class="showback">
+              <h4><i class="fa fa-angle-right"></i> 4.Presiona el botón "Agregar carácteristicas del parqueo"</h4>
+              <div class="progress progress-striped active">
+                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                  <span class="sr-only">60% Complete</span>
+                </div>
+              </div>
+            </div>
+       
+
+
+   
+
+
+        
+
+  
+
+          <!-- COMPLEX TO DO LIST -->
+          <div class="row mt mb">
           <div class="col-md-12">
             <section class="task-panel tasks-widget">
               <div class="panel-heading">
                 <div class="pull-left">
-                  <h4><i class="fa fa-tasks"></i> Datos Principales y Tárifas (Sino ofrece una tarifa dejar en 0). Las tarifas son en Quetzales (Q)</h4>
+                  <h4><i class="fa fa-tasks"></i> Características del parqueo</h4>
                 </div>
                 <br>
               </div>
               <div class="panel-body">
-
-              <form class="form-horizontal style-form" method="get" action="formularios/crearprincipales.php">
-
-                
-                <div class="form-group">
-                  <label class="col-sm-2 col-sm-2 control-label"> Nombre del Parqueo: 
-                </label>
-                  <div class="col-sm-8">
-                    <input type="text" name="nombre_empresa" placeholder="Introduzca el nombre oficial registrado" value ="<?php echo $nombreparqueo;?>" class="form-control" required> 
-
-                    <input type="hidden" name="id_parqueo" value=<?php echo $id_parqueo;?>>
-
-
-
-               <!--     <p class="form-control-static"> <b> <?php /*echo $nombreparqueo;*/?> </b> </p>
-               -->
-                  </div>
-                </div>
-
-
-                <div class="form-group">
-                  <label class="col-sm-2 col-sm-2 control-label">Dirección:</label>
-                  <div class="col-sm-8">   
-                  <input type="text" name="direccion" placeholder="Introduzca la dirección donde se ubica el parqueo"  value ="<?php echo $direccion;?>" class="form-control" required>
-
-                  </div>
-                </div>
-
-
-                <div class="form-group">
-                  <label class="col-sm-2 col-sm-2 control-label">Capacidad Máxima:</label>
-                  <div class="col-sm-1">
-                  
-                  <input type="number" name="capacidad_maxima" class="form-control" value=0 required>
-
-                  </div>
-
-
-
-                  <label class="col-sm-1 col-sm-1 control-label">1/2 hora:</label>
-                  <div class="col-sm-1">
-                  
-
-                  <input type="number" class="form-control" name="media_hora" value=0 required>
-
-                  </div>
-               
-
-                
-                  <label class="col-sm-1 col-sm-1 control-label">Hora:</label>
-                  <div class="col-sm-1">
-                  <input type="number" class="form-control" name="hora" value=0 required>
-
-                  
-                </div>
-
-                
-                  <label class="col-sm-1 col-sm-1 control-label">Día:</label>
-                  <div class="col-sm-1">
-
-                  <input type='number' class='form-control' name='dia' value= 0 required>
-
-
                 
 
-                </div>
-              
-
-                
-            
-                  <label class="col-sm-1 col-sm-1 control-label">Mes:</label>
-                  <div class="col-sm-1">
-
-                  <input type='number' class='form-control' name='mes' value=0 required>
-
-
-              
-
-                  </div>
-                </div>
-
-        
 
                 <div class=" add-task-row">
 
+                <?php
+
+$id_parqueo_recibido= $_COOKIE["id_parqueo_registrando"];
+
+
+echo "<a class='btn btn-success btn-sm pull-left' href=4RegistrarCaracteristicasInside.php?id_parqueo=$id_parqueo_recibido>Agregar Carácteristicas del parqueo</a>";
 
 
 
-                  <button type="submit" class="btn btn-success">Guardar Cambios</button>
-
-
-
-
-
-
-
-
-
-
-                </div>
-
+ ?> 
 
               </div>
 
-              </form>
 
+           
+              </div>
             </section>
-
-
-
-        
           </div>
-          <!-- /col-md-12-->
+          <!--/col-md-12 -->
         </div>
         <!-- /row -->
 
 
 
-        
 
-
-
-
-
-
-
-
+     
        
       </section>
       <!-- /wrapper -->
     </section>
+    <!-- /MAIN CONTENT -->
+    <!--main content end-->
+    <!--footer start-->
    
     <!--footer end-->
   </section>

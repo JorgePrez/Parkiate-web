@@ -26,8 +26,7 @@ else{
 
 if(!isset($_COOKIE["id_parqueo"])){
 
-   $id_parqueo='N';
-   $id_pagina_side_no='1';
+   //$id_pagina_side_no='1';
    header("Location: Registrar_parqueo_index.php");
 
 

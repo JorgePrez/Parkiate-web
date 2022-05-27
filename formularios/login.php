@@ -55,8 +55,27 @@ echo "Contraseñia coincide";
 setcookie("id_usuario",$id_usuario,time()+(60*60*24*31),"/");
 
 
+
+
+
+
 if(strlen($id_parqueo) >1){
+  $query2 = "SELECT id_firebase from parqueo WHERE id_parqueo= '$id_parqueo'";
+$result2 = pg_query($conn, $query2) or die('ERROR AL OBTENER DATOS: ' . pg_last_error());
+
+$id_firebase="";
+
+while ($row = pg_fetch_row($result2)) {
+  $id_firebase= $row[0]; 
+ }
+
+
+if(!(is_null($id_firebase))){
   setcookie("id_parqueo",$id_parqueo,time()+(60*60*24*31),"/");
+
+}
+
+
 
 }
 else{
