@@ -62,6 +62,7 @@ include('dbcon.php');
 
    $control = $_GET['optionsRadios'];
 
+   $reservas = $_GET['optionsRadiosD'];
 
 
 
@@ -91,7 +92,7 @@ include('dbcon.php');
 
 
 
-  $query= "UPDATE parqueo SET detalles='$detalles', control_pagos='$control'  WHERE id_parqueo = '$id_parqueo'";
+ $query= "UPDATE parqueo SET detalles='$detalles', control_pagos='$control',reservas='$reservas'   WHERE id_parqueo = '$id_parqueo'";
 
   $result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
   $tuplasaafectadas = pg_affected_rows($result);
@@ -137,6 +138,8 @@ $query = "select * from parqueo where id_parqueo='$id_parqueo'";
    $sabado_salida='';
    $control_pagos='';
    $id_firebase='';
+   $reservas='';
+
 
 
 
@@ -172,6 +175,8 @@ $query = "select * from parqueo where id_parqueo='$id_parqueo'";
         $sabado_salida=$row[26];
         $control_pagos=$row[27];
         $id_firebase=$row[28];
+        $reservas = $row[29];
+
 
     
    }
@@ -208,7 +213,8 @@ $postData = ['id_parqueo'=>$idparqueo1,
 'viernes_salida' =>$viernes_salida,
 'sabado_entrada' => $sabado_entrada,
 'sabado_salida' =>$sabado_salida,
-'control_pagos' => $control_pagos 
+'control_pagos' => $control_pagos,
+'reservas' => $reservas 
 ];
 
 
@@ -220,7 +226,7 @@ $ref='/parqueos/'.$id_firebase;
 
  
 
- $url="Location: ./../MisParqueos.php";
+ $url="Location: ./../Detalles_Parqueo.php";
  header($url);
 
 

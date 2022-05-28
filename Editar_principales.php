@@ -230,7 +230,9 @@ $viernes_entrada='';
 $viernes_salida='';
 $sabado_entrada='';
 $sabado_salida='';
+$control_pagos='';
 $id_firebase='';
+$reservas='';
            
 
 
@@ -262,8 +264,9 @@ while ($row = pg_fetch_row($result)) {
         $viernes_salida=$row[24];
         $sabado_entrada=$row[25];
         $sabado_salida=$row[26];
+        $control_pagos= $row[27];
         $id_firebase=$row[28];
-
+        $reservas = $row[29];
 }
 
 ?>
@@ -401,7 +404,7 @@ echo "<input type='number' class='form-control' name='mes' value= $tarifa4>";
 
 
 
-                  <a class="btn btn-danger pull-right" href="MisParqueos.php">Cancelar</a>
+                  <a class="btn btn-danger pull-right" href="Detalles_Parqueo.php">Cancelar</a>
 
 
 

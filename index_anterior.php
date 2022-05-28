@@ -90,7 +90,7 @@ include 'logout.php';
 
         <?php
               
-              $query = "select nombre_empresa from parqueo where id_parqueo='$id_parqueo'";
+              $query = "select nombre from duenio where id_duenio='$id_usuario'";
               //                       $query = "select * from prospectos_template";
               
               $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
@@ -103,6 +103,21 @@ include 'logout.php';
 
               //ver si tiene asociado parqueo
 
+
+  $query = "select * from duenio,parqueo where duenio.id_duenio=parqueo.id_duenio AND duenio.id_duenio='$id_usuario'";
+$result = pg_query($conn, $query) or die('ERROR AL OBTENER DATOS: ' . pg_last_error());
+$tuplasaafectadas = pg_affected_rows($result);
+
+$valorlisttile=0;
+
+
+
+if($tuplasaafectadas==1){
+
+ $valorlisttile=1;
+  
+  
+  }
 
 
               
@@ -118,71 +133,34 @@ include 'logout.php';
         
           
     <?php
+          if(strlen($id_parqueo) >1)
+          {
+            echo 'Parqueo la sexta';
+          }
+          else{
+            echo 'Parece que no áun no has todos los detalles agregado tu parqueo, hazlo para poder ver todas nuestras opciones';
+
+          }
      
-      echo $nombrecompleto;
 
           ?>
         
         </h5> 
         
-     
+        <?php 
 
-<li class="mt">
-<a class="active" href="index.php">
-  <i class="fa fa-dashboard"></i>
-  <span>Dashboard</span>
-  </a>
-</li>
+if(strlen($id_parqueo) >1)
+{
+  include 'normal_sidebar.php';
+}
+else{
 
-<li class="mt">
-<a href="micuenta.php">
-  <i class="fa fa-desktop"></i>
-  <span>Mi cuenta</span>
-  </a>
-
-</li>
-
-<li class="mt">
-<a href="Detalles_Parqueo.php">
-  <i class="fa fa-edit"></i>
-  <span>Editar datos de parqueo</span>
-  </a>
-</li>
-
-<li class="mt">
-<a href="opcione.php">
-  <i class="fa fa-th-large"></i>
-  <span>Slots(libres/ocupados)</span>
-  </a>
-</li>
+include 'side_bar_nopark_controller.php';
+}
+         
 
 
-<li class="mt">
-<a href="MisParqueos.php">
-  <i class="fa fa-camera"></i>
-  <span>Flujo de autos(placas)</span>
-  </a>
-
-</li>
-<li class="mt">
-<a href="RegistrarParqueo1.php">
-  <i class="fa fa-external-link"></i>
-  <span>Registro de Servicios(App)</span>
-  </a>
-
-</li>
-
-<li class="mt">
-<a href="RegistrarParqueo1.php">
-  <i class="fa fa-book"></i>
-  <span>Reservas</span>
-  </a>
-
-</li>
-
-
-
-    
+         ?>
 
 
         </ul>

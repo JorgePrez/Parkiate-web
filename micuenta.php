@@ -155,6 +155,27 @@ if($tuplasaafectadas==1){
               
               ?>
               
+  
+              <?php
+              
+              $query = "select nombre_empresa from parqueo where id_parqueo='$id_parqueo'";
+              //                       $query = "select * from prospectos_template";
+              
+              $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
+              $nombrecompleto = '';
+              
+              
+              while ($row = pg_fetch_row($result)) {
+              $nombrecompleto= $row[0];
+              }
+
+              //ver si tiene asociado parqueo
+
+
+
+              
+              ?>
+              
     <!--sidebar start-->
     <aside>
       <div id="sidebar" class="nav-collapse ">
@@ -165,34 +186,71 @@ if($tuplasaafectadas==1){
         
           
     <?php
-          if(strlen($id_parqueo) >1)
-          {
-            echo 'Parqueo la sexta';
-          }
-          else{
-            echo 'Parece que áun no has registrado todos los detalles de tu parqueo, hazlo para poder ver todas nuestras opciones';
-
-          }
      
+      echo $nombrecompleto;
 
           ?>
         
         </h5> 
         
-        <?php 
+     
 
-if(strlen($id_parqueo) >1)
-{
-  include 'normal_sidebar.php';
-}
-else{
+<li class="mt">
+<a href="index.php">
+  <i class="fa fa-dashboard"></i>
+  <span>Dashboard</span>
+  </a>
+</li>
 
-include 'side_bar_nopark_controller.php';
-}
-         
+<li class="mt">
+<a class="active" href="micuenta.php">
+  <i class="fa fa-desktop"></i>
+  <span>Mi cuenta</span>
+  </a>
+
+</li>
+
+<li class="mt">
+<a href="Detalles_Parqueo.php">
+  <i class="fa fa-edit"></i>
+  <span>Editar datos de parqueo</span>
+  </a>
+</li>
+
+<li class="mt">
+<a href="opcione.php">
+  <i class="fa fa-th-large"></i>
+  <span>Slots(libres/ocupados)</span>
+  </a>
+</li>
 
 
-         ?>
+<li class="mt">
+<a href="MisParqueos.php">
+  <i class="fa fa-camera"></i>
+  <span>Flujo de autos(placas)</span>
+  </a>
+
+</li>
+<li class="mt">
+<a href="RegistrarParqueo1.php">
+  <i class="fa fa-external-link"></i>
+  <span>Registro de Servicios(App)</span>
+  </a>
+
+</li>
+
+<li class="mt">
+<a href="RegistrarParqueo1.php">
+  <i class="fa fa-book"></i>
+  <span>Reservas</span>
+  </a>
+
+</li>
+
+
+
+    
 
 
         </ul>

@@ -351,7 +351,7 @@ while ($row = pg_fetch_row($result)) {
 
                     $martes_e = substr($martes_entrada, 0, -3);  // devuelve "abcde"
 
-                    $martes_ex = substr($martes_entrada, 0, -3);  // devuelve "abcde"
+                    $martes_ex = substr($martes_salida, 0, -3);  // devuelve "abcde"
 
   
   

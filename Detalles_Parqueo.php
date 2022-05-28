@@ -12,7 +12,7 @@ if (!$conn){
 
 
 if(!isset($_COOKIE["id_usuario"])){
-  header("Location: login.html");
+  header("Location: login.php");
 
 }
 
@@ -22,8 +22,24 @@ else{
   $id_usuario= $_COOKIE["id_usuario"];
 
 }  
-?>
 
+
+if(!isset($_COOKIE["id_parqueo"])){
+
+   $id_parqueo='N';
+   $id_pagina_side_no='2';
+
+
+}
+
+else{
+
+  $id_parqueo= $_COOKIE["id_parqueo"];
+
+
+}
+
+?>
 
 
 <!DOCTYPE html>
@@ -112,7 +128,7 @@ else{
     <!--sidebar start-->
     <?php
               
-              $query = "select nombre from duenio where id_duenio='$id_usuario'";
+              $query = "select nombre_empresa from parqueo where id_parqueo='$id_parqueo'";
               //                       $query = "select * from prospectos_template";
               
               $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
@@ -122,79 +138,101 @@ else{
               while ($row = pg_fetch_row($result)) {
               $nombrecompleto= $row[0];
               }
+
+              //ver si tiene asociado parqueo
+
+
+
               
               ?>
-              
           
           
-              <aside>
-                <div id="sidebar" class="nav-collapse ">
-                  <!-- sidebar menu start-->
-                  <ul class="sidebar-menu" id="nav-accordion">
-                    <p class="centered"><img src="img/ui-user.jpg" class="img-circle" width="80"></a></p>
-                    <h5 class="centered">
-                  
-                    
-                  <?php
-                        echo $nombrecompleto;
-              
-                        ?>
-                      
-                      </h5>
-                      
-                      <li class="mt">
-                      <a href="index.php">
-                        <i class="fa fa-dashboard"></i>
-                        <span>Dashboard</span>
-                        </a>
-                    </li>
+               <!--sidebar start-->
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" id="nav-accordion">
+          <p class="centered"><img src="img/park_icon2.jpg" class="img-circle" width="80"></a></p>
+          <h5 class="centered">
+        
           
-                    <li class="mt">
-                      <a href="opcione.php">
-                        <i class="fa fa-home"></i>
-                        <span>Menú Principal</span>
-                        </a>
-                    </li>
-          
-                    <li class="mt">
-                      <a href="micuenta.php">
-                        <i class="fa fa-desktop"></i>
-                        <span>Mi cuenta</span>
-                        </a>
-                  
-                    </li>
-                    <li class="mt">
-                      <a href="MisParqueos.php">
-                        <i class="fa fa-truck"></i>
-                        <span>Mis parqueos</span>
-                        </a>
-                    
-                    </li>
-                    <li class="mt">
-                      <a href="RegistrarParqueo1.php">
-                        <i class="fa fa-book"></i>
-                        <span>Agregar parqueos</span>
-                        </a>
-                   
-                    </li>
-                    
-                    <li class="mt">
-                      <a  href="escanearQR.php">
-                        <i class="fa fa-qrcode"></i>
-                        <span>Escanear QR de usuario</span>
-                        </a>
-                   
-                    </li>
-            
-                       </ul>
-                  <!-- sidebar menu end-->
-                </div>
-              </aside>
+    <?php
+     
+      echo $nombrecompleto;
 
+          ?>
+        
+        </h5> 
+        
+     
+
+<li class="mt">
+<a href="index.php">
+  <i class="fa fa-dashboard"></i>
+  <span>Dashboard</span>
+  </a>
+</li>
+
+<li class="mt">
+<a href="micuenta.php">
+  <i class="fa fa-desktop"></i>
+  <span>Mi cuenta</span>
+  </a>
+
+</li>
+
+<li class="mt">
+<a class="active" href="Detalles_Parqueo.php">
+  <i class="fa fa-edit"></i>
+  <span>Editar datos de parqueo</span>
+  </a>
+</li>
+
+<li class="mt">
+<a href="opcione.php">
+  <i class="fa fa-th-large"></i>
+  <span>Slots(libres/ocupados)</span>
+  </a>
+</li>
+
+
+<li class="mt">
+<a href="MisParqueos.php">
+  <i class="fa fa-camera"></i>
+  <span>Flujo de autos(placas)</span>
+  </a>
+
+</li>
+<li class="mt">
+<a href="RegistrarParqueo1.php">
+  <i class="fa fa-external-link"></i>
+  <span>Registro de Servicios(App)</span>
+  </a>
+
+</li>
+
+<li class="mt">
+<a href="RegistrarParqueo1.php">
+  <i class="fa fa-book"></i>
+  <span>Reservas</span>
+  </a>
+
+</li>
+
+
+
+    
+
+
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+    <!--sidebar end-->
               
     <?php
 
-$id_parqueo=$_GET["id_parqueo"];
+//$id_parqueo=$_GET["id_parqueo"];
 
 
 
@@ -230,6 +268,9 @@ $viernes_entrada='';
 $viernes_salida='';
 $sabado_entrada='';
 $sabado_salida='';
+$control_pagos='';
+$id_firebase='';
+$reservas='';
            
 
 
@@ -261,6 +302,9 @@ while ($row = pg_fetch_row($result)) {
         $viernes_salida=$row[24];
         $sabado_entrada=$row[25];
         $sabado_salida=$row[26];
+        $control_pagos= $row[27];
+        $id_firebase=$row[28];
+        $reservas = $row[29];
 
 }
 
@@ -862,6 +906,125 @@ echo '<li class="list-primary"><i class=" fa fa-lightbulb-o"></i><div class="tas
                       
 
                           }
+                          ?>
+
+                          <h4 class="mb"><i class="fa fa-clock-o"></i> ¿Desea que la app le muestre al usuario el precio que debe pagar? </h4>
+          
+
+                          <?php
+          
+          
+          
+          if (str_contains($control_pagos, 'S')) {
+          
+          
+            echo '
+          
+            <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios1" value="S" checked disabled>
+              Si, deseo que la app se encargue de calcular el tiempo y le muestre al usuario cuando debe pagar. (DEBERÁ DESCARGAR LA APLICACIÓN MÓVIL para tener esta funcionalidad)
+              </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios2" value="N" disabled>
+              No, usaré mi propio sistema del parqueo para mostrarle al usuario cuanto debe pagar.
+              </label>
+          </div>
+          <hr>
+            
+            
+            
+            ';
+          
+          
+          }
+          
+          else {
+          
+            echo '
+          
+            <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios1" value="S" disabled>
+              Si, deseo que la app se encargue de calcular el tiempo y le muestre al usuario cuando debe pagar. (DEBERÁ DESCARGAR LA APLICACIÓN MÓVIL o usar un lector de QR para PC)
+              </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadios" id="optionsRadios2" value="N" checked disabled>
+              No, usaré mi propio sistema del parqueo para mostrarle al usuario cuanto debe pagar.
+              </label>
+          </div>
+          <hr>
+            
+            ';
+          
+          
+          
+          
+          }
+          ?>
+          <h4 class="mb"><i class="fa fa-ticket"></i> ¿Su parqueo tendrá habilitada la opción de reservar parqueos?  </h4>
+          <?php
+          //////
+          
+          if (str_contains($reservas, 'S')) {
+          
+          
+            echo '
+          
+            <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadiosD" id="optionsRadiosD1" value="S" checked disabled>
+              Si, deseo habilitar la opción de reservar parqueos
+              </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadiosD" id="optionsRadiosD2" value="N" disabled>
+              No, por el momento deseo que la opción de reservas este deshabilitada
+              </label>
+          </div>
+            
+            
+            
+            ';
+          
+          
+          }
+          
+          else {
+          
+            echo '
+          
+            <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadiosD" id="optionsRadiosD1" value="S" disabled>
+              Si, deseo que la app se encargue de calcular el tiempo y le muestre al usuario cuando debe pagar. (DEBERÁ DESCARGAR LA APLICACIÓN MÓVIL para esta funcionalidad)
+              </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="optionsRadiosD" id="optionsRadiosD2" value="N" checked disabled>
+              No, usaré mi propio sistema del parqueo para mostrarle al usuario cuanto debe pagar.
+              </label>
+          </div>
+            
+            ';
+          
+          
+          
+          
+          }
+          
+                   
+          
+          
+                    
+          
+          
                             
                         
   ?>

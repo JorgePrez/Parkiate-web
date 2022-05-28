@@ -820,7 +820,7 @@ else {
   <div class="radio">
   <label>
     <input type="radio" name="optionsRadios" id="optionsRadios1" value="S">
-    Si, deseo que la app se encargue de calcular el tiempo y le muestre al usuario cuando debe pagar. (DEBERÁ DESCARGAR LA APLICACIÓN MÓVIL o usar un lector de QR para PC)
+    Si, deseo que la app se encargue de calcular el tiempo y le muestre al usuario cuando debe pagar. (DEBERÁ DESCARGAR LA APLICACIÓN MÓVIL (DEBERÁ DESCARGAR LA APLICACIÓN MÓVIL para esta funcionalidad)
     </label>
 </div>
 <div class="radio">

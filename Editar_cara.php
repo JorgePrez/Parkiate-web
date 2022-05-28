@@ -198,13 +198,14 @@ $id_parqueo=$_GET["id_parqueo"];
 
 
 
-$query = "select detalles,control_pagos from parqueo where id_parqueo='$id_parqueo'";
+$query = "select detalles,control_pagos,reservas from parqueo where id_parqueo='$id_parqueo'";
 
 
 
 $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error()); 
 $detalles='';
 $control_pagos='';
+$reservas='';
 
            
 
@@ -213,8 +214,8 @@ while ($row = pg_fetch_row($result)) {
 
         $detalles=$row[0];
         $control_pagos=$row[1];
-    
-
+        $reservas=$row[2];
+  
 }
 
 ?>
@@ -843,7 +844,7 @@ if (str_contains($control_pagos, 'S')) {
   <div class="radio">
   <label>
     <input type="radio" name="optionsRadios" id="optionsRadios1" value="S" checked>
-    Si, deseo que la app se encargue de calcular el tiempo y le muestre al usuario cuando debe pagar. (DEBERÁ DESCARGAR LA APLICACIÓN MÓVIL o usar un lector de QR para PC)
+    Si, deseo que la app se encargue de calcular el tiempo y le muestre al usuario cuando debe pagar. (DEBERÁ DESCARGAR LA APLICACIÓN MÓVIL para tener esta funcionalidad)
     </label>
 </div>
 <div class="radio">
@@ -874,6 +875,61 @@ else {
 <div class="radio">
   <label>
     <input type="radio" name="optionsRadios" id="optionsRadios2" value="N" checked>
+    No, usaré mi propio sistema del parqueo para mostrarle al usuario cuanto debe pagar.
+    </label>
+</div>
+<hr>
+  
+  ';
+
+
+
+
+}
+?>
+<h4 class="mb"><i class="fa fa-ticket"></i> ¿Su parqueo tendrá habilitada la opción de reservar parqueos?  </h4>
+<?php
+//////
+
+if (str_contains($reservas, 'S')) {
+
+
+  echo '
+
+  <div class="radio">
+  <label>
+    <input type="radio" name="optionsRadiosD" id="optionsRadiosD1" value="S" checked>
+    Si, deseo habilitar la opción de reservar parqueos
+    </label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optionsRadiosD" id="optionsRadiosD2" value="N">
+    No, por el momento deseo que la opción de reservas este deshabilitada
+    </label>
+</div>
+<hr>
+  
+  
+  
+  ';
+
+
+}
+
+else {
+
+  echo '
+
+  <div class="radio">
+  <label>
+    <input type="radio" name="optionsRadiosD" id="optionsRadiosD1" value="S">
+    Si, deseo que la app se encargue de calcular el tiempo y le muestre al usuario cuando debe pagar. (DEBERÁ DESCARGAR LA APLICACIÓN MÓVIL o usar un lector de QR para PC)
+    </label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optionsRadiosD" id="optionsRadiosD2" value="N" checked>
     No, usaré mi propio sistema del parqueo para mostrarle al usuario cuanto debe pagar.
     </label>
 </div>

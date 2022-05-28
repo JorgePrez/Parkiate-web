@@ -74,6 +74,8 @@ $query = "select * from parqueo where id_parqueo='$id_parqueo'";
    $sabado_salida='';
    $control_pagos='';
    $id_firebase='';
+   $reservas='';
+
 
 
 
@@ -109,6 +111,9 @@ $query = "select * from parqueo where id_parqueo='$id_parqueo'";
         $sabado_salida=$row[26];
         $control_pagos=$row[27];
         $id_firebase=$row[28];
+        $reservas=$row[29];
+
+        
 
     
    }
@@ -145,7 +150,9 @@ $postData = ['id_parqueo'=>$idparqueo1,
 'viernes_salida' =>$viernes_salida,
 'sabado_entrada' => $sabado_entrada,
 'sabado_salida' =>$sabado_salida,
-'control_pagos' => $control_pagos 
+'control_pagos' => $control_pagos,
+'reservas' => $reservas 
+
 ];
 
 
@@ -157,9 +164,9 @@ $ref='/parqueos/'.$id_firebase;
 
  
 
- $url="Location: ./../MisParqueos.php";
- header($url);
 
+ $url="Location: ./../Detalles_Parqueo.php";
+ header($url);
 
 
 
