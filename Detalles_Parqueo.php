@@ -139,7 +139,6 @@ else{
               $nombrecompleto= $row[0];
               }
 
-              //ver si tiene asociado parqueo
 
 
 

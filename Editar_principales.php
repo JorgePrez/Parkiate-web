@@ -12,7 +12,7 @@ if (!$conn){
 
 
 if(!isset($_COOKIE["id_usuario"])){
-  header("Location: login.html");
+  header("Location: login.php");
 
 }
 
@@ -22,8 +22,24 @@ else{
   $id_usuario= $_COOKIE["id_usuario"];
 
 }  
-?>
 
+
+if(!isset($_COOKIE["id_parqueo"])){
+
+   $id_parqueo='N';
+   $id_pagina_side_no='2';
+
+
+}
+
+else{
+
+  $id_parqueo= $_COOKIE["id_parqueo"];
+
+
+}
+
+?>
 
 
 <!DOCTYPE html>
@@ -110,9 +126,15 @@ else{
         MAIN SIDEBAR MENU
         *********************************************************************************************************************************************************** -->
     <!--sidebar start-->
+   <!--sidebar start-->
+
+              
+          
+          
+             <!--sidebar start-->
     <?php
               
-              $query = "select nombre from duenio where id_duenio='$id_usuario'";
+              $query = "select nombre_empresa from parqueo where id_parqueo='$id_parqueo'";
               //                       $query = "select * from prospectos_template";
               
               $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
@@ -122,74 +144,96 @@ else{
               while ($row = pg_fetch_row($result)) {
               $nombrecompleto= $row[0];
               }
+
+
+
+
               
               ?>
-              
           
           
-              <aside>
-                <div id="sidebar" class="nav-collapse ">
-                  <!-- sidebar menu start-->
-                  <ul class="sidebar-menu" id="nav-accordion">
-                    <p class="centered"><img src="img/ui-user.jpg" class="img-circle" width="80"></a></p>
-                    <h5 class="centered">
-                  
-                    
-                  <?php
-                        echo $nombrecompleto;
-              
-                        ?>
-                      
-                      </h5>
-                      
-                      <li class="mt">
-                      <a href="index.php">
-                        <i class="fa fa-dashboard"></i>
-                        <span>Dashboard</span>
-                        </a>
-                    </li>
+               <!--sidebar start-->
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" id="nav-accordion">
+          <p class="centered"><img src="img/park_icon2.jpg" class="img-circle" width="80"></a></p>
+          <h5 class="centered">
+        
           
-                    <li class="mt">
-                      <a href="opcione.php">
-                        <i class="fa fa-home"></i>
-                        <span>Menú Principal</span>
-                        </a>
-                    </li>
-          
-                    <li class="mt">
-                      <a href="micuenta.php">
-                        <i class="fa fa-desktop"></i>
-                        <span>Mi cuenta</span>
-                        </a>
-                  
-                    </li>
-                    <li class="mt">
-                      <a href="MisParqueos.php">
-                        <i class="fa fa-truck"></i>
-                        <span>Mis parqueos</span>
-                        </a>
-                    
-                    </li>
-                    <li class="mt">
-                      <a href="RegistrarParqueo1.php">
-                        <i class="fa fa-book"></i>
-                        <span>Agregar parqueos</span>
-                        </a>
-                   
-                    </li>
-                    
-                    <li class="mt">
-                      <a  href="escanearQR.php">
-                        <i class="fa fa-qrcode"></i>
-                        <span>Escanear QR de usuario</span>
-                        </a>
-                   
-                    </li>
-            
-                       </ul>
-                  <!-- sidebar menu end-->
-                </div>
-              </aside>
+    <?php
+     
+      echo $nombrecompleto;
+
+          ?>
+        
+        </h5> 
+        
+     
+
+<li class="mt">
+<a href="index.php">
+  <i class="fa fa-dashboard"></i>
+  <span>Dashboard</span>
+  </a>
+</li>
+
+<li class="mt">
+<a href="micuenta.php">
+  <i class="fa fa-desktop"></i>
+  <span>Mi cuenta</span>
+  </a>
+
+</li>
+
+<li class="mt">
+<a class="active" href="Detalles_Parqueo.php">
+  <i class="fa fa-edit"></i>
+  <span>Editar datos de parqueo</span>
+  </a>
+</li>
+
+<li class="mt">
+<a href="opcione.php">
+  <i class="fa fa-th-large"></i>
+  <span>Slots(libres/ocupados)</span>
+  </a>
+</li>
+
+
+<li class="mt">
+<a href="MisParqueos.php">
+  <i class="fa fa-camera"></i>
+  <span>Flujo de autos(placas)</span>
+  </a>
+
+</li>
+<li class="mt">
+<a href="RegistrarParqueo1.php">
+  <i class="fa fa-external-link"></i>
+  <span>Registro de Servicios(App)</span>
+  </a>
+
+</li>
+
+<li class="mt">
+<a href="RegistrarParqueo1.php">
+  <i class="fa fa-book"></i>
+  <span>Reservas</span>
+  </a>
+
+</li>
+
+
+
+    
+
+
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+    <!--sidebar end-->
 
               
     <?php
