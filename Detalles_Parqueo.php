@@ -906,7 +906,7 @@ echo '<li class="list-primary"><i class=" fa fa-lightbulb-o"></i><div class="tas
                           }
                           ?>
 
-                          <h4 class="mb"><i class="fa fa-clock-o"></i> ¿Desea que la app le muestre al usuario el precio que debe pagar? </h4>
+                          <h4 class="mb"><i class="fa fa-clock-o"></i> ¿Desea llevar control de las entradas y salidas por medio de la app móvil? </h4>
           
 
                           <?php
@@ -921,13 +921,13 @@ echo '<li class="list-primary"><i class=" fa fa-lightbulb-o"></i><div class="tas
             <div class="radio">
             <label>
               <input type="radio" name="optionsRadios" id="optionsRadios1" value="S" checked disabled>
-              Si, deseo que la app se encargue de calcular el tiempo y le muestre al usuario cuando debe pagar. (DEBERÁ DESCARGAR LA APLICACIÓN MÓVIL para tener esta funcionalidad)
+              Si (DEBERÁ DESCARGAR LA APLICACIÓN MÓVIL ya que será necesiario escanear el código QR del usuario)
               </label>
           </div>
           <div class="radio">
             <label>
               <input type="radio" name="optionsRadios" id="optionsRadios2" value="N" disabled>
-              No, usaré mi propio sistema del parqueo para mostrarle al usuario cuanto debe pagar.
+              No, por el momento no deseo llevar control por medio de la app.
               </label>
           </div>
           <hr>
@@ -946,13 +946,13 @@ echo '<li class="list-primary"><i class=" fa fa-lightbulb-o"></i><div class="tas
             <div class="radio">
             <label>
               <input type="radio" name="optionsRadios" id="optionsRadios1" value="S" disabled>
-              Si, deseo que la app se encargue de calcular el tiempo y le muestre al usuario cuando debe pagar. (DEBERÁ DESCARGAR LA APLICACIÓN MÓVIL o usar un lector de QR para PC)
+              Si (DEBERÁ DESCARGAR LA APLICACIÓN MÓVIL ya que será necesiario escanear el código QR del usuario)
               </label>
           </div>
           <div class="radio">
             <label>
               <input type="radio" name="optionsRadios" id="optionsRadios2" value="N" checked disabled>
-              No, usaré mi propio sistema del parqueo para mostrarle al usuario cuanto debe pagar.
+              No, por el momento no deseo llevar control por medio de la app.
               </label>
           </div>
           <hr>
@@ -964,10 +964,11 @@ echo '<li class="list-primary"><i class=" fa fa-lightbulb-o"></i><div class="tas
           
           }
           ?>
-          <h4 class="mb"><i class="fa fa-ticket"></i> ¿Su parqueo tendrá habilitada la opción de reservar parqueos?  </h4>
+          <h4 class="mb"><i class="fa fa-ticket"></i> ¿Su parqueo tendrá habilitada la opción de reservar parqueos por medio de la aplicación móvil?  </h4>
+
           <?php
           //////
-          
+       
           if (str_contains($reservas, 'S')) {
           
           
@@ -976,13 +977,14 @@ echo '<li class="list-primary"><i class=" fa fa-lightbulb-o"></i><div class="tas
             <div class="radio">
             <label>
               <input type="radio" name="optionsRadiosD" id="optionsRadiosD1" value="S" checked disabled>
-              Si, deseo habilitar la opción de reservar parqueos
+              Si, deseo habilitar la opción de reservar parqueos (Necesitaras descargar la app Parkiate-ki, <b>ya que se usarán códigos QR</b>)
+
               </label>
           </div>
           <div class="radio">
             <label>
               <input type="radio" name="optionsRadiosD" id="optionsRadiosD2" value="N" disabled>
-              No, por el momento deseo que la opción de reservas este deshabilitada
+              No, por el momento deseo que la opción de reservas desde la app este deshabilitada
               </label>
           </div>
             
@@ -999,16 +1001,19 @@ echo '<li class="list-primary"><i class=" fa fa-lightbulb-o"></i><div class="tas
           
             <div class="radio">
             <label>
-              <input type="radio" name="optionsRadiosD" id="optionsRadiosD1" value="S" disabled>
-              Si, deseo que la app se encargue de calcular el tiempo y le muestre al usuario cuando debe pagar. (DEBERÁ DESCARGAR LA APLICACIÓN MÓVIL para esta funcionalidad)
+              <input type="radio" name="optionsRadiosD" id="optionsRadiosD1" value="S">
+              Si, deseo habilitar la opción de reservar parqueos (Necesitaras descargar la app Parkiate-ki, <b>ya que se usarán códigos QR</b>)
               </label>
           </div>
           <div class="radio">
             <label>
               <input type="radio" name="optionsRadiosD" id="optionsRadiosD2" value="N" checked disabled>
-              No, usaré mi propio sistema del parqueo para mostrarle al usuario cuanto debe pagar.
+              No, por el momento deseo que la opción de reservas desde la app este deshabilitada
               </label>
           </div>
+          <hr>
+            
+            
             
             ';
           
