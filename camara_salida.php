@@ -180,6 +180,12 @@ else if(preg_match('/^\d{3}[BCDFGHJKLMNPQRSTVWXYZ]{3}$/', $placa_detectada) and 
 
 }
 else{
+  $primer_caracter=substr($placa_detectada, 0, 1);
+
+  if(is_numeric($primer_caracter)){
+    $placa_detectada='P'.$placa_detectada;
+  }
+
   $placa_necesita_correccion='S';
 }
 
