@@ -70,7 +70,7 @@ $status = $database->getReference($ref_tabla)->getValue();
 if(str_contains($status, '1'))
 
 {
-$received = file_get_contents('http://192.168.1.4/picture');
+$received = file_get_contents('http://192.168.1.9/picture');
 
 
 $img = 'placa_salida.jpeg';
@@ -161,11 +161,36 @@ $placa_detectada = strtoupper($placa_detectada);
 
 
 
+$placa_necesita_correccion='';
+
+
+if(preg_match('/^[A-Z]{1}\d{3}[BCDFGHJKLMNPQRSTVWXYZ]{3}$/',$placa_detectada) and strlen($placa_detectada)==7){
+
+  $placa_necesita_correccion='N';
+
+}
+
+else if(preg_match('/^\d{3}[BCDFGHJKLMNPQRSTVWXYZ]{3}$/', $placa_detectada) and strlen($placa_detectada)==6)
+{
+  $string='paso con 6';
+
+  $placa_detectada='P'.$placa_detectada;
+  $placa_necesita_correccion='N';
+
+
+}
+else{
+  $placa_necesita_correccion='S';
+}
+
+
+
+
 
 
 //$bounding_box_placa = $xmin_placa + $ymin_placa + $xmax_placa + $ymax_placa;
 
-//configurar algunas cosas.... TODO: 
+//configurar algunas cosas... 
 
 
 $xmin_auto =$response->results[0]->vehicle->box->xmin;
@@ -194,7 +219,10 @@ $h_a= $ymax_auto-$ymin_auto;
 //https://cloudinary.com/documentation/transformations_on_upload
 
 
-$response_placa=json_encode($uploader->upload($img,['folder' => 'autos/salida/placa','width' => $w, 'height' => $h, 'crop' => 'crop' , 'x' => $x, 'y' => $y]));
+//$response_placa=json_encode($uploader->upload($img,['folder' => 'autos/salida/full','width' => $w, 'height' => $h, 'crop' => 'crop' , 'x' => $x, 'y' => $y]));
+
+
+$response_placa=json_encode($uploader->upload($img,['folder' => 'autos/salida/full']));
 $response_auto=json_encode($uploader->upload($img,['folder' => 'autos/salida/vehiculo','width' => $w_a, 'height' => $h_a, 'crop' => 'crop' , 'x' => $x_a, 'y' => $y_a]));
 
 
@@ -222,9 +250,9 @@ for($i=0;$i < 6;$i++){
 
 
 
+$correccion_deteccion='NA';
 
-
-$query = "INSERT INTO placas_salida VALUES ('$id_placa_entrada',  '$now','$imagen_auto', '$placa_detectada','$id_parqueo','$imagen_placa')";
+$query = "INSERT INTO placas_salida VALUES ('$id_placa_entrada',  '$now','$imagen_auto', '$placa_detectada','$id_parqueo','$imagen_placa','$placa_necesita_correccion','$correccion_deteccion')";
 $result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
 $tuplasaafectadas = pg_affected_rows($result);
 pg_free_result($result);
@@ -234,7 +262,7 @@ echo "correcto";
 }
 else {
 
-echo "no hay auto en la salida";
+echo "no hay NADA en la salida";
 
 }
 

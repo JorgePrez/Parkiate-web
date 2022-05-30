@@ -205,7 +205,7 @@ else{
 </li>
 
 <li class="mt">
-<a href="opcione.php">
+<a href="Slots.php">
   <i class="fa fa-th-large"></i>
   <span>Slots(libres/ocupados)</span>
   </a>

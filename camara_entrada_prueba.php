@@ -104,7 +104,7 @@ if (function_exists('curl_file_create')) { // php 5.5+
 //ADD PARAMETER IN REQUEST LIKE regions
 $data = array(
     'upload' => $cFile,
-    'regions' => 'gp', //gt
+    //'regions' => 'gp', //gt
     'camera_id' => 'camara_entrada', // Optional , camara_salida
 );
 
@@ -176,43 +176,12 @@ $placa_detectada=$response->results[0]->plate;
 $placa_detectada = strtoupper($placa_detectada);
 
 
-//1.Comprar longitud , si es 6 pasar al punto 2 sino pasar al punto 3
-//2.COMPARAR CON si sigue la expresion regular "000AAA" , SI ES ASI AGREGAR "P" ELSE QUE SIGA IGUAL y pasar al punto 3
-//3DESPUES COMPARAR CANTIDAD DE CARACTERES , si es 7 agregar en correccion N , sino agregar S
-
-
-//[A-Z]{3}|[0-9]{5}
-
-$placa_necesita_correccion='';
-
-
-if(preg_match('/^[A-Z]{1}\d{3}[BCDFGHJKLMNPQRSTVWXYZ]{3}$/',$placa_detectada) and strlen($placa_detectada)==7){
-
-  $placa_necesita_correccion='N';
-
-}
-
-else if(preg_match('/^\d{3}[BCDFGHJKLMNPQRSTVWXYZ]{3}$/', $placa_detectada) and strlen($placa_detectada)==6)
-{
-  $string='paso con 6';
-
-  $placa_detectada='P'.$placa_detectada;
-  $placa_necesita_correccion='N';
-
-
-}
-else{
-  $placa_necesita_correccion='S';
-}
-
 
 
 
 //$bounding_box_placa = $xmin_placa + $ymin_placa + $xmax_placa + $ymax_placa;
 
-
-
-//configurar algunas cosas....
+//configurar algunas cosas.... TODO: 
 
 
 $xmin_auto =$response->results[0]->vehicle->box->xmin;
@@ -241,12 +210,23 @@ $h_a= $ymax_auto-$ymin_auto;
 //https://cloudinary.com/documentation/transformations_on_upload
 
 
-$response_placa=json_encode($uploader->upload($img,['folder' => 'autos/entrada/full']));
-$response_auto=json_encode($uploader->upload($img,['folder' => 'autos/entrada/vehiculo','width' => $w_a, 'height' => $h_a, 'crop' => 'crop' , 'x' => $x_a, 'y' => $y_a]));
+$response_placa=json_encode($uploader->upload($img,['folder' => 'autos/entrada/full','width' => $w, 'height' => $h, 'crop' => 'crop' , 'x' => $x, 'y' => $y]));
+$response_auto=json_encode($uploader->upload($img,
+['folder' => 'autos/entrada/vehiculo',
+['width' => $w_a, 
+'height' => $h_a, 
+'crop' => 'crop' , 
+'x' => $x_a, 
+'y' => $y_a],
+
+]));
+
 
 
 
 $imagen_placa = json_decode($response_placa);
+print_r($imagen_placa);
+
 $imagen_placa=$imagen_placa->secure_url;
 
 
@@ -266,13 +246,12 @@ for($i=0;$i < 6;$i++){
 
   $id_placa_entrada=$key;
   
-  $correccion_deteccion='NA';
 
 
 
 
 
-$query = "INSERT INTO placas_entrada VALUES ('$id_placa_entrada',  '$now','$imagen_auto', '$placa_detectada','$id_parqueo','$imagen_placa','$placa_necesita_correccion','$correccion_deteccion')";
+$query = "INSERT INTO placas_entrada VALUES ('$id_placa_entrada',  '$now','$imagen_auto', '$placa_detectada','$id_parqueo','$imagen_placa')";
 $result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
 $tuplasaafectadas = pg_affected_rows($result);
 pg_free_result($result);
@@ -283,7 +262,7 @@ echo "camara_entrada registrando";
 }
 else {
 
-  echo "no hay NADA en la entrada";
+  echo "no hay auto en la entrada";
 
 
 

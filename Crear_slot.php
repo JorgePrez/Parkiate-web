@@ -12,7 +12,7 @@ if (!$conn){
 
 
 if(!isset($_COOKIE["id_usuario"])){
-  header("Location: login.html");
+  header("Location: login.php");
 
 }
 
@@ -22,7 +22,26 @@ else{
   $id_usuario= $_COOKIE["id_usuario"];
 
 }  
+
+
+if(!isset($_COOKIE["id_parqueo"])){
+
+   $id_parqueo='N';
+   $id_pagina_side_no='2';
+
+
+}
+
+else{
+
+  $id_parqueo= $_COOKIE["id_parqueo"];
+
+
+}
+
 ?>
+
+
 
 
 
@@ -110,96 +129,113 @@ else{
         MAIN SIDEBAR MENU
         *********************************************************************************************************************************************************** -->
     <!--sidebar start-->
-    <?php
+
+             <!--sidebar start-->
+             <?php
               
-              $query = "select nombre from duenio where id_duenio='$id_usuario'";
+              $query = "select nombre_empresa,reservas from parqueo where id_parqueo='$id_parqueo'";
               //                       $query = "select * from prospectos_template";
               
               $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
               $nombrecompleto = '';
+              $reservas='';
               
               
               while ($row = pg_fetch_row($result)) {
               $nombrecompleto= $row[0];
+              $reservas = $row[1];
               }
+
+
+
+
               
               ?>
-              
           
           
-              <aside>
-                <div id="sidebar" class="nav-collapse ">
-                  <!-- sidebar menu start-->
-                  <ul class="sidebar-menu" id="nav-accordion">
-                    <p class="centered"><img src="img/ui-user.jpg" class="img-circle" width="80"></a></p>
-                    <h5 class="centered">
-                  
-                    
-                  <?php
-                        echo $nombrecompleto;
-              
-                        ?>
-                      
-                      </h5>
-                      
-                      <li class="mt">
-                      <a href="index.php">
-                        <i class="fa fa-dashboard"></i>
-                        <span>Dashboard</span>
-                        </a>
-                    </li>
+               <!--sidebar start-->
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" id="nav-accordion">
+          <p class="centered"><img src="img/park_icon2.jpg" class="img-circle" width="80"></a></p>
+          <h5 class="centered">
+        
           
-                    <li class="mt">
-                      <a href="opcione.php">
-                        <i class="fa fa-home"></i>
-                        <span>Menú Principal</span>
-                        </a>
-                    </li>
-          
-                    <li class="mt">
-                      <a href="micuenta.php">
-                        <i class="fa fa-desktop"></i>
-                        <span>Mi cuenta</span>
-                        </a>
-                  
-                    </li>
-                    <li class="mt">
-                      <a href="MisParqueos.php">
-                        <i class="fa fa-truck"></i>
-                        <span>Mis parqueos</span>
-                        </a>
-                    
-                    </li>
-                    <li class="mt">
-                      <a href="RegistrarParqueo1.php">
-                        <i class="fa fa-book"></i>
-                        <span>Agregar parqueos</span>
-                        </a>
-                   
-                    </li>
-                    
-                    <li class="mt">
-                      <a  href="escanearQR.php">
-                        <i class="fa fa-qrcode"></i>
-                        <span>Escanear QR de usuario</span>
-                        </a>
-                   
-                    </li>
-            
-                       </ul>
-                  <!-- sidebar menu end-->
-                </div>
-              </aside>
-
-              
     <?php
+     
+      echo $nombrecompleto;
 
-$id_parqueo=$_GET["id_parqueo"];
+          ?>
+        
+        </h5> 
+        
+     
+
+<li class="mt">
+<a href="index.php">
+  <i class="fa fa-dashboard"></i>
+  <span>Dashboard</span>
+  </a>
+</li>
+
+<li class="mt">
+<a href="micuenta.php">
+  <i class="fa fa-desktop"></i>
+  <span>Mi cuenta</span>
+  </a>
+
+</li>
+
+<li class="mt">
+<a href="Detalles_Parqueo.php">
+  <i class="fa fa-edit"></i>
+  <span>Editar datos de parqueo</span>
+  </a>
+</li>
+
+<li class="mt">
+<a class="active">
+  <i class="fa fa-th-large"></i>
+  <span>Slots(libres/ocupados)</span>
+  </a>
+</li>
+
+
+<li class="mt">
+<a href="MisParqueos.php">
+  <i class="fa fa-camera"></i>
+  <span>Flujo de autos(placas)</span>
+  </a>
+
+</li>
+<li class="mt">
+<a href="RegistrarParqueo1.php">
+  <i class="fa fa-external-link"></i>
+  <span>Registro de Servicios(App)</span>
+  </a>
+
+</li>
+
+<li class="mt">
+<a href="RegistrarParqueo1.php">
+  <i class="fa fa-book"></i>
+  <span>Reservas</span>
+  </a>
+
+</li>
 
 
 
+    
 
-?>
+
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+    <!--sidebar end-->
+ 
     <!--sidebar end-->
     <!-- **********************************************************************************************************************************************************
         MAIN CONTENT
@@ -240,15 +276,45 @@ $id_parqueo=$_GET["id_parqueo"];
                   </div>
                 </div>
 
+<!--
 
-                <div class="form-group">
-                  <label class="col-sm-8 col-sm-8 control-label"> <b>Reservas</b>  (seleccione si este espacio estará destinado a reservas o será un espacio normal, puede modificarlo en cualquier momento):</label>
+
+               
+            -->
+
+
+
+            <?php
+ if(str_contains($reservas, 'S'))
+ {
+
+echo ' <div class="form-group">
+<label class="col-sm-8 col-sm-8 control-label"> <b>Reservas</b>  (seleccione si este espacio estará destinado a reservas o será un espacio normal, puede modificarlo en cualquier momento):</label>
+<div class="col-sm-4">   
+
+
+<select name="reservas" class="form-control">
+
+
+<option value="N">Espacio cómun</option>
+<option value="S">Espacio Destinado para reservas</option>
+
+</select>
+
+</div>
+</div>';
+
+
+ }
+ else
+ { 
+
+        echo   '<div class="form-group">
+                  <label class="col-sm-8 col-sm-8 control-label"> <b>[Reservas]</b> en su caso todos los espacios serán comunes ya que no tiene habilitada la opción de reservas. <b>(Puede cambiar esta opción en la pestaña "Editar datos de parqueo")</b></label>
                   <div class="col-sm-4">   
-                  <!--
-                  <input type="text" name="direccion" placeholder=
-                  "Introduzca la dirección donde se ubica el parqueo" class="form-control"> -->
+             
 
-                  <select name="reservas" class="form-control">
+                  <select name="reservas" class="form-control" disabled>
 
 
                   <option value="N">Espacio cómun</option>
@@ -257,8 +323,17 @@ $id_parqueo=$_GET["id_parqueo"];
                 </select>
 
                   </div>
-                </div>
+                </div>';
+              
+         
 
+              } 
+
+              
+              ?>
+            
+
+          
 
              
         
@@ -274,7 +349,7 @@ $id_parqueo=$_GET["id_parqueo"];
 
 
 
-                  <a class="btn btn-danger pull-right" href="Slots.php?id_parqueo=<?php echo $id_parqueo ?>">Cancelar</a>
+                  <a class="btn btn-danger pull-right" href="Slots.php">Cancelar</a>
 
 
 

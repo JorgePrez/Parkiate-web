@@ -124,7 +124,7 @@ else{
 
 
 
-$url="Location: ./../Slots.php?id_parqueo=".$id_parqueo;
+$url="Location: ./../Slots.php";
 
 header($url);
 

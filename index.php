@@ -1,8 +1,47 @@
 
 <?php
 
+$conn = pg_connect("host=db-instancia.ccwm7dhw4cau.us-east-1.rds.amazonaws.com port=5432 user=postgres password=56721449 dbname=postgres");
+if (!$conn){
+    die("PostgreSQL connection failed");
+   
+}
 
-include 'database_cookie.php';
+if(!isset($_COOKIE["id_usuario"])){
+  header("Location: login.php");
+
+}
+
+
+
+else{    
+  $id_usuario= $_COOKIE["id_usuario"];
+
+}  
+
+
+if(!isset($_COOKIE["id_parqueo"])){
+
+   //$id_pagina_side_no='1';
+   header("Location: Registrar_parqueo_index.php");
+
+
+}
+
+else{
+
+  $id_parqueo= $_COOKIE["id_parqueo"];
+
+
+}
+
+
+//consulta: select * from slots where id_parqueo ='2CE369' PARA VER SI TIENE SLOTS ASOCIADOS SINO
+
+//mostrar otro
+
+
+
 
 ?>
 
@@ -46,7 +85,357 @@ include 'database_cookie.php';
   <script src="lib/chart-master/Chart.js"></script>
 
 
+  
+  <style>
+
+<?php
+
+
+$id_parqueo=$_COOKIE["id_parqueo"];
+//ID_FIREBASE
+$query = "select id_placa_entrada,foto_auto_entrada,deteccion_entrada from placas_entrada where hora_deteccion_entrada =(select max(hora_deteccion_entrada) from placas_entrada) AND id_parqueo='$id_parqueo'";
+//                       $query = "select * from prospectos_template";
+
+$result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
+$id_placa_entrada='';
+$foto_auto_entrada1='';
+$deteccion_entrada='';
+
+$tuplasaafectadas_placa1 = pg_affected_rows($result);
+
+
+
+while ($row = pg_fetch_row($result)) { 
+     $id_placa_entrada=$row[0];
+     $foto_auto_entrada1=$row[1];
+     $deteccion_entrada=$row[2];
+ 
+}
+
+pg_free_result($result);
+
+
+$query = "select id_placa_salida,foto_auto_salida,deteccion_salida from placas_salida where hora_deteccion_salida = (select max(hora_deteccion_salida) from placas_salida) AND id_parqueo='$id_parqueo'";
+//                       $query = "select * from prospectos_template";
+
+$result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
+$id_placa_salida='';
+$foto_auto_salida1='';
+$deteccion_salida='';
+
+
+while ($row = pg_fetch_row($result)) { 
+     $id_placa_salida=$row[0];
+     $foto_auto_salida1=$row[1];
+     $deteccion_salida=$row[2];
+ 
+}
+
+$tuplasaafectadas_placa2 = pg_affected_rows($result);
+
+
+pg_free_result($result);
+
+
+
+?>
+#spotify1 {
+	/*background: url(../placa_entrada.jpeg) no-repeat center top;*/  
+	background: url(<?php echo $foto_auto_entrada1?>) no-repeat center top;
+    margin-top: -15px;
+	background-attachment: relative;
+	background-position: center center;
+	min-height: 220px;
+	width: 100%;
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+#spotify1 .btn-clear-g {
+	top: 15%;
+	right: 10px;
+	position: absolute;
+	margin-top: 5px;
+}
+
+#spotify1 .btn-theme03  {
+	top: 15%;
+	right: 10px;
+	position: absolute;
+	margin-top: 5px;
+}
+#spotify1 .sp-title {
+	bottom: 15%;
+	left: 25px;
+	position: absolute;
+	color: #efefef;
+}
+#spotify1 .sp-title h3 {
+	font-weight: 900;
+}
+#spotify1 .play{
+	bottom: 18%;
+	right: 25px;
+	position: absolute;
+	color: #efefef;
+	font-size: 20px
+}
+.followers {
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+
+#spotify2 {
+	/*background: url(../placa_salida.jpeg) no-repeat center top;*/
+    background:url(<?php echo $foto_auto_salida1?>) no-repeat center top;
+	margin-top: -15px;
+	background-attachment: relative;
+	background-position: center center;
+	min-height: 220px;
+	width: 100%;
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+#spotify2 .btn-clear-g {
+	top: 15%;
+	right: 10px;
+	position: absolute;
+	margin-top: 5px;
+}
+
+#spotify2 .btn-theme04  {
+	top: 15%;
+	right: 10px;
+	position: absolute;
+	margin-top: 5px;
+}
+#spotify2 .sp-title {
+	bottom: 15%;
+	left: 25px;
+	position: absolute;
+	color: #efefef;
+}
+#spotify2 .sp-title h3 {
+	font-weight: 900;
+}
+#spotify2 .play{
+	bottom: 18%;
+	right: 25px;
+	position: absolute;
+	color: #efefef;
+	font-size: 20px
+}
+.followers {
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+
+#spotify3 {
+	/*background: url(../placa_salida.jpeg) no-repeat center top;*/
+    background:url('https://res.cloudinary.com/parkiate-ki/image/upload/v1653897978/detalles/10-109983_security-camera-icon-png-cctv-icon-transparent-png_mxdo9a.png') no-repeat center top;
+	margin-top: -15px;
+	background-attachment: relative;
+	background-position: center center;
+	min-height: 220px;
+	width: 100%;
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+#spotify3 .btn-clear-g {
+	top: 15%;
+	right: 10px;
+	position: absolute;
+	margin-top: 5px;
+}
+
+#spotify3 .btn-theme04  {
+	top: 15%;
+	right: 10px;
+	position: absolute;
+	margin-top: 5px;
+}
+
+#spotify3 .btn-theme03  {
+	top: 15%;
+	right: 10px;
+	position: absolute;
+	margin-top: 5px;
+}
+#spotify3 .sp-title {
+	bottom: 15%;
+	left: 25px;
+	position: absolute;
+	color: #efefef;
+}
+#spotify3 .sp-title h3 {
+	font-weight: 900;
+}
+#spotify3 .play{
+	bottom: 18%;
+	right: 25px;
+	position: absolute;
+	color: #efefef;
+	font-size: 20px
+}
+.followers {
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+</style>
+
+
 </head>
+
+
+<?php
+$id_parqueo=$_COOKIE["id_parqueo"];
+//ID_FIREBASE
+$query = "select id_firebase from parqueo where id_parqueo='$id_parqueo'";
+//                       $query = "select * from prospectos_template";
+
+$result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
+$id_firebase='';
+
+
+while ($row = pg_fetch_row($result)) { 
+     $id_firebase=$row[0];
+ 
+}
+
+pg_free_result($result);
+date_default_timezone_set('America/Guatemala');
+
+//////////////////////////////////
+
+
+$query = "select id_slot,id_firebase_slot from slots where id_parqueo='$id_parqueo'";
+//                       $query = "select * from prospectos_template";
+
+$result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
+
+$tuplasaafectadas = pg_affected_rows($result);
+
+$estadogeneral='';
+$contador_ocupados=0;
+
+
+
+if($tuplasaafectadas>0){
+  include('formularios/dbcon.php');
+
+
+  $estadogeneral='1';
+
+    
+    
+  while ($row = pg_fetch_row($result)) {
+    $id_slot=$row[0];
+    $id_firebase_slot=$row[1];
+
+
+
+
+/* CONSULTAA FIREBASE PARA VER EL ESTADO DEL PARQUEO
+
+RUTA DE ESTE MANERA: https://parkiate-ki-default-rtdb.firebaseio.com/Parking_Status/-Mq73KmXyn-fx7tlnIQn/-N-t_vx07IoxzsBpIURf/estado.json
+*/
+
+
+$ref_tabla="/Parking_Status/".$id_firebase."/".$id_firebase_slot."/estado";
+
+
+$status = $database->getReference($ref_tabla)->getValue();
+
+
+$estado_boolean=true;
+
+if(str_contains($status, '1'))
+{
+$queriesa= "UPDATE slots SET estado=true WHERE id_slot='$id_slot'";
+
+
+$resultadosa = pg_query($conn, $queriesa) or die('ERROR : ' . pg_last_error());
+
+}
+
+
+else {
+
+$queriesa= "UPDATE slots SET estado=false WHERE id_slot='$id_slot'";
+
+
+$resultadosa = pg_query($conn, $queriesa) or die('ERROR : ' . pg_last_error());
+
+$contador_ocupados = $contador_ocupados+1;
+
+}
+
+
+
+  //FALSO ES OCUPADO
+  
+
+
+
+
+}
+
+$proporcion = $contador_ocupados. "/" .$tuplasaafectadas ;
+  // echo $nombrecompleto;
+  
+  $porcentaje_number= ($contador_ocupados*100)/$tuplasaafectadas;
+  
+  //echo $porcentaje_number;
+  
+  $complemento_porcentaje= 100-$porcentaje_number;
+  
+  //echo $complemento_porcentaje;
+  $noDecimalNumber = intval($porcentaje_number);
+  $porcentaje= strval($noDecimalNumber);
+}
+else{
+$estadogeneral='0';
+}
+
+$now = new Datetime('now');
+//$now = $now->format('d-m-Y');
+
+
+$anio = $now->format('Y');
+$mes = $now->format('m');
+$dia = $now->format('d');
+
+$mesesN=array(1=>"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio",
+          "Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+$fecha=$dia." de ". $mesesN[2] ." de $anio";
+
+
+
+
+
+
+?>
+
 
 <body>
   <section id="container">
@@ -150,7 +539,7 @@ include 'logout.php';
 </li>
 
 <li class="mt">
-<a href="opcione.php">
+<a href="Slots.php">
   <i class="fa fa-th-large"></i>
   <span>Slots(libres/ocupados)</span>
   </a>
@@ -215,12 +604,15 @@ include 'logout.php';
               </div>
             </div>
 
+
             <!--custom chart end-->
             <div class="row mt">
               <!-- SERVER STATUS PANELS -->
+              <?php
 
-
-              <div class="col-md-4 col-sm-4 mb">
+              if(str_contains($estadogeneral, '0')){
+     
+        echo '<div class="col-md-4 col-sm-4 mb">
                 <div class="darkblue-panel pn">
                   <div class="darkblue-header">
                     <h5>ESTADO GENERAL</h5>
@@ -228,11 +620,58 @@ include 'logout.php';
                   <canvas id="serverstatus02" height="120" width="120"></canvas>
                   <script>
                     var doughnutData = [{
-                        value: 60,
+                        value: 100,
                         color: "#1c9ca7"
                       },
                       {
-                        value: 40,
+                        value: 0,
+                        color: "#f68275"
+                      }
+                    ];
+                    var myDoughnut = new Chart(document.getElementById("serverstatus02").getContext("2d")).Doughnut(doughnutData);
+                  </script>
+               <p>';  
+     
+     echo $fecha;
+
+   
+
+      echo     '</p>
+                  <footer>
+                    <!--  <div class="pull-left">
+                      <h5><i class="fa fa-hdd-o"></i> 0/0</h5>
+                    </div> -->
+                    <div>
+                      <h10> <b>No has registrado ningún slot (espacio) ve a la pestaña "Slots(libres/ocupados)"
+                      </b>
+                      </h10>
+                    </div>
+                  </footer>
+                </div>
+           <!--     /darkblue panel -->
+              </div>';
+
+                  }
+
+                  else { 
+ 
+         echo  '<div class="col-md-4 col-sm-4 mb">
+                <div class="darkblue-panel pn">
+                  <div class="darkblue-header">
+                    <h5>ESTADO GENERAL</h5>
+                  </div>
+                  <canvas id="serverstatus02" height="120" width="120"></canvas>
+                  <script>
+                    var doughnutData = [{
+                        value:  ';
+                        echo $complemento_porcentaje; 
+                        echo ',
+                        color: "#1c9ca7"
+                      },
+                      {
+                        value: ';
+                        echo $porcentaje_number;
+                        echo ',
                         color: "#f68275"
                       }
                     ];
@@ -241,58 +680,100 @@ include 'logout.php';
                   <p>23 de Marzo, 2022</p>
                   <footer>
                     <div class="pull-left">
-                      <h5><i class="fa fa-hdd-o"></i> 30/50</h5>
+                      <h5><i class="fa fa-hdd-o"></i> 
+                    ';
+                   
+
+     echo $proporcion;
+  
+
+echo                             '</h5>
                     </div>
                     <div class="pull-right">
-                      <h5>60% Ocupado</h5>
+                      <h5>
+                      ';
+                      echo $porcentaje;
+                            echo '%
+                      Ocupado</h5>
                     </div>
                   </footer>
                 </div>
-                <!--  /darkblue panel -->
-              </div>
+              </div>'; 
+                  }
+
+                  
+              ?>  
 
               <div class="col-lg-4 col-md-4 col-sm-4 mb">
                 <div class="content-panel pn">
-                  <div id="spotify">
+
+
+                  <?php
+if($tuplasaafectadas_placa1>0){
+  echo '<div id="spotify1">';
+
+}
+else{
+ echo '<div id="spotify3">';
+
+}
+
+
+                  ?>  
 
                   <div class="col-xs-4 col-xs-offset-8">
-                      <button class="btn btn-sm btn-clear-g">VER DETALLES</button>
+              <!--        <button class="btn btn-sm btn-clear-g">VER DETALLES</button> -->
+              <button class="btn btn-sm btn-theme03        
+                  
+                  <?php
+if($tuplasaafectadas_placa1>0){
+
+}
+else{
+ echo 'disabled';
+
+}
+
+?>
+">VER DETALLES/CORREGIR</button>
                     </div>
                  
                     <div class="sp-title">
-                      <h3>
-                      Placa:
 
                       <?php
-        //  echo $nombrecompleto;
 
-          
-        $query3 = "select foto_auto_entrada,deteccion_entrada from placas_entrada where hora_deteccion_entrada = (select max(hora_deteccion_entrada) from placas_entrada) AND id_parqueo='2CE369'";
-        //                       $query = "select * from prospectos_template";
-        
-        $resultadp1 = pg_query($conn, $query3) or die('ERROR : ' . pg_last_error());
-        $foto_auto_entrada = '';
-        $deteccion_entrada='';
-        
-
-        while ($row = pg_fetch_row($resultadp1)) {
-        $foto_auto_entrada= $row[0];
-        $deteccion_entrada=$row[1];
-        }
-
-        echo $deteccion_entrada;
+if($tuplasaafectadas_placa1>0){
+ echo '<h3 style="color:yellow;" >Placa:';
+  echo $deteccion_entrada; 
 
 
-        pg_free_result($resultadp1);
+
+}
+else{
 
 
+}
+    
           ?>
 
                       </h3>
                     </div>
                   
                   </div>
-                  <p class="followers"><i class="fa fa-arrow-right"></i>  Último auto en llegar
+                  <p class="followers"><i class="fa fa-arrow-right"></i>
+                  <?php
+                  if($tuplasaafectadas_placa2>0){
+
+                    echo   'Último auto en llegar';
+
+
+}
+else{
+  echo 'No existen fotos registradas'; 
+
+
+}
+?>
                  </p>
                 </div>
               </div>
@@ -300,43 +781,75 @@ include 'logout.php';
               
               <div class="col-lg-4 col-md-4 col-sm-4 mb">
                 <div class="content-panel pn">
-                  <div id="spotify2">
+
+
+                <?php
+if($tuplasaafectadas_placa2>0){
+  echo '<div id="spotify2">';
+
+}
+else{
+ echo '<div id="spotify3">';
+
+}
+
+?>  
 
                   <div class="col-xs-4 col-xs-offset-8">
-                      <button class="btn btn-sm btn-clear-g">VER DETALLES</button>
+                  <button class="btn btn-sm btn-theme04        
+                  
+                  <?php
+if($tuplasaafectadas_placa2>0){
+
+}
+else{
+ echo 'disabled';
+
+}
+
+?>
+">VER DETALLES/CORREGIR</button>
                     </div>
               
                     <div class="sp-title">
-                      <h3> Placa:
 
 
-                      <?php
-        //  echo $nombrecompleto;
-
-        $query3 = "select foto_auto_salida,deteccion_salida from placas_salida where hora_deteccion_salida = (select max(hora_deteccion_salida) from placas_salida) AND id_parqueo='2CE369'";
-        //                       $query = "select * from prospectos_template";
-        
-        $resultadp = pg_query($conn, $query3) or die('ERROR : ' . pg_last_error());
-        $foto_auto_salida = '';
-        $deteccion_salida='';
-        
-
-        while ($row = pg_fetch_row($resultadp)) {
-        $foto_auto_salida= $row[0];
-        $deteccion_salida=$row[1];
-        }
+                    <?php
+                    if($tuplasaafectadas_placa2>0){
+ echo '<h3 style="color:yellow;" >Placa:';
+  echo $deteccion_salida; 
 
 
 
-            echo $deteccion_salida;
+}
+else{
+  
 
-          ?>
+}
+?>
+                  
+         
 
                       </h3>
                     </div>
                   
                   </div>
-                  <p class="followers"><i class="fa fa-arrow-left"></i> Último auto en irse </p>
+                  <p class="followers"><i class="fa fa-arrow-left"></i> 
+                  <?php
+                  if($tuplasaafectadas_placa2>0){
+
+                    echo 'Último auto en irse';
+
+
+
+}
+else{
+  echo 'No existen fotos registradas'; 
+
+
+}
+?>
+                </p>
                 </div>
               </div>
             

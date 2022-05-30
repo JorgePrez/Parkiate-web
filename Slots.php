@@ -1,3 +1,4 @@
+
 <?php
 
 
@@ -11,7 +12,7 @@ if (!$conn){
 
 
 if(!isset($_COOKIE["id_usuario"])){
-  header("Location: login.html");
+  header("Location: login.php");
 
 }
 
@@ -21,8 +22,24 @@ else{
   $id_usuario= $_COOKIE["id_usuario"];
 
 }  
-?>
 
+
+if(!isset($_COOKIE["id_parqueo"])){
+
+   $id_parqueo='N';
+   $id_pagina_side_no='2';
+
+
+}
+
+else{
+
+  $id_parqueo= $_COOKIE["id_parqueo"];
+
+
+}
+
+?>
 
 
 
@@ -93,10 +110,11 @@ else{
     <!-- **********************************************************************************************************************************************************
         MAIN SIDEBAR MENU
         *********************************************************************************************************************************************************** -->
-    <!--sidebar start-->
-    <?php
+          
+             <!--sidebar start-->
+             <?php
               
-              $query = "select nombre from duenio where id_duenio='$id_usuario'";
+              $query = "select nombre_empresa from parqueo where id_parqueo='$id_parqueo'";
               //                       $query = "select * from prospectos_template";
               
               $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
@@ -106,86 +124,96 @@ else{
               while ($row = pg_fetch_row($result)) {
               $nombrecompleto= $row[0];
               }
+
+
+
+
               
               ?>
-      
-              <aside>
-                  <div id="sidebar" class="nav-collapse ">
-                    <!-- sidebar menu start-->
-                    <ul class="sidebar-menu" id="nav-accordion">
-                      <p class="centered"><img src="img/ui-user.jpg" class="img-circle" width="80"></a></p>
-                      <h5 class="centered">
-                
-                  
-                <?php
-                      echo $nombrecompleto;
-            
-                      ?>
-                    
-                    </h5>
+          
+          
+               <!--sidebar start-->
+    <aside>
+      <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" id="nav-accordion">
+          <p class="centered"><img src="img/park_icon2.jpg" class="img-circle" width="80"></a></p>
+          <h5 class="centered">
         
-                    <li class="mt">
-            <a  href="index.php">
-              <i class="fa fa-dashboard"></i>
-              <span>Dashboard</span>
-              </a>
-          </li>
-
-          <li class="mt">
-            <a href="opcione.php">
-              <i class="fa fa-home"></i>
-              <span>Menú Principal</span>
-              </a>
-          </li>
-
-
+          
+    <?php
      
-          <li class="mt">
-            <a href="micuenta.php">
-              <i class="fa fa-desktop"></i>
-              <span>Mi cuenta</span>
-              </a>
+      echo $nombrecompleto;
+
+          ?>
         
-          </li>
-          <li class="mt">
-            <a class="active" href="MisParqueos.php">
-              <i class="fa fa-truck"></i>
-              <span>Mis parqueos</span>
-              </a>
-          
-          </li>
+        </h5> 
+        
+     
 
-          <!--
+<li class="mt">
+<a href="index.php">
+  <i class="fa fa-dashboard"></i>
+  <span>Dashboard</span>
+  </a>
+</li>
 
-          <li class="mt">
-            <a  href="Slots.php">
-              <i class="fa fa-table"></i>
-              <span>Espacios (Slots)</span>
-              </a>
-          
-          </li>
-            -->
+<li class="mt">
+<a href="micuenta.php">
+  <i class="fa fa-desktop"></i>
+  <span>Mi cuenta</span>
+  </a>
 
-          <li class="mt">
-            <a href="RegistrarParqueo1.php">
-              <i class="fa fa-book"></i>
-              <span>Agregar parqueos</span>
-              </a>
-         
-          </li>
-          
-          <li class="mt">
-            <a href="escanearQR.php">
-              <i class="fa fa-qrcode"></i>
-              <span>Escanear QR de usuario</span>
-              </a>
-         
-          </li>
-              
-                         </ul>
-                    <!-- sidebar menu end-->
-                  </div>
-                </aside>
+</li>
+
+<li class="mt">
+<a href="Detalles_Parqueo.php">
+  <i class="fa fa-edit"></i>
+  <span>Editar datos de parqueo</span>
+  </a>
+</li>
+
+<li class="mt">
+<a class="active">
+  <i class="fa fa-th-large"></i>
+  <span>Slots(libres/ocupados)</span>
+  </a>
+</li>
+
+
+<li class="mt">
+<a href="MisParqueos.php">
+  <i class="fa fa-camera"></i>
+  <span>Flujo de autos(placas)</span>
+  </a>
+
+</li>
+<li class="mt">
+<a href="RegistrarParqueo1.php">
+  <i class="fa fa-external-link"></i>
+  <span>Registro de Servicios(App)</span>
+  </a>
+
+</li>
+
+<li class="mt">
+<a href="RegistrarParqueo1.php">
+  <i class="fa fa-book"></i>
+  <span>Reservas</span>
+  </a>
+
+</li>
+
+
+
+    
+
+
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
+    </aside>
+    <!--sidebar end-->
  
     <!--sidebar end-->
      <!--sidebar end-->
@@ -224,7 +252,7 @@ else{
 /*Este parametro deberia estar guardado en el inicio de sesión*/ 
 
 
-  $id_parqueo=$_GET["id_parqueo"];
+ // $id_parqueo=$_GET["id_parqueo"];
 
 
   ?>
@@ -251,7 +279,7 @@ else{
                     /*Este parametro deberia estar guardado en el inicio de sesión*/ 
 
 
-                      $id_parqueo=$_GET["id_parqueo"];
+                 //     $id_parqueo=$_GET["id_parqueo"];
 
                      // echo $id_parqueo;
                       
@@ -510,13 +538,13 @@ pg_free_result($result);
                 <form action="Slots.php" method="get">
 
 
-                <input type="hidden" name="id_parqueo" value=
+             <!--    <input type="hidden" name="id_parqueo" value=
                 
                 "<?php 
-                $id_parqueo=$_GET["id_parqueo"];
-                echo $id_parqueo; ?>">
+                /*$id_parqueo=$_GET["id_parqueo"];
+                echo $id_parqueo;*/ ?>">
 
-
+-->
 
                   <button type="submit" class="btn btn-theme"><i class="fa fa-refresh"></i> Actualizar Estado</button>
 
@@ -542,8 +570,10 @@ pg_free_result($result);
 <input type="hidden" name="id_parqueo" value=
 
 "<?php 
-                $id_parqueo=$_GET["id_parqueo"];
-                echo $id_parqueo; ?>">
+               // $id_parqueo=$_GET["id_parqueo"];
+
+                echo $id_parqueo_cookie=$_COOKIE["id_parqueo"];
+                ; ?>">
 
                   <button type="submit" class="btn btn-theme04"><i class="fa fa-check-square"></i> Crear nuevo espacio (Slot).... </button>
                  
