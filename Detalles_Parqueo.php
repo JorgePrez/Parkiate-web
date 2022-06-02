@@ -61,6 +61,7 @@ else{
   <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!--external css-->
   <link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+  <link href="lib/fancybox/jquery.fancybox.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="css/zabuto_calendar.css">
   <link rel="stylesheet" type="text/css" href="lib/gritter/css/jquery.gritter.css" />
   <link rel="stylesheet" type="text/css" href="lib/bootstrap-fileupload/bootstrap-fileupload.css" />
@@ -75,6 +76,7 @@ else{
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
   <link rel="stylesheet" href="css/to-do.css">
+  <script src="lib/jquery/jquery.min.js"></script>
   <script src="lib/chart-master/Chart.js"></script>
 
 
@@ -1083,21 +1085,14 @@ echo "<a class='btn btn-success btn-sm pull-left' href=Editar_cara.php?id_parque
 
               <form class="form-horizontal style-form">
 
+              <div class="photo">
 
-              
-<div class="project-wrapper">
-                              <div class="project">
-                                <div class="photo-wrapper">
-                                  <div class="photo">
-                                        <img id=user-photo class="img-responsive" src=" <?php              
-  echo $imagenes;
-       
-                ?>" width="300px" height="300px" alt="">
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+              <?php   
+              echo "<a class='fancybox' href=$imagenes><img class='img-responsive' src=$imagenes width='700px' height='auto' alt=''></a>"  ?> 
 
+</div>
+
+                                      
 
                             <div class=" add-task-row">
 
@@ -1157,7 +1152,7 @@ echo "<a class='btn btn-success btn-sm pull-left' href=Editar_imagen.php?id_parq
     <!--footer end-->
   </section>
   <!-- js placed at the end of the document so the pages load faster -->
-  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/fancybox/jquery.fancybox.js"></script>
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>
   <script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
   <script src="lib/jquery.scrollTo.min.js"></script>
@@ -1167,6 +1162,14 @@ echo "<a class='btn btn-success btn-sm pull-left' href=Editar_imagen.php?id_parq
   <!--script for this page-->
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <script src="lib/tasks.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+    $(function() {
+      //    fancybox
+      jQuery(".fancybox").fancybox();
+    });
+  </script>
+
   <script>
     jQuery(document).ready(function() {
       TaskList.initTaskWidget();

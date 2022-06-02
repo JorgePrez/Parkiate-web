@@ -240,13 +240,9 @@ else{
 
       <h3><i class="fa fa-table"></i> Registro de autos (cámara de salida)
       </h3>
+     
 
-  
-
-
-          
-
-        <div class="row mb">
+      <div class="row mb">
           <!-- page start-->
           <div class="content-panel">
 
@@ -318,7 +314,7 @@ else{
            
 
          //   $query = "select * from servicios_admin where Id_parqueo='$id_parqueo' order by Id DESCASC";   
-            $query = "select * from placas_entrada where id_parqueo='$id_parqueo' order by hora_deteccion_entrada DESC";   
+            $query = "select * from placas_salida where id_parqueo='$id_parqueo' order by hora_deteccion_salida DESC";   
 
             //                       $query = "select * from prospectos_template";
 
@@ -425,18 +421,30 @@ else{
 
         </td>";
 
+        //comprobando si hubo correción , si lo hubo mostrar esa.
 
+       if($deteccion_entrada_correccion!='NA'){
          echo	"<td>
 
-        <h4> <span class='label label-default'>
-         
+        <h4> <span class='label label-default'>  
+        $deteccion_entrada_correccion
+               </span>
+               </h4>
+        
+        
+        </td>";
+       }
+       else{
+        echo	"<td>
+
+        <h4> <span class='label label-default'>  
         $deteccion_entrada
                </span>
                </h4>
         
         
         </td>";
-
+       }
        //  echo	"<td>$deteccion_entrada</td>";
          /*echo	"<td>$foto_placa_entrada</td>";*/
        /* echo	"<td>         
@@ -613,7 +621,6 @@ echo	"<td>$fecha</td>";
           <!-- page end-->
         </div>
         <!-- /row -->
-       
 
               
 
@@ -625,7 +632,7 @@ echo	"<td>$fecha</td>";
 
 
 
-                <form action="entrada.php" method="get">
+                <form action="salida.php" method="get">
 
 
              <!--    <input type="hidden" name="id_parqueo" value=

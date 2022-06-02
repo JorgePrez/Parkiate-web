@@ -201,6 +201,12 @@ pg_free_result($result);
     padding:5px;font-size:20px;background-color:black;color:#ffffff;
 }
 
+#spotify1 .sp-title h5 {
+    display: table; /* keep the background color wrapped tight */
+    margin: 0px auto 0px auto; /* keep the table centered */
+    background-color:black;color:#ffffff;
+}
+
 #spotify1 .play{
 	bottom: 18%;
 	right: 25px;
@@ -758,20 +764,29 @@ else{
                   ?>  
 
                   <div class="col-xs-4 col-xs-offset-8">
-              <!--        <button class="btn btn-sm btn-clear-g">VER DETALLES</button> -->
-              <button class="btn btn-sm btn-theme04        
+                  <form action="editar_placa.php" method="get">
+
+
+      
                   
                   <?php
 if($tuplasaafectadas_placa1>0){
+  echo '
+  <input type="hidden" name="id_placa_entrada" value=';
+ echo $id_placa_entrada;
+
+  echo '>
+<input type="hidden" name="entrada_salida" value="E">
+
+              <button class="btn btn-sm btn-theme04">CORREGIR/VER DETALLES</button>
+              </form>
+              ';
 
 }
-else{
- echo 'disabled';
 
-}
 
 ?>
-">VER DETALLES/CORREGIR</button>
+
                     </div>
                  
                     <div class="sp-title">
@@ -779,8 +794,40 @@ else{
                       <?php
 
 if($tuplasaafectadas_placa1>0){
- echo '<h3 style="color:yellow;" >Placa:';
-  echo $deteccion_entrada; 
+
+  
+
+  if($deteccion_entrada_correcion!='NA'){
+    echo '<h3 style="color:yellow;" >Placa:';
+    echo  $deteccion_entrada_correcion;
+    echo '</h3>';
+
+
+  }
+  else if($error_entrada!='S'){
+    echo '<h3 style="color:yellow;" >Placa:';
+
+    echo $deteccion_entrada;
+    echo '</h3>';
+
+
+  }
+  else{
+    echo '<h3 style="color:red;" >Placa:';
+    echo $deteccion_entrada;
+    echo '</h3>';
+
+    echo '<h5 style="color:red;" >';
+    echo 'Posiblemente hay un ERROR';
+    echo '</h5>';
+
+    echo '<h5 style="color:red;" >';
+    echo 'en esta placa';
+    echo '</h5>';
+
+
+
+  }
 
 
 
@@ -789,10 +836,17 @@ else{
 
 
 }
+/*
+echo '<h5 style="color:red;" >Placa:';
+
+ 
+echo 'Esta placa puede tener errores, presione el boton para rojo para corregir';
+
+ echo '</h5>';*/
     
           ?>
 
-                      </h3>
+                  
                     </div>
                   
                   </div>
@@ -851,19 +905,41 @@ else{
 ?>  
 
                   <div class="col-xs-4 col-xs-offset-8">
-                  <button class="btn btn-sm btn-theme04        
+
+
+
+               
                   
                   <?php
 if($tuplasaafectadas_placa2>0){
+  echo'<form action="editar_placa.php" method="get">
+
+
+  <input type="hidden" name="id_placa_entrada" value=';
+  
+  echo $id_placa_salida; 
+  echo '>
+  <input type="hidden" name="entrada_salida" value="S">
+  <button class="btn btn-sm btn-theme04">CORREGIR/VER DETALLES</button>
+
+  </form>';
 
 }
-else{
- echo 'disabled';
+else{  
+  
+  
+
+  
+  
+  
+  
+  
+  
 
 }
 
 ?>
-">VER DETALLES/CORREGIR</button>
+
                     </div>
               
                     <div class="sp-title">
@@ -871,8 +947,15 @@ else{
 
                     <?php
                     if($tuplasaafectadas_placa2>0){
- echo '<h3 style="color:yellow;" >Placa:';
-  echo $deteccion_salida; 
+                      echo '<h3 style="color:yellow;" >Placa:';
+
+                      if($deteccion_salida_correcion!='NA'){
+                        echo $deteccion_salida_correcion;
+                      }
+                      else{
+                        echo $deteccion_salida;
+                    
+                      }
 
 
 
@@ -1363,7 +1446,7 @@ else{
 
 
   <script type="text/javascript">
-    $(document).ready(function() {
+    /*$(document).ready(function() {
       var unique_id = $.gritter.add({
         // (string | mandatory) the heading of the notification
         title: 'Bienvenido a Parkiate-ki estimado usuario administrador:',
@@ -1379,7 +1462,7 @@ else{
       });
 
       return false;
-    });
+    });*/
   </script>
   <script type="application/javascript">
     $(document).ready(function() {
@@ -1423,6 +1506,19 @@ else{
       console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
     }
   </script>
+
+	
+<script>
+    $(document).ready(function() {
+        // auto refresh page after 1 second
+        setInterval('refreshPage()', 30000);
+    });
+ 
+    function refreshPage() { 
+        location.reload(); 
+    }
+</script>
+
 </body>
 
 </html>

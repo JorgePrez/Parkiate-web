@@ -425,18 +425,30 @@ else{
 
         </td>";
 
+        //comprobando si hubo correción , si lo hubo mostrar esa.
 
+       if($deteccion_entrada_correccion!='NA'){
          echo	"<td>
 
-        <h4> <span class='label label-default'>
-         
+        <h4> <span class='label label-default'>  
+        $deteccion_entrada_correccion
+               </span>
+               </h4>
+        
+        
+        </td>";
+       }
+       else{
+        echo	"<td>
+
+        <h4> <span class='label label-default'>  
         $deteccion_entrada
                </span>
                </h4>
         
         
         </td>";
-
+       }
        //  echo	"<td>$deteccion_entrada</td>";
          /*echo	"<td>$foto_placa_entrada</td>";*/
        /* echo	"<td>         
@@ -720,6 +732,18 @@ echo	"<td>$fecha</td>";
       jQuery(".fancybox").fancybox();
     });
   </script>
+
+<script>
+    $(document).ready(function() {
+        // auto refresh page after 1 second
+        setInterval('refreshPage()', 30000);
+    });
+ 
+    function refreshPage() { 
+        location.reload(); 
+    }
+</script>
+
   
   <script type="text/javascript">
     /* Formating function for row details */
