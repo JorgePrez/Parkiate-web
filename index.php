@@ -93,13 +93,20 @@ else{
 
 $id_parqueo=$_COOKIE["id_parqueo"];
 //ID_FIREBASE
-$query = "select id_placa_entrada,foto_auto_entrada,deteccion_entrada from placas_entrada where hora_deteccion_entrada =(select max(hora_deteccion_entrada) from placas_entrada) AND id_parqueo='$id_parqueo'";
+$query = "select id_placa_entrada,foto_auto_entrada,deteccion_entrada,hora_deteccion_entrada,error_entrada,deteccion_entrada_correcion from placas_entrada where hora_deteccion_entrada =(select max(hora_deteccion_entrada) from placas_entrada) AND id_parqueo='$id_parqueo'";
 //                       $query = "select * from prospectos_template";
 
 $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
+
+
+
+
 $id_placa_entrada='';
 $foto_auto_entrada1='';
 $deteccion_entrada='';
+$hora_deteccion_entrada='';
+$error_entrada='';
+$deteccion_entrada_correcion='';
 
 $tuplasaafectadas_placa1 = pg_affected_rows($result);
 
@@ -109,25 +116,34 @@ while ($row = pg_fetch_row($result)) {
      $id_placa_entrada=$row[0];
      $foto_auto_entrada1=$row[1];
      $deteccion_entrada=$row[2];
+     $hora_deteccion_entrada=$row[3];
+     $error_entrada=$row[4];
+     $deteccion_entrada_correcion=$row[5];
  
 }
 
 pg_free_result($result);
 
 
-$query = "select id_placa_salida,foto_auto_salida,deteccion_salida from placas_salida where hora_deteccion_salida = (select max(hora_deteccion_salida) from placas_salida) AND id_parqueo='$id_parqueo'";
+$query = "select id_placa_salida,foto_auto_salida,deteccion_salida,hora_deteccion_salida,error_salida,deteccion_salida_correcion from placas_salida where hora_deteccion_salida = (select max(hora_deteccion_salida) from placas_salida) AND id_parqueo='$id_parqueo'";
 //                       $query = "select * from prospectos_template";
 
 $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
 $id_placa_salida='';
 $foto_auto_salida1='';
 $deteccion_salida='';
+$hora_deteccion_salida='';
+$error_salida='';
+$deteccion_salida_correcion='';
 
 
 while ($row = pg_fetch_row($result)) { 
      $id_placa_salida=$row[0];
      $foto_auto_salida1=$row[1];
      $deteccion_salida=$row[2];
+     $hora_deteccion_salida=$row[3];
+     $error_salida=$row[4];
+     $deteccion_salida_correcion=$row[5];
  
 }
 
@@ -140,9 +156,9 @@ pg_free_result($result);
 
 ?>
 #spotify1 {
-	/*background: url(../placa_entrada.jpeg) no-repeat center top;*/  
-	background: url(<?php echo $foto_auto_entrada1?>) no-repeat center top;
-    margin-top: -15px;
+  background: url(<?php echo $foto_auto_entrada1?>) no-repeat center top;
+/*	background: url(https://res.cloudinary.com/parkiate-ki/image/upload/v1653981444/autos/entrada/vehiculo/cpj3hx32gphfdkqgccgh.jpg) no-repeat center top; */
+  margin-top: -15px;
 	background-attachment: relative;
 	background-position: center center;
 	min-height: 220px;
@@ -163,21 +179,28 @@ pg_free_result($result);
 	margin-top: 5px;
 }
 
-#spotify1 .btn-theme03  {
+#spotify1 .btn-theme04  {
 	top: 15%;
 	right: 10px;
 	position: absolute;
 	margin-top: 5px;
 }
 #spotify1 .sp-title {
-	bottom: 15%;
-	left: 25px;
+	bottom: 60%;   /*  	bottom: 15%;   left: 25px; */
+	left: 75px;
 	position: absolute;
 	color: #efefef;
 }
-#spotify1 .sp-title h3 {
+#spotify1 .sp-title h4 {
 	font-weight: 900;
 }
+#spotify1 .sp-title h3 {
+    font-weight: 900;
+    display: table; /* keep the background color wrapped tight */
+    margin: 0px auto 0px auto; /* keep the table centered */
+    padding:5px;font-size:20px;background-color:black;color:#ffffff;
+}
+
 #spotify1 .play{
 	bottom: 18%;
 	right: 25px;
@@ -222,13 +245,20 @@ pg_free_result($result);
 	margin-top: 5px;
 }
 #spotify2 .sp-title {
-	bottom: 15%;
-	left: 25px;
+	bottom: 60%;
+	left: 75px;
 	position: absolute;
 	color: #efefef;
 }
-#spotify2 .sp-title h3 {
+#spotify2 .sp-title h4 {
 	font-weight: 900;
+}
+
+#spotify2 .sp-title h3 {
+    font-weight: 900;
+    display: table; /* keep the background color wrapped tight */
+    margin: 0px auto 0px auto; /* keep the table centered */
+    padding:5px;font-size:20px;background-color:black;color:#ffffff;
 }
 #spotify2 .play{
 	bottom: 18%;
@@ -287,7 +317,7 @@ pg_free_result($result);
 	color: #efefef;
 }
 #spotify3 .sp-title h3 {
-	font-weight: 900;
+	font-weight: 900; /* 900*/
 }
 #spotify3 .play{
 	bottom: 18%;
@@ -547,12 +577,18 @@ include 'logout.php';
 
 
 <li class="mt">
-<a href="MisParqueos.php">
-  <i class="fa fa-camera"></i>
-  <span>Flujo de autos(placas)</span>
-  </a>
+            <a href="javascript:;">
+              <i class="fa fa-camera"></i>
+              <span>Flujo de autos(placas)</span>
+              </a>
+            <ul class="sub">
+            <li><a href="entrada.php">Registro de Autos Entrada</a></li>
+              <li><a href="salida.php">Registro de Autos Salida</a></li>
+              <li><a href="flujo_autos.php">Entrada y Salida por Placa</a></li>
+              <li><a href="autos.php">Registro por auto</a></li>
+            </ul>
+          </li>
 
-</li>
 <li class="mt">
 <a href="RegistrarParqueo1.php">
   <i class="fa fa-external-link"></i>
@@ -723,7 +759,7 @@ else{
 
                   <div class="col-xs-4 col-xs-offset-8">
               <!--        <button class="btn btn-sm btn-clear-g">VER DETALLES</button> -->
-              <button class="btn btn-sm btn-theme03        
+              <button class="btn btn-sm btn-theme04        
                   
                   <?php
 if($tuplasaafectadas_placa1>0){
@@ -764,7 +800,26 @@ else{
                   <?php
                   if($tuplasaafectadas_placa2>0){
 
-                    echo   'Último auto en llegar';
+               //     echo   'Último auto en llegar';
+
+                    $separada = explode(' ', $hora_deteccion_entrada);
+
+                    $separada2 = explode('-', $separada[0]);
+            
+                    $separada3 = explode(':', $separada[1]);
+            
+                    $hora_min_entrada = $separada3[0]. ':'.$separada3[1];
+            
+                  $fecha_formato_entrada = $separada2[2].'/'.$separada2[1];
+
+                    $mensajeE='Último auto en llegar ';
+                    $timestamp_entrada = '('.$fecha_formato_entrada. ' a las ' . $hora_min_entrada. ')';
+                    $mensajeEntrada= $mensajeE . $timestamp_entrada;
+                    
+                    echo $mensajeEntrada;
+
+
+                    //Obtener timestamp
 
 
 }
@@ -837,9 +892,24 @@ else{
                   <p class="followers"><i class="fa fa-arrow-left"></i> 
                   <?php
                   if($tuplasaafectadas_placa2>0){
+                   
 
-                    echo 'Último auto en irse';
+                    $separada = explode(' ', $hora_deteccion_salida);
 
+                    $separada2 = explode('-', $separada[0]);
+            
+                    $separada3 = explode(':', $separada[1]);
+            
+                    $hora_min_salida = $separada3[0]. ':'.$separada3[1];
+            
+                  $fecha_formato_salida = $separada2[2].'/'.$separada2[1];
+
+                    $mensajeE='Último auto en Irse ';
+                    $timestamp_salida= '('.$fecha_formato_salida. ' a las ' . $hora_min_salida. ')';
+                    $mensajeSalida= $mensajeE . $timestamp_salida;
+                    
+                    echo $mensajeSalida;
+                
 
 
 }

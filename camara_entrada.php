@@ -86,7 +86,7 @@ $id_firebase='';
 if(str_contains($status, '1'))
 {
 
-$received = file_get_contents('http://192.168.1.12/picture');
+$received = file_get_contents('http://192.168.1.10/picture');
 
 
 $img = 'placa_entrada.jpeg';
@@ -247,9 +247,13 @@ $h_a= $ymax_auto-$ymin_auto;
 //https://cloudinary.com/documentation/transformations_on_upload
 
 
-$response_placa=json_encode($uploader->upload($img,['folder' => 'autos/entrada/full']));
+$response_full=json_encode($uploader->upload($img,['folder' => 'autos/entrada/full']));
+$response_placa=json_encode($uploader->upload($img,['folder' => 'autos/entrada/placa','width' => $w, 'height' => $h, 'crop' => 'crop' , 'x' => $x, 'y' => $y]));
 $response_auto=json_encode($uploader->upload($img,['folder' => 'autos/entrada/vehiculo','width' => $w_a, 'height' => $h_a, 'crop' => 'crop' , 'x' => $x_a, 'y' => $y_a]));
 
+
+$imagen_full = json_decode($response_full);
+$imagen_full=$imagen_full->secure_url;
 
 
 $imagen_placa = json_decode($response_placa);
@@ -278,7 +282,7 @@ for($i=0;$i < 6;$i++){
 
 
 
-$query = "INSERT INTO placas_entrada VALUES ('$id_placa_entrada',  '$now','$imagen_auto', '$placa_detectada','$id_parqueo','$imagen_placa','$placa_necesita_correccion','$correccion_deteccion')";
+$query = "INSERT INTO placas_entrada VALUES ('$id_placa_entrada',  '$now','$imagen_auto', '$placa_detectada','$id_parqueo','$imagen_full','$placa_necesita_correccion','$correccion_deteccion','$imagen_placa')";
 $result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
 $tuplasaafectadas = pg_affected_rows($result);
 pg_free_result($result);

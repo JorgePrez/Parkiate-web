@@ -226,12 +226,18 @@ if($tuplasaafectadas==1){
 
 
 <li class="mt">
-<a href="MisParqueos.php">
-  <i class="fa fa-camera"></i>
-  <span>Flujo de autos(placas)</span>
-  </a>
+            <a href="javascript:;">
+              <i class="fa fa-camera"></i>
+              <span>Flujo de autos(placas)</span>
+              </a>
+            <ul class="sub">
+              <li><a href="entrada.php">Registro de Autos Entrada</a></li>
+              <li><a href="salida.php">Registro de Autos Salida</a></li>
+              <li><a href="flujo_autos.php">Entrada y Salida por Placa</a></li>
+              <li><a href="autos.php">Registro por auto</a></li>
+            </ul>
+          </li>
 
-</li>
 <li class="mt">
 <a href="RegistrarParqueo1.php">
   <i class="fa fa-external-link"></i>

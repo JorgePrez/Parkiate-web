@@ -70,7 +70,7 @@ $status = $database->getReference($ref_tabla)->getValue();
 if(str_contains($status, '1'))
 
 {
-$received = file_get_contents('http://192.168.1.9/picture');
+$received = file_get_contents('http://192.168.1.11/picture');
 
 
 $img = 'placa_salida.jpeg';
@@ -91,7 +91,6 @@ $data = array(
     'regions' => 'gp', //gt
     'camera_id' => 'camara_salida', // Optional , camara_salida
 );
-
 // Prepare new cURL resource
 $ch = curl_init('https://api.platerecognizer.com/v1/plate-reader/');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -106,9 +105,19 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
     )
 );
 
+$result = curl_exec($ch);
+
+
+
+$response = json_decode($result);
+print_r($response);
+
+curl_close($ch);
+
+
+
 $now = new Datetime('now');
 $now = $now->format('Y-m-d H:i:s');
-
 
 
 
@@ -120,16 +129,16 @@ $now = $now->format('Y-m-d H:i:s');
 
 
 // Submit the POST request and close cURL session handle
-$result = curl_exec($ch);
+//$result = curl_exec($ch);
 
 
 
-$response = json_decode($result);
+//$response = json_decode($result);
 
 print_r($response);
 
 
-curl_close($ch);
+//curl_close($ch);
 
 //print_r($response->results[0]);
 //DEL RESPONSE NECESITO: 
@@ -228,10 +237,13 @@ $h_a= $ymax_auto-$ymin_auto;
 //$response_placa=json_encode($uploader->upload($img,['folder' => 'autos/salida/full','width' => $w, 'height' => $h, 'crop' => 'crop' , 'x' => $x, 'y' => $y]));
 
 
-$response_placa=json_encode($uploader->upload($img,['folder' => 'autos/salida/full']));
+$response_full=json_encode($uploader->upload($img,['folder' => 'autos/salida/full']));
+$response_placa=json_encode($uploader->upload($img,['folder' => 'autos/salida/placa','width' => $w, 'height' => $h, 'crop' => 'crop' , 'x' => $x, 'y' => $y]));
 $response_auto=json_encode($uploader->upload($img,['folder' => 'autos/salida/vehiculo','width' => $w_a, 'height' => $h_a, 'crop' => 'crop' , 'x' => $x_a, 'y' => $y_a]));
 
 
+$imagen_full = json_decode($response_full);
+$imagen_full=$imagen_full->secure_url;
 
 $imagen_placa = json_decode($response_placa);
 $imagen_placa=$imagen_placa->secure_url;
@@ -258,7 +270,7 @@ for($i=0;$i < 6;$i++){
 
 $correccion_deteccion='NA';
 
-$query = "INSERT INTO placas_salida VALUES ('$id_placa_entrada',  '$now','$imagen_auto', '$placa_detectada','$id_parqueo','$imagen_placa','$placa_necesita_correccion','$correccion_deteccion')";
+$query = "INSERT INTO placas_salida VALUES ('$id_placa_entrada',  '$now','$imagen_auto', '$placa_detectada','$id_parqueo','$imagen_full','$placa_necesita_correccion','$correccion_deteccion','$imagen_placa')";
 $result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
 $tuplasaafectadas = pg_affected_rows($result);
 pg_free_result($result);
