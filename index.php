@@ -266,6 +266,13 @@ pg_free_result($result);
     margin: 0px auto 0px auto; /* keep the table centered */
     padding:5px;font-size:20px;background-color:black;color:#ffffff;
 }
+
+#spotify2 .sp-title h5 {
+    display: table; /* keep the background color wrapped tight */
+    margin: 0px auto 0px auto; /* keep the table centered */
+    background-color:black;color:#ffffff;
+}
+
 #spotify2 .play{
 	bottom: 18%;
 	right: 25px;
@@ -947,15 +954,41 @@ else{
 
                     <?php
                     if($tuplasaafectadas_placa2>0){
-                      echo '<h3 style="color:yellow;" >Placa:';
+                 
 
-                      if($deteccion_salida_correcion!='NA'){
-                        echo $deteccion_salida_correcion;
-                      }
-                      else{
-                        echo $deteccion_salida;
-                    
-                      }
+  if($deteccion_salida_correcion!='NA'){
+    echo '<h3 style="color:yellow;" >Placa:';
+    echo  $deteccion_salida_correcion;
+    echo '</h3>';
+
+
+  }
+  else if($error_salida!='S'){
+    echo '<h3 style="color:yellow;" >Placa:';
+
+    echo $deteccion_salida;
+    echo '</h3>';
+
+
+  }
+  else{
+    echo '<h3 style="color:red;" >Placa:';
+    echo $deteccion_salida;
+    echo '</h3>';
+
+    echo '<h5 style="color:red;" >';
+    echo 'Posiblemente hay un ERROR';
+    echo '</h5>';
+
+    echo '<h5 style="color:red;" >';
+    echo 'en esta placa';
+    echo '</h5>';
+
+
+
+  }
+
+
 
 
 

@@ -1077,7 +1077,7 @@ echo "<a class='btn btn-success btn-sm pull-left' href=Editar_cara.php?id_parque
             <section class="task-panel tasks-widget">
               <div class="panel-heading">
                 <div class="pull-left">
-                  <h4><i class="fa fa-pircture-o"></i> Imagen del parqueo</h4>
+                  <h4><i class="fa fa-picture-o"></i> Imagen del parqueo</h4>
                 </div>
                 <br>
               </div>

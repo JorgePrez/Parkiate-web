@@ -126,7 +126,17 @@ if($martes_entrada!='00:00:00'){
 
     if(!($detalles=='Pendiente')){
 
-      header("Location: 5RegistrarImagen.php");
+
+      if(!($imagenes=='Pendiente')){
+
+        header("Location: index.php");
+
+
+      }else{
+        header("Location: 5RegistrarImagen.php");
+
+      }
+
 
     }
     else{
