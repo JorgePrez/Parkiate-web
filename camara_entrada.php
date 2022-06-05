@@ -299,6 +299,10 @@ $result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_e
 $tuplasaafectadas = pg_affected_rows($result);
 pg_free_result($result);
 
+
+//sino tiene error hara lo sigueinte
+
+if($placa_necesita_correccion=='N'){ 
 // AUTO 
 $query = "Select  * FROM auto WHERE placa='$placa_detectada' AND id_parqueo='$id_parqueo'";
 $resultadoauto = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
@@ -375,7 +379,10 @@ $tuplasaafectadas = pg_affected_rows($result);
 pg_free_result($result);
 
 echo "camara_entrada registrando";
-
+}
+else{
+  echo "error presente no se registro ni auto ni entrada_salida";
+}
 //Comprobar si existe un auto con la placa detectada, sino crear uno
 }
 else{
