@@ -77,7 +77,7 @@ $id_firebase='';
               }
 
 
-    $ref_tabla="/Parking_Status/".$id_firebase."/"."entrada"."/estado";
+    $ref_tabla="/Parking_Status/".$id_firebase."/"."salida"."/estado";
 
     
     $status = $database->getReference($ref_tabla)->getValue();
@@ -143,6 +143,7 @@ $result = curl_exec($ch);
 $response = json_decode($result);
 
 //print_r($response);
+//echo $response;
 
 
 curl_close($ch);
@@ -154,8 +155,11 @@ curl_close($ch);
   //3. BOUNDIX BOX DEL AUTO , PARA EDITAR 
    // OTROS PARAMETROS : score ,candidates 
 
+print_r($response);
 
 //variable del boundix box de la placa 
+
+if(!($response->results[0]===null)){
  
 $xmin_placa =$response->results[0]->box->xmin;
 $ymin_placa =$response->results[0]->box->ymin;
@@ -206,9 +210,17 @@ else{
 
   if(is_numeric($primer_caracter)){
     $placa_detectada='P'.$placa_detectada;
+  }else{
+    $placa_detectada= substr($placa_detectada,1);
   }
 
   $placa_necesita_correccion='S';
+}
+
+if(preg_match('/^[A-Z]{1}\d{3}[BCDFGHJKLMNPQRSTVWXYZ]{3}$/',$placa_detectada) and strlen($placa_detectada)==7){
+
+  $placa_necesita_correccion='N';
+
 }
 
 
@@ -282,13 +294,95 @@ for($i=0;$i < 6;$i++){
 
 
 
-$query = "INSERT INTO placas_entrada VALUES ('$id_placa_entrada',  '$now','$imagen_auto', '$placa_detectada','$id_parqueo','$imagen_full','$placa_necesita_correccion','$correccion_deteccion','$imagen_placa')";
+$query = "INSERT INTO placas_entrada VALUES ('$id_placa_entrada',  '$now','$imagen_auto', '$placa_detectada','$id_parqueo','$imagen_full','$placa_necesita_correccion','$correccion_deteccion','$imagen_placa','D')";
+$result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
+$tuplasaafectadas = pg_affected_rows($result);
+pg_free_result($result);
+
+// AUTO 
+$query = "Select  * FROM auto WHERE placa='$placa_detectada' AND id_parqueo='$id_parqueo'";
+$resultadoauto = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
+$tuplasaafectadas4 = pg_affected_rows($resultadoauto);
+
+
+$id_auto='';
+
+
+ 
+
+if($tuplasaafectadas4>0){
+  while ($row = pg_fetch_row($resultadoauto)) {
+    $id_auto=$row[0];
+}
+  
+pg_free_result($resultadoauto);
+
+echo "id existrente";
+echo $id_auto;
+
+//UPDATEIMAGEN
+
+$query= "UPDATE auto SET foto_delante='$imagen_auto' WHERE id_auto='$id_auto' AND id_parqueo='$id_parqueo'";
+
 $result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
 $tuplasaafectadas = pg_affected_rows($result);
 pg_free_result($result);
 
 
+}else{
+
+
+  pg_free_result($resultadoauto);
+
+$key = '';
+$pattern = '1234567890ABCDEFGH123456789';
+$max = strlen($pattern)-1;
+for($i=0;$i < 6;$i++){
+     $key .= $pattern[mt_rand(0,$max)]; 
+    } 
+
+
+  $id_auto=$key;
+
+  $query = "INSERT INTO auto(
+    id_auto, placa, numero_visitas, modelo_auto, foto_delante, foto_atras, id_parqueo, id_usuario_app)
+    VALUES ('$id_auto', '$placa_detectada', 0, 'Por Definir', '$imagen_auto', 'Pendiente', '$id_parqueo', 'Por definir');";
+$result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
+$tuplasaafectadas = pg_affected_rows($result);
+pg_free_result($result);
+
+echo "Registrando nuevo auto";
+  }
+
+
+
+$key = '';
+$pattern = '1234567890ABCDEFGH123456789';
+$max = strlen($pattern)-1;
+for($i=0;$i < 6;$i++){
+     $key .= $pattern[mt_rand(0,$max)]; 
+    } 
+
+
+  $id_entrada_salida=$key;
+
+$query="INSERT INTO placas_entrada_salida(
+	id_entrada_salida, id_deteccion_entrada, id_deteccion_salida, id_auto, id_parqueo, id_servicio_app,tiempo_total)
+	VALUES ('$id_entrada_salida', '$id_placa_entrada', 'NA', '$id_auto', '$id_parqueo', 'NA','NA');";
+
+$result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
+$tuplasaafectadas = pg_affected_rows($result);
+pg_free_result($result);
+
 echo "camara_entrada registrando";
+
+//Comprobar si existe un auto con la placa detectada, sino crear uno
+}
+else{
+  echo "en la foto no hay ninguna placa";
+
+}
+
 
 }
 else {

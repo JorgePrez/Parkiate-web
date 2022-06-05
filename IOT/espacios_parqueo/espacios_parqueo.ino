@@ -1,8 +1,9 @@
 
-#include <ESP8266WiFi.h>   //node mcu
+#include "FirebaseESP32.h"
+
+//#include <ESP8266WiFi.h>   //node mcu
 
 
-#include "FirebaseESP8266.h"
 
 
 //Firebase settings
@@ -16,23 +17,35 @@
 FirebaseData data_park;
 
 //Espacio1
-const int trigPin1 = 5;
-const int echoPin1 = 16;
+const int trigPin1 = 33;
+const int echoPin1 = 39;
+const int led_1verde= 13;
+const int led_1rojo = 14;
+
 
 //Espacio2
 
-const int trigPin2 = 0;
-const int echoPin2 = 4;
-
-const int trigPin3 = 14;
-const int echoPin3 = 12;
-
-const int trigPin4= 13;
-const int echoPin4 = 15;
+const int trigPin2 = 32;
+const int echoPin2 = 36;
+const int led_2verde= 23;
+const int led_2rojo = 22;
 
 
-//const int trigPin5= 3;
-//const int echoPin5 = 1;
+const int trigPin3 = 25;
+const int echoPin3 = 34;
+const int led_3verde= 19;
+const int led_3rojo = 21;
+
+const int trigPin4= 12;
+const int echoPin4 = 35;
+const int led_4verde= 5;
+const int led_4rojo = 18;
+
+
+const int trigPin5= 26;
+const int echoPin5 = 27;
+const int led_5verde= 17;
+const int led_5rojo = 16;
 
 /*
 
@@ -81,7 +94,7 @@ String id3 = "-N02alg3lI1WRKBLKyWt";
 
 String id4= "-N02bNZNPsszn9wekk32";
 
-//String id5= "-N02bSTo1QKk2_q4nAl5";
+String id5= "-N3jbyztY7Oj5jN2n2VH";
 
 // Rutas para cambiar el valor   : /Parking_Status/parqueo1/p1
 
@@ -93,7 +106,7 @@ String doc3= "/Parking_Status/"+id_parqueo+"/"+id3+"/estado";
 
 String doc4= "/Parking_Status/"+id_parqueo+"/"+id4+"/estado";
 
-//String doc5= "/Parking_Status/"+id_parqueo+"/"+id5+"/estado";
+String doc5= "/Parking_Status/"+id_parqueo+"/"+id5+"/estado";
 
 
 
@@ -136,8 +149,25 @@ void setup() {
   pinMode(trigPin1, OUTPUT); // Sets the trigPin as an Output
   pinMode(echoPin1, INPUT); // Sets the echoPin as an Input
 
+    pinMode(led_1verde, OUTPUT); // Sets the echoPin as an Input
+  pinMode(led_1rojo, OUTPUT); // Sets the echoPin as an Input
+
+
     pinMode(trigPin2, OUTPUT); // Sets the trigPin as an Output
   pinMode(echoPin2, INPUT); // Sets the echoPin as an Input
+  
+    pinMode(led_2verde, OUTPUT); // Sets the echoPin as an Input
+  pinMode(led_2rojo, OUTPUT); // Sets the echoPin as an Input
+
+      pinMode(led_3verde, OUTPUT); // Sets the echoPin as an Input
+  pinMode(led_3rojo, OUTPUT); 
+
+    pinMode(led_4verde, OUTPUT); // Sets the echoPin as an Input
+  pinMode(led_4rojo, OUTPUT); 
+      
+      pinMode(led_5verde, OUTPUT); // Sets the echoPin as an Input
+  pinMode(led_5rojo, OUTPUT); 
+  
 
   
     pinMode(trigPin3, OUTPUT); // Sets the trigPin as an Output
@@ -146,8 +176,8 @@ void setup() {
       pinMode(trigPin4, OUTPUT); // Sets the trigPin as an Output
   pinMode(echoPin4, INPUT);
 
-  //    pinMode(trigPin5, OUTPUT); // Sets the trigPin as an Output
- // pinMode(echoPin5, INPUT);
+      pinMode(trigPin5, OUTPUT); // Sets the trigPin as an Output
+  pinMode(echoPin5, INPUT);
 
 
    WiFi.begin(ssid,password);
@@ -196,6 +226,11 @@ void loop() {
     if (distanceCm1 < 10) {                      //if distance is less than 6cm then on led 
         Serial.println("1:Occupied ");
                   Firebase.setBool(data_park,doc1, false );  // send bool to firebase
+                                    digitalWrite(led_1verde,LOW);
+
+                                                      digitalWrite(led_1rojo,HIGH);
+
+
 
   }
 
@@ -203,6 +238,10 @@ void loop() {
         Serial.println("1:Available ");
 
                   Firebase.setBool(data_park,doc1, true );  // send bool to firebase
+
+                    digitalWrite(led_1verde,HIGH);
+
+                                                      digitalWrite(led_1rojo,LOW);
 
   }
 
@@ -242,6 +281,13 @@ void loop() {
     if (distanceCm2 < 10) {                      //if distance is less than 6cm then on led 
         Serial.println("2_Occupied ");
                   Firebase.setBool(data_park,doc2, false );  // send bool to firebase
+                      
+
+                                                      
+                      digitalWrite(led_2verde,HIGH);
+
+                                                      digitalWrite(led_2rojo,LOW);
+
 
   }
 
@@ -249,6 +295,9 @@ void loop() {
         Serial.println("2_Available ");
 
                   Firebase.setBool(data_park,doc2, true );  // send bool to firebase
+                  digitalWrite(led_2verde,LOW);
+
+                                                      digitalWrite(led_2rojo,HIGH);
 
   }
   
@@ -291,6 +340,10 @@ void loop() {
     if (distanceCm3 < 10) {                      //if distance is less than 6cm then on led 
         Serial.println("3_Occupied ");
                   Firebase.setBool(data_park,doc3, false );  // send bool to firebase
+                                                       
+                      digitalWrite(led_3verde,HIGH);
+
+                                                      digitalWrite(led_3rojo,LOW);
 
   }
 
@@ -298,6 +351,9 @@ void loop() {
         Serial.println("3_Available ");
 
                   Firebase.setBool(data_park,doc3, true );  // send bool to firebase
+                           digitalWrite(led_3verde,LOW);
+
+                                                      digitalWrite(led_3rojo,HIGH);
 
   }
 
@@ -335,6 +391,10 @@ void loop() {
     if (distanceCm4 < 10) {                      //if distance is less than 6cm then on led 
         Serial.println("4_Occupied ");
                   Firebase.setBool(data_park,doc4, false );  // send bool to firebase
+                  
+                    digitalWrite(led_4verde,HIGH);
+
+                                                      digitalWrite(led_4rojo,LOW);
 
   }
 
@@ -343,9 +403,14 @@ void loop() {
 
                   Firebase.setBool(data_park,doc4, true );  // send bool to firebase
 
+                  
+                    digitalWrite(led_4rojo,HIGH);
+
+                                                      digitalWrite(led_4verde,LOW);
+
   }
   
-  /*
+  
   digitalWrite(trigPin5, LOW);
   delayMicroseconds(2);
   // Sets the trigPin on HIGH state for 10 micro seconds
@@ -379,6 +444,9 @@ void loop() {
     if (distanceCm5 < 10) {                      //if distance is less than 6cm then on led 
         Serial.println("5_Occupied ");
                   Firebase.setBool(data_park,doc5, false );  // send bool to firebase
+                  digitalWrite(led_5verde,HIGH);
+
+                                                      digitalWrite(led_5rojo,LOW);
 
   }
 
@@ -387,9 +455,13 @@ void loop() {
 
                   Firebase.setBool(data_park,doc5, true );  // send bool to firebase
 
+                   digitalWrite(led_5verde,LOW);
+
+                                                      digitalWrite(led_5rojo,HIGH);
+
   }
   
-*/
+
   
   delay(1000);
 
