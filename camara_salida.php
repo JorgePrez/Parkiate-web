@@ -62,7 +62,7 @@ while ($row = pg_fetch_row($result12)) {
      
 }
 
-$ref_tabla="/Parking_Status/".$id_firebase."/"."entrada"."/estado";
+$ref_tabla="/Parking_Status/".$id_firebase."/"."salida"."/estado";
 
     
 $status = $database->getReference($ref_tabla)->getValue();
@@ -70,7 +70,7 @@ $status = $database->getReference($ref_tabla)->getValue();
 if(str_contains($status, '1'))
 
 {
-$received = file_get_contents('http://192.168.1.11/picture');
+$received = file_get_contents('http://192.168.1.4/picture');
 
 
 $img = 'placa_salida.jpeg';

@@ -15,16 +15,17 @@
 
 FirebaseData data_park;
 
-//Entrada
-const int trigPin1 = 5;
-const int echoPin1 = 16;
-const int led_salida = 4;
+//Sensor1
+const int trigPin1 = 0;
+const int echoPin1 = 4;
+const int led_verde1 = 16;
+const int led_rojo1=5;
 
-//Salida
-
-const int trigPin2 = 12;
-const int echoPin2 = 14;
-const int led_entrada = 13;
+//Sensor2
+const int trigPin2 = 2;
+const int echoPin2 = 13;
+const int led_verde2 = 14;
+const int led_rojo2=12 ;
 
 /*
 const int trigPin3 = 14;
@@ -78,8 +79,8 @@ const String id_parqueo="-Mq73KmXyn-fx7tlnIQn";
 
 //String id1= "-N-z1WyD84Z1_hHh4nkQ";
 
-String id1= "salida";  
-String id2= "entrada";  
+String id1= "sensor1";  
+String id2= "sensor2";  
 
 
 /*
@@ -144,13 +145,19 @@ void setup() {
   pinMode(trigPin1, OUTPUT); // Sets the trigPin as an Output
   pinMode(echoPin1, INPUT); // Sets the echoPin as an Input
 
-  pinMode(led_salida, OUTPUT); // Sets the echoPin as an Input
+  pinMode(led_verde1, OUTPUT); // Sets the echoPin as an Input
+
+    pinMode(led_rojo1, OUTPUT); // Sets the echoPin as an Input
+
 
 
     pinMode(trigPin2, OUTPUT); // Sets the trigPin as an Output
   pinMode(echoPin2, INPUT); // Sets the echoPin as an Input*/
 
-    pinMode(led_entrada, OUTPUT); // Sets the echoPin as an Input
+  pinMode(led_verde2, OUTPUT); // Sets the echoPin as an Input
+
+      pinMode(led_rojo2, OUTPUT); // Sets the echoPin as an Input
+
 
 
   /*
@@ -207,20 +214,23 @@ void loop() {
 
 
     
-    if (distanceCm1 < 20) {                      //if distance is less than 6cm then on led 
+    if (distanceCm1 < 10) {                      //if distance is less than 6cm then on led 
         Serial.println("1:Occupied ");
                   Firebase.setBool(data_park,doc1, true );  // send bool to firebase
 
-                  digitalWrite(led_salida,HIGH);
+                  digitalWrite(led_verde1,HIGH);
+                                     digitalWrite(led_rojo1,LOW);
 
-  }
+  }         
 
   else{                        //if distance is greater than 6cm then off led 
         Serial.println("1:Available ");
 
                   Firebase.setBool(data_park,doc1, false );  // send bool to firebase
 
-                                    digitalWrite(led_salida,LOW);
+                                    digitalWrite(led_verde1,LOW);
+                                                                         digitalWrite(led_rojo1,HIGH);
+
 
 
   }
@@ -257,10 +267,11 @@ void loop() {
 
 
     
-    if (distanceCm2 < 20) {                      //if distance is less than 6cm then on led 
+    if (distanceCm2 < 10) {                      //if distance is less than 6cm then on led 
         Serial.println("2_Occupied ");
                   Firebase.setBool(data_park,doc2, true );  // send bool to firebase
-                                    digitalWrite(led_entrada,HIGH);
+  digitalWrite(led_verde2,HIGH);
+                                     digitalWrite(led_rojo2,LOW);
 
 
   }
@@ -270,8 +281,8 @@ void loop() {
 
                   Firebase.setBool(data_park,doc2, false );  // send bool to firebase
 
-                                    digitalWrite(led_entrada,LOW);
-
+        digitalWrite(led_verde2,LOW);
+                                                                         digitalWrite(led_rojo2,HIGH);
 
   }
   

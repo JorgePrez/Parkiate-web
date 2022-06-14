@@ -54,7 +54,7 @@ $id_parqueo ='2CE369'; //$_GET['id_parqueo']; //'2CE369'
 
 
 
-
+/*
 $query12 = "select id_firebase from parqueo where id_parqueo='$id_parqueo'";
 
 
@@ -77,7 +77,7 @@ $id_firebase='';
               }
 
 
-    $ref_tabla="/Parking_Status/".$id_firebase."/"."entrada"."/estado";
+    $ref_tabla="/Parking_Status/".$id_firebase."/"."salida"."/estado";
 
     
     $status = $database->getReference($ref_tabla)->getValue();
@@ -85,16 +85,20 @@ $id_firebase='';
 
 if(str_contains($status, '1'))
 {
+*/
+$received = file_get_contents('http://192.168.1.11/picture');
 
-$received = file_get_contents('http://192.168.1.5/picture');
 
-
-$img = 'placa_entrada.jpeg';
+$img = 'placa_parqueo.jpeg';
 file_put_contents($img, $received);
 
 
+//$fakeurl='https://res.cloudinary.com/parkiate-ki/image/upload/v1654611891/autos/entrada/vehiculo/ousjminchv11pivfgyiu.jpg';
 // CREATE FILE READY TO UPLOAD WITH CURL
-$file = realpath('placa_entrada.jpeg');
+$file = realpath('placa_parqueo.jpeg');
+
+//$file = realpath($fakeurl);
+
 if (function_exists('curl_file_create')) { // php 5.5+
   $cFile = curl_file_create($file);
 } else {
@@ -105,7 +109,7 @@ if (function_exists('curl_file_create')) { // php 5.5+
 $data = array(
     'upload' => $cFile,
     'regions' => 'gp', //gt
-    'camera_id' => 'camara_entrada', // Optional , camara_salida
+    'camera_id' => 'camara_parqueo', // Optional , camara_salida
 );
 
 // Prepare new cURL resource
@@ -159,8 +163,12 @@ print_r($response);
 
 //variable del boundix box de la placa 
 
-if(!($response->results[0]===null)){
+//if(!($response->results[0]===null)){
  
+
+
+  ///////////////////TODO:////////////////////*
+  
 $xmin_placa =$response->results[0]->box->xmin;
 $ymin_placa =$response->results[0]->box->ymin;
 $xmax_placa =$response->results[0]->box->xmax;
@@ -175,6 +183,7 @@ $h= $ymax_placa-$ymin_placa;
 
 //PLACA DETECTADA
 
+
 $placa_detectada=$response->results[0]->plate;
 
 $placa_detectada = strtoupper($placa_detectada);
@@ -188,47 +197,6 @@ $placa_detectada = strtoupper($placa_detectada);
 //[A-Z]{3}|[0-9]{5}
 
 $placa_necesita_correccion='';
-
-
-if(preg_match('/^[A-Z]{1}\d{3}[BCDFGHJKLMNPQRSTVWXYZ]{3}$/',$placa_detectada) and strlen($placa_detectada)==7){
-
-  $placa_necesita_correccion='N';
-
-}
-
-else if(preg_match('/^\d{3}[BCDFGHJKLMNPQRSTVWXYZ]{3}$/', $placa_detectada) and strlen($placa_detectada)==6)
-{
-  $string='paso con 6';
-
-  $placa_detectada='P'.$placa_detectada;
-  $placa_necesita_correccion='N';
-
-
-}
-else{
-  $primer_caracter=substr($placa_detectada, 0, 1);
-
-  if(is_numeric($primer_caracter)){
-    $placa_detectada='P'.$placa_detectada;
-  }else{
-    $placa_detectada= substr($placa_detectada,1);
-  }
-
-  $placa_necesita_correccion='S';
-}
-
-if(preg_match('/^[A-Z]{1}\d{3}[BCDFGHJKLMNPQRSTVWXYZ]{3}$/',$placa_detectada) and strlen($placa_detectada)==7){
-
-  $placa_necesita_correccion='N';
-
-}
-
-
-
-
-//$bounding_box_placa = $xmin_placa + $ymin_placa + $xmax_placa + $ymax_placa;
-
-
 
 //configurar algunas cosas....
 
@@ -278,143 +246,6 @@ $imagen_auto =$imagen_auto->secure_url;
 
 
  
-$key = '';
-$pattern = '1234567890ABCDEFGH123456789';
-$max = strlen($pattern)-1;
-for($i=0;$i < 6;$i++){
-     $key .= $pattern[mt_rand(0,$max)]; 
-    } 
-
-
-  $id_placa_entrada=$key;
-  
-  $correccion_deteccion='NA';
-
-
-
-
-
-$query = "INSERT INTO placas_entrada VALUES ('$id_placa_entrada',  '$now','$imagen_auto', '$placa_detectada','$id_parqueo','$imagen_full','$placa_necesita_correccion','$correccion_deteccion','$imagen_placa','D')";
-$result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
-$tuplasaafectadas = pg_affected_rows($result);
-pg_free_result($result);
-
-
-//sino tiene error hara lo sigueinte
-
-if($placa_necesita_correccion=='N'){ 
-// AUTO 
-$query = "Select  * FROM auto WHERE placa='$placa_detectada' AND id_parqueo='$id_parqueo'";
-$resultadoauto = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
-$tuplasaafectadas4 = pg_affected_rows($resultadoauto);
-
-
-$id_auto='';
-
-
- 
-
-if($tuplasaafectadas4>0){
-  while ($row = pg_fetch_row($resultadoauto)) {
-    $id_auto=$row[0];
-}
-  
-pg_free_result($resultadoauto);
-
-echo "id existrente";
-echo $id_auto;
-
-//UPDATEIMAGEN
-
-$query= "UPDATE auto SET foto_delante='$imagen_auto' WHERE id_auto='$id_auto' AND id_parqueo='$id_parqueo'";
-
-$result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
-$tuplasaafectadas = pg_affected_rows($result);
-pg_free_result($result);
-
-
-}else{
-
-
-  pg_free_result($resultadoauto);
-
-$key = '';
-$pattern = '1234567890ABCDEFGH123456789';
-$max = strlen($pattern)-1;
-for($i=0;$i < 6;$i++){
-     $key .= $pattern[mt_rand(0,$max)]; 
-    } 
-
-
-  $id_auto=$key;
-
-  $query = "INSERT INTO auto(
-    id_auto, placa, numero_visitas, modelo_auto, foto_delante, foto_atras, id_parqueo, id_usuario_app)
-    VALUES ('$id_auto', '$placa_detectada', 0, 'Por Definir', '$imagen_auto', 'Pendiente', '$id_parqueo', 'Por definir');";
-$result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
-$tuplasaafectadas = pg_affected_rows($result);
-pg_free_result($result);
-
-echo "Registrando nuevo auto";
-  }
-
-
-
-$key = '';
-$pattern = '1234567890ABCDEFGH123456789';
-$max = strlen($pattern)-1;
-for($i=0;$i < 6;$i++){
-     $key .= $pattern[mt_rand(0,$max)]; 
-    } 
-
-
-  $id_entrada_salida=$key;
-
-$query="INSERT INTO placas_entrada_salida(
-	id_entrada_salida, id_deteccion_entrada, id_deteccion_salida, id_auto, id_parqueo, id_servicio_app,tiempo_total)
-	VALUES ('$id_entrada_salida', '$id_placa_entrada', 'NA', '$id_auto', '$id_parqueo', 'NA','NA');";
-
-$result = pg_query($conn, $query) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
-$tuplasaafectadas = pg_affected_rows($result);
-pg_free_result($result);
-
-echo "camara_entrada registrando";
-}
-else{
-  echo "error presente no se registro ni auto ni entrada_salida";
-}
-//Comprobar si existe un auto con la placa detectada, sino crear uno
-}
-else{
-  echo "en la foto no hay ninguna placa";
-
-}
-
-
-}
-else {
-
-  echo "no hay NADA en la entrada";
-
-
-
-}
-
-
-//p567a0ahttps://res.cloudinary.com/parkiate-ki/image/upload/v1653182389/autos/entrada/placa/zxjygwpqbd5q9wadxfw5.jpg
-
-//https://res.cloudinary.com/parkiate-ki/image/upload/v1653182390/autos/entrada/vehiculo/ewrypv9irsp1akim1xxc.jpg
-
-//$bounding_box_auto = $xmin_auto + $ymin_auto + $xmax_auto + $ymax_auto;
-
-//echo $bounding_box_auto;
-
-
-
-
-//print_r($result);
-//exit;
-
 ?>
 
 

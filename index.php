@@ -533,8 +533,384 @@ include 'logout.php';
               $nombrecompleto= $row[0];
               }
 
-              //ver si tiene asociado parqueo
 
+              $domingo2='';
+              $sabado2='';
+              $viernes2='';
+              $jueves2='';
+              $miercoles2='';
+              $martes2='';
+              $lunes2='';
+       
+
+              $domingo2_c=0;
+              $sabado2_c=0;
+              $viernes2_c=0;
+              $jueves2_c=0;
+              $miercoles2_c=0;
+              $martes2_c=0;
+              $lunes2_c=0;
+     
+
+              $domingo=false;
+
+              $sabado=true;
+              $viernes=false;
+              $jueves=false;
+              $miercoles=false;
+              $martes=false;
+              $lunes=false;
+
+              if($domingo==true){
+                $domingo2=date('y-m-d');
+                $domingo2_c=40;
+                $sabado2=Date('y-m-d', strtotime('-1 days'));  
+                $sabado2_c=20;
+                
+                $viernes2=Date('y-m-d', strtotime('-2 days'));    
+                $viernes2_c=20;
+
+                $jueves2=Date('y-m-d', strtotime('-3 days'));
+                $jueves2_c=20;
+
+                $miercoles2=Date('y-m-d', strtotime('-4 days'));
+                $miercoles2_c=20;
+
+
+                $martes2=Date('y-m-d', strtotime('-5 days'));
+                $martes2_c=20;
+
+                $lunes2=Date('y-m-d', strtotime('-6 days'));
+                $lunes2_c=20;
+              }
+
+              else if( $sabado==true){
+                $domingo2=Date('y-m-d', strtotime('+1 days'));                ;
+                $sabado2=date('y-m-d');;
+                $viernes2=Date('y-m-d', strtotime('-1 days'));    ;
+                $jueves2=Date('y-m-d', strtotime('-2 days'));;
+                $miercoles2=Date('y-m-d', strtotime('-3 days'));;
+                $martes2=Date('y-m-d', strtotime('-4 days'));;
+                $lunes2=Date('y-m-d', strtotime('-5 days'));;
+           
+
+                $domingo2_c=0;
+                $sabado2_c=40;
+                
+                $viernes2_c=20;
+
+                $jueves2_c=20;
+
+                $miercoles2_c=20;
+
+
+                $martes2_c=20;
+
+                $lunes2_c=20;
+
+
+              }
+
+              else if( $viernes==true){
+                $domingo2=Date('y-m-d', strtotime('+2 days'));                ;
+                $sabado2=Date('y-m-d', strtotime('+1 days'));  ;
+                $viernes2=date('y-m-d');;    ;
+                $jueves2=Date('y-m-d', strtotime('-1 days'));;
+                $miercoles2=Date('y-m-d', strtotime('-2 days'));;
+                $martes2=Date('y-m-d', strtotime('-3 days'));;
+                $lunes2=Date('y-m-d', strtotime('-4 days'));;
+
+
+                $domingo2_c=0;
+                $sabado2_c=00;
+                
+                $viernes2_c=40;
+
+                $jueves2_c=20;
+
+                $miercoles2_c=20;
+
+
+                $martes2_c=20;
+
+                $lunes2_c=20;
+            
+
+           
+
+
+              }
+
+              else if( $jueves==true){
+                $domingo2=Date('y-m-d', strtotime('+3 days'));                ;
+                $sabado2=Date('y-m-d', strtotime('+2 days'));  ;
+                $viernes2=Date('y-m-d', strtotime('+1 days'));  ;   ;
+                $jueves2=date('y-m-d');;    ;
+                $miercoles2=Date('y-m-d', strtotime('-1 days'));;
+                $martes2=Date('y-m-d', strtotime('-2 days'));;
+                $lunes2=Date('y-m-d', strtotime('-3 days'));;
+
+
+                $domingo2_c=0;
+                $sabado2_c=00;
+                
+                $viernes2_c=0;
+
+                $jueves2_c=40;
+
+                $miercoles2_c=20;
+
+
+                $martes2_c=20;
+
+                $lunes2_c=20;
+     
+
+
+              }
+
+              else if( $miercoles==true){
+                $domingo2=Date('y-m-d', strtotime('+4 days'));                ;
+                $sabado2=Date('y-m-d', strtotime('+3 days'));  ;
+                $viernes2=Date('y-m-d', strtotime('+2 days'));  ;   ;
+                $jueves2= Date('y-m-d', strtotime('+1 days')); ;
+                $miercoles2=date('y-m-d');  
+                $martes2=Date('y-m-d', strtotime('-1 days'));;
+                $lunes2=Date('y-m-d', strtotime('-2 days'));;
+
+               
+                $domingo2_c=0;
+                $sabado2_c=00;
+                
+                $viernes2_c=0;
+
+                $jueves2_c=0;
+
+                $miercoles2_c=40;
+
+
+                $martes2_c=20;
+
+                $lunes2_c=20; 
+    
+
+
+              }
+
+              else if( $martes==true){
+                $domingo2=Date('y-m-d', strtotime('+5 days'));                ;
+                $sabado2=Date('y-m-d', strtotime('+4 days'));  ;
+                $viernes2=Date('y-m-d', strtotime('+3 days'));  ;   ;
+                $jueves2= Date('y-m-d', strtotime('+2 days'));
+                $miercoles2=Date('y-m-d', strtotime('+1 days')); 
+                $martes2=date('y-m-d'); 
+                $lunes2=Date('y-m-d', strtotime('-1 days'));
+
+                $domingo2_c=0;
+                $sabado2_c=0;
+                
+                $viernes2_c=0;
+
+                $jueves2_c=0;
+
+                $miercoles2_c=0;
+
+
+                $martes2_c=40;
+
+                $lunes2_c=20; 
+    
+          
+
+           
+
+
+              } 
+              else{
+
+                $domingo2=Date('y-m-d', strtotime('+6 days'));                ;
+                $sabado2=Date('y-m-d', strtotime('+5 days'));  ;
+                $viernes2=Date('y-m-d', strtotime('+4 days'));  ;   ;
+                $jueves2= Date('y-m-d', strtotime('+3 days'));
+                $miercoles2=Date('y-m-d', strtotime('+2 days')); 
+                $martes2=Date('y-m-d', strtotime('+1 days'));  
+                $lunes2=date('y-m-d');
+   
+                $domingo2_c=0;
+                $sabado2_c=0;
+                
+                $viernes2_c=0;
+
+                $jueves2_c=0;
+
+                $miercoles2_c=0;
+
+
+                $martes2_c=0;
+
+                $lunes2_c=40; 
+           
+
+              }
+
+
+
+//Porcentaje para cada valor
+
+$porcentaje_lunes=0;
+
+
+if (($lunes2_c > 0) && ($lunes2_c <= 20)) {
+
+                $porcentaje_lunes=20;
+        
+               }
+        
+        
+             else  if (($lunes2_c >= 21) && ($lunes2_c <= 40)) {
+                $porcentaje_lunes=40;
+                 
+              }   
+              
+              else if (($lunes2_c >= 41) && ($num <= 60)) {
+                $porcentaje_lunes=60;
+                 
+              }  
+              else  if (($lunes2_c >= 61) && ($num <= 80)) {
+                $porcentaje_lunes=80;
+                 
+              }   else{
+                $porcentaje_lunes=100;
+              }
+
+
+              $porcentaje_martes=0;
+
+
+if (($martes2_c > 0) && ($martes2_c <= 20)) {
+
+                $porcentaje_martes=20;
+        
+               }
+        
+        
+             else  if (($martes2_c >= 21) && ($martes2_c <= 40)) {
+                $porcentaje_martes=40;
+                 
+              }   
+              
+              else if (($martes2_c >= 41) && ($num <= 60)) {
+                $porcentaje_martes=60;
+                 
+              }  
+              else  if (($martes2_c >= 61) && ($num <= 80)) {
+                $porcentaje_martes=80;
+                 
+              }   else{
+                $porcentaje_martes=100;
+              }
+
+
+              $porcentaje_miercoles=0;
+
+
+if (($miercoles2_c > 0) && ($miercoles2_c <= 20)) {
+
+                $porcentaje_miercoles=20;
+        
+               }
+        
+        
+             else  if (($miercoles2_c >= 21) && ($miercoles2_c <= 40)) {
+                $porcentaje_miercoles=40;
+                 
+              }   
+              
+              else if (($miercoles2_c >= 41) && ($num <= 60)) {
+                $porcentaje_miercoles=60;
+                 
+              }  
+              else  if (($miercoles2_c >= 61) && ($num <= 80)) {
+                $porcentaje_miercoles=80;
+                 
+              }   else{
+                $porcentaje_miercoles=100;
+              }
+
+
+              $porcentaje_jueves=0;
+
+
+if (($jueves2_c > 0) && ($jueves2_c <= 20)) {
+
+                $porcentaje_jueves=20;
+        
+               }
+        
+        
+             else  if (($jueves2_c >= 21) && ($jueves2_c <= 40)) {
+                $porcentaje_jueves=40;
+                 
+              }   
+              
+              else if (($jueves2_c >= 41) && ($num <= 60)) {
+                $porcentaje_jueves=60;
+                 
+              }  
+              else  if (($jueves2_c >= 61) && ($num <= 80)) {
+                $porcentaje_jueves=80;
+                 
+              }   else{
+                $porcentaje_jueves=100;
+              }
+
+
+              $porcentaje_viernes=0;
+
+
+if (($viernes2_c > 0) && ($viernes2_c <= 20)) {
+
+                $porcentaje_viernes=20;
+        
+               }
+        
+        
+             else  if (($viernes2_c >= 21) && ($viernes2_c <= 40)) {
+                $porcentaje_viernes=40;
+                 
+              }   
+              
+              else if (($viernes2_c >= 41) && ($num <= 60)) {
+                $porcentaje_viernes=60;
+                 
+              }  
+              else  if (($viernes2_c >= 61) && ($num <= 80)) {
+                $porcentaje_viernes=80;
+                 
+              }   else{
+                $porcentaje_viernes=100;
+              }
+         
+
+
+              
+
+            
+              //Obtener timestamps para grafico
+
+              /*
+              1.Obtener fecha de hoy
+              2.Ver que dia es hoy (de la semana), determinar fecha de inicio y fin
+
+               Si es domingo, hoy - ultimos 14 dias
+               Si es sabado, hoy + ultimos 12 dias
+               Si es viernes , hoy + ultimos 11 dias
+               Si es jueves, hoy + ultimos 10 dias
+               Si es miercoles, hoy + ultimos 9 dias
+               Si es martes, hoy + ultimos 8 dias
+               Si es lunes, hoy + ultimos 7 dias
+
+              */
 
 
               
@@ -552,7 +928,7 @@ include 'logout.php';
     <?php
      
       echo $nombrecompleto;
-
+ 
           ?>
         
         </h5> 
@@ -637,21 +1013,143 @@ include 'logout.php';
         <div class="row mt">
           <div class="col-lg-9 main-chart">
             <!--CUSTOM CHART START -->
+
+      
+
             <div class="border-head">
-              <h3>BIENVENIDO A PARKIATE-KI ESTIMADO ADMINISTRADOR:</h3>
+              <h3>   <i class="fa fa-bar-chart-o">  VISITAS DE LA SEMANA ACTUAL A TU PARQUEO</i> </h3>
             </div>
-           
-            <div class="content-panel">
-              <h4><i class="fa fa-angle-right"></i>  Servicios prestado por día 
-              <span class="label label-info">Semana pasada</span>
-              <span class="label label-danger">Semana actual</span>
+            <div class="custom-bar-chart">
+              <ul class="y-axis">
+                <li><span>+100</span></li>
+                <li><span>80</span></li>
+                <li><span>60</span></li>
+                <li><span>40</span></li>
+                <li><span>20</span></li>
+                <li><span>0</span></li>
+              </ul>
+              <div class="bar">
+                <div class="title">LUNES</div>
+                <div class="value tooltips" data-original-title="<?php  echo  
+                $lunes2_c; ?>" data-toggle="tooltip" data-placement="top">
+                
+                <?php  
+                
+                if($lunes2_c>100){
+                  echo "100%";
+                }
+                else{
+                  echo  
+                  $porcentaje_lunes;
+                  echo "%";
 
-            </h4>
+                }
+                ?>
+                </div>
+              </div>
+              <div class="bar ">
+                <div class="title">MARTES</div>
+                <div class="value tooltips" data-original-title="<?php  echo  
+                $martes2_c; ?>" data-toggle="tooltip" data-placement="top">
+                
+                <?php  
+                
+                if($martes2_c>100){
+                  echo "100%";
+                }
+                else{
+                  echo  
+                  $martes_porcentaje;
+                  echo "%";
 
-              <div class="panel-body">
-                <figure class="demo-xchart" id="chart"></figure>
+                }
+                ?>
+                </div>
+              </div>
+              <div class="bar ">
+                <div class="title">MIERCOLES</div>
+                <div class="value tooltips" data-original-title="<?php  echo  
+                $miercoles2_c; ?>" data-toggle="tooltip" data-placement="top">   
+                <?php  
+                
+                if($miercoles2_c>100){
+                  echo "100%";
+                }
+                else{
+                  echo  
+                  $miercoles_porcentaje;
+                  echo "%";
+
+                }
+                ?></div>
+              </div>
+              <div class="bar ">
+                <div class="title">JUEVES</div>
+                <div class="value tooltips" data-original-title="<?php  echo  
+                $jueves2_c; ?>" data-toggle="tooltip" data-placement="top">    
+                 <?php  
+                if($jueves2_c>100){
+                  echo "100%";
+                }
+                else{
+                  echo  
+                  $jueves_porcentaje;
+                  echo "%";
+
+                }
+                ?></div>
+              </div>
+              <div class="bar">
+                <div class="title">VIERNES</div>
+                <div class="value tooltips" data-original-title="<?php  echo  
+                $viernes2_c; ?>" data-toggle="tooltip" data-placement="top">
+                  <?php  
+                if($viernes2_c>100){
+                  echo "100%";
+                }
+                else{
+                  echo  
+                  $viernes_porcentaje;
+                  echo "%";
+
+                }
+                ?></div>
+              </div>
+            < <div class="bar ">
+                <div class="title">SABADO</div>
+                <div class="value tooltips" data-original-title="<?php  echo  
+                $sabado2_c; ?>" data-toggle="tooltip" data-placement="top">
+                
+                <?php  
+                if($sabado2_c>100){
+                  echo "100%";
+                }
+                else{
+                  echo  
+                  $sabado_porcentaje;
+                  echo "%";
+
+                }
+                ?> </div>
+              </div> 
+              <div class="bar">
+                <div class="title">DOMINGO</div>
+                <div class="value tooltips" data-original-title="<?php  echo  
+                $domingo2_c; ?>" data-toggle="tooltip" data-placement="top">40%
+                  <?php  
+            /*    if($domingo2_c>100){
+                  echo "100%";
+                }
+                else{
+                  echo  
+                  $domingo_porcentaje;
+                  echo "%";
+
+                }*/
+                ?></div>
               </div>
             </div>
+            <!--custom chart end-->
 
 
             <!--custom chart end-->
@@ -946,6 +1444,8 @@ else{
 }
 
 ?>
+
+
 
                     </div>
               
@@ -1278,49 +1778,56 @@ else{
         "main": [{
           "className": ".main.l1",
           "data": [{
-            "y": 15,
+            "y": "<?php  echo   $lunes2_c; ?>",
             "x": "2012-11-19T00:00:00"
           }, {
-            "y": 11,
+            "y": "<?php  echo $martes2_c; ?>",
             "x": "2012-11-20T00:00:00"
           }, {
-            "y": 8,
+            "y": "<?php  echo  $miercoles2_c;?>",
             "x": "2012-11-21T00:00:00"
           }, {
-            "y": 10,
+            "y": "<?php  echo $jueves2_c;?>",
             "x": "2012-11-22T00:00:00"
           }, {
-            "y": 1,
+            "y": "<?php  echo $viernes2_c;
+            ?>",
             "x": "2012-11-23T00:00:00"
           }, {
-            "y": 6,
+            "y": "<?php  echo $sabado2_c; ?>",
             "x": "2012-11-24T00:00:00"
           }, {
-            "y": 8,
+            "y": "<?php  echo  
+                $domingo2_c;
+           ?>",
             "x": "2012-11-25T00:00:00"
           }]
         }, {
           "className": ".main.l2",
           "data": [{
-            "y": 29,
+            "y": "<?php  echo  
+                $domingo1_c; ?>",
             "x": "2012-11-19T00:00:00"
           }, {
-            "y": 33,
+            "y": "<?php  echo   
+                $lunes1_c; ?>",
             "x": "2012-11-20T00:00:00"
           }, {
-            "y": 13,
+            "y": "<?php  echo   
+                $martes1_c; ?>",
             "x": "2012-11-21T00:00:00"
           }, {
-            "y": 16,
+            "y": "<?php  echo   
+                $miercoles1_c; ?>",
             "x": "2012-11-22T00:00:00"
           }, {
-            "y": 7,
+            "y": "<?php  echo $jueves1_c; ?>",
             "x": "2012-11-23T00:00:00"
           }, {
-            "y": 18,
+            "y": "<?php  echo $sabado1_c; ?>",
             "x": "2012-11-24T00:00:00"
           }, {
-            "y": 8,
+            "y": "<?php  echo $domingo1_c; ?>",
             "x": "2012-11-25T00:00:00"
           }]
         }],
@@ -1452,7 +1959,7 @@ else{
         toggles = d3.selectAll('.multi button'),
         t = 3500;
 
-      function updateChart(i) {
+     /* function updateChart(i) {
         var d = data[i];
         chart.setData(d);
         toggles.classed('toggled', function() {
@@ -1472,7 +1979,7 @@ else{
         var d = updateChart(order[i]);
         rotateTimer = setTimeout(rotateChart, t);
       }
-      rotateTimer = setTimeout(rotateChart, t);
+      rotateTimer = setTimeout(rotateChart, t);*/
     }());
   </script>
 

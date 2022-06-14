@@ -31,16 +31,16 @@ const int led_2verde= 33;
 const int led_2rojo = 25;
 
 
-const int trigPin3= 5;
-const int echoPin3 = 18;
-const int led_3verde= 17;
-const int led_3rojo = 16;
+const int trigPin4= 5;
+const int echoPin4 = 18;
+const int led_4verde= 17;
+const int led_4rojo = 16;
 
 
-const int trigPin4 = 22;
-const int echoPin4 = 23;
-const int led_4verde= 19;
-const int led_4rojo = 21;
+const int trigPin3 = 22;
+const int echoPin3 = 23;
+const int led_3verde= 19;
+const int led_3rojo = 21;
 
 
 /*
@@ -88,13 +88,13 @@ const String id_parqueo="-Mq73KmXyn-fx7tlnIQn";
 
 // Id de los slots
 
-String id1= "-N-z1WyD84Z1_hHh4nkQ";  
+String id1= "-N3jbyztY7Oj5jN2n2VH";  
 
-String id2="-N02aeTREkypDcfEQ8Ch";
+String id2="-N44V9outt8hMouQmcE0";
 
-String id3 = "-N02bNZNPsszn9wekk32";
+String id3 = "-N44VCx6q9VhFqdxawOW";
 
-String id4= "-N02alg3lI1WRKBLKyWt";
+String id4= "-N44VD-b5Q8RrI-efoHd";
 
 String id5= "-N3jbyztY7Oj5jN2n2VH";
 

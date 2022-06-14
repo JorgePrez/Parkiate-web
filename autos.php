@@ -292,9 +292,9 @@ else{
           <!-- <th>Prospectos</th> -->
           </b></th>
 
-          <th><b> Foto delante (más reciente)
+          <th><b> Foto en entrada (más reciente)
           </b></th>
-          <th><b>Foto atrás (más reciente)</b></th>
+          <th><b>Foto en salida (más reciente)</b></th>
 
           <th><b>Estado</b></th>
 
