@@ -238,13 +238,16 @@ else{
      <section id="main-content">
       <section class="wrapper">
 
-      <h3><i class="fa fa-table"></i> Registro de entradas y salida por placa
+      <h3><i class="fa fa-table"></i> Registro de entradas y salida por placa 
       </h3>
      
 
       <div class="row mb">
           <!-- page start-->
           <div class="content-panel">
+
+          <h4>Nota: una placa solo puede ser editada cuando el auto se ha retirado
+            </h4>
 
       
 
@@ -293,9 +296,18 @@ else{
           <th><b> Tiempo Total
           </b></th>
 
+          <th><b>¿Placa Cumple con Formato?
+          </b></th>
+          
+          <th><b> Editar Placa
+          </b></th>
+
+
           <th><b> Foto entrada
           </b></th>
           <th><b>Foto Salida</b></th>
+
+
 
           
 
@@ -313,7 +325,7 @@ else{
            
 
          //   $query = "select * from servicios_admin where Id_parqueo='$id_parqueo' order by Id DESCASC";   
-            $query = "    select id_entrada_salida,id_deteccion_entrada, id_deteccion_salida, tiempo_total,id_auto,id_servicio_app from placas_entrada_salida
+            $query = "    select id_entrada_salida,id_deteccion_entrada, id_deteccion_salida, tiempo_total,id_auto,id_servicio_app,deteccion_entrada_salida,existe_error from placas_entrada_salida
             where id_parqueo='$id_parqueo' order by tiempo_total desc";   
 
         
@@ -330,6 +342,8 @@ else{
             $tiempo_total= '';
             $id_auto='';
             $id_servicio_app = '';
+            $deteccion_entrada_salida='';
+            $existe_error='';
             $contador = 0;
           
 
@@ -345,6 +359,8 @@ else{
             $tiempo_total= $row[3];
             $id_auto=$row[4];
             $id_servicio_app = $row[5];
+            $deteccion_entrada_salida=$row[6];
+            $existe_error=$row[7];
              $contador = $contador+1;
 
 
@@ -352,7 +368,7 @@ else{
 
 
 
-           $query1 = "select hora_deteccion_entrada,foto_auto_entrada,deteccion_entrada,error_entrada,deteccion_entrada_correcion from placas_entrada where  id_parqueo='$id_parqueo'AND id_placa_entrada='$id_deteccion_entrada'";   
+           $query1 = "select hora_deteccion_entrada,foto_auto_entrada,deteccion_entrada from placas_entrada where  id_parqueo='$id_parqueo'AND id_placa_entrada='$id_deteccion_entrada'";   
 
        
 
@@ -367,9 +383,7 @@ else{
            $hora_deteccion_entrada='';
            $foto_auto_entrada='';
            $deteccion_entrada = '';
-           $error_entrada= '';
-           $deteccion_entrada_correcion='';
-           $id_servicio_app = '';
+     
            $contador = 0;
          
 
@@ -384,9 +398,7 @@ else{
            $hora_deteccion_entrada=$row[0];
            $foto_auto_entrada=$row[1];
            $deteccion_entrada = $row[2];
-           $error_entrada= $row[3];
-           $deteccion_entrada_correcion=$row[4];
-           $id_servicio_app = $row[5];
+     
 
           }
           $separada = explode(' ', $hora_deteccion_entrada);
@@ -530,11 +542,14 @@ else{
         
         //comprobando si hubo correción , si lo hubo mostrar esa.
 
-       if($deteccion_entrada_correcion!='NA'){
+      /* if($deteccion_entrada_correcion!='NA'){
+
+        //        $deteccion_entrada_correcion
+
          echo	"<td>
 
         <h4> <span class='label label-default'>  
-        $deteccion_entrada_correcion
+        $id_placa_entrada_salida
                </span>
                </h4>
         
@@ -552,7 +567,21 @@ else{
         
         
         </td>";
-       }
+       }*/
+
+
+       echo	"<td>
+
+       <h4> <span class='label label-default'>  
+       
+
+       $deteccion_entrada_salida
+
+              </span>
+              </h4>
+       
+       
+       </td>";
 
 
 
@@ -594,7 +623,7 @@ $hora_min_salida
         echo	"<td>
         <h4> <span class='label label-danger'>
         
-        El auto esta actualmente en tu parqueo
+        En parqueo
         
 
        </span>
@@ -642,8 +671,96 @@ $hora_min_salida
        </td>";
       }
 
-   
 
+      if (($existe_error=='S')) {
+        
+  
+        echo	"<td>
+        <h4> <span class='label label-danger'>
+        
+        Existe Error
+
+  
+       </span>
+      
+  
+      
+       </h4>
+  
+       </td>";
+
+       
+      }
+      else{
+
+        echo	"<td>
+        <h4> <span class='label label-success'>
+        
+  
+        Si
+
+       </span>
+      
+  
+      
+       </h4>
+  
+       </td>";
+      }
+
+
+
+      echo	"<td>";
+      ?>
+
+
+
+
+<?php 
+
+if (($id_deteccion_salida=='NA'))
+{
+  
+
+
+}
+else{
+
+echo "<form action='editar_placa.php' method='get'>";
+
+
+}
+    
+
+
+    ?>
+
+
+
+
+
+    <input type="hidden" name="id_entrada_salida" value="<?php echo   $id_placa_entrada_salida ?>">
+
+
+
+    
+
+
+    <?php 
+
+
+  echo  "<button class='btn btn-primary btn-xs'><i class='fa fa-pencil'></i></button>";
+
+
+    
+
+
+    ?>
+
+     </form>
+     
+     <?php 
+    echo "</td>";
 
 
 /*           <img src=$foto_auto_entrada  width='100px' height='100px' alt=''>

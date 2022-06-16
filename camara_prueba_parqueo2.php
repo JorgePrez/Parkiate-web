@@ -48,7 +48,7 @@ $uploader = $cloudinary->uploadApi();
 
 include('dbcon.php');
 
-
+/*
 //$id_parqueo ='F7B816'; // '2CE369'; //$_GET['id_parqueo']; //'2CE369'
 
 
@@ -87,28 +87,31 @@ $id_firebase='';
 
 
 if(str_contains($status, '1'))
-{
+{*/
 
-$received = file_get_contents('http://192.168.1.13/picture'); 
+$received = file_get_contents('http://192.168.1.15/picture'); 
 
 
-$img = 'placa_entrada_p.jpeg';   
+$img = 'placa_p1.jpeg';   
 file_put_contents($img, $received);
 
 
 // CREATE FILE READY TO UPLOAD WITH CURL
-$file = realpath('placa_entrada_p.jpeg');  
+$file = realpath('placa_p1.jpeg');  
 if (function_exists('curl_file_create')) { // php 5.5+
   $cFile = curl_file_create($file);
 } else {
   $cFile = '@' . realpath($file);
 }
 
+
 //ADD PARAMETER IN REQUEST LIKE regions
 $data = array(
     'upload' => $cFile,
     'regions' => 'gp', //gt
-    'camera_id' => 'camara_entrada', // Optional , camara_salida  
+    'camera_id' => 'camara_parqueo2', // Optional , camara_salida 
+   'config' => '{"detection_mode":"vehicle"}',
+//    'config' => '"{\"region\":\"strict\"}"',
 );
 
 // Prepare new cURL resource
@@ -160,7 +163,60 @@ curl_close($ch);
 
 print_r($response);
 
+
+$arreglo_autos=$response->results;
+
+$arrLength = count($arreglo_autos);
+
+echo "\n";
+echo $arrLength;
+
+
+for($i = 0; $i < $arrLength; $i++) {
+
+
+  echo "------------------------------------------------------------";
+  echo "\n";
+  print_r($response->results[$i]->vehicle->box);
+  echo "\n";
+
+
+  $xmin_auto =$response->results[$i]->vehicle->box->xmin;
+  $ymin_auto =$response->results[$i]->vehicle->box->ymin;
+  $xmax_auto =$response->results[$i]->vehicle->box->xmax;
+  $ymax_auto=$response->results[$i]->vehicle->box->ymax;
+  
+  
+  
+  $x_a=$xmin_auto; 
+  $y_a= $ymin_auto;
+  $w_a= $xmax_auto-$xmin_auto;
+  $h_a= $ymax_auto-$ymin_auto;
+  
+  
+  $response_auto=json_encode($uploader->upload($img,['folder' => 'autos/parqueo/1/prueba1','width' => $w_a, 'height' => $h_a, 'crop' => 'crop' , 'x' => $x_a, 'y' => $y_a]));
+  
+  
+  
+  $imagen_auto = json_decode($response_auto);
+  $imagen_auto =$imagen_auto->secure_url;
+  
+  echo "\n";
+  echo $imagen_auto;
+  
+  echo "------------------------------------------------------------";
+
+  
+  }
+
 //variable del boundix box de la placa 
+
+
+
+/*
+
+
+
 
 if(!($response->results[0]===null)){
  
@@ -327,7 +383,7 @@ echo "Longitud: ";
 
 */
 
-
+/*
  }
 
 
@@ -523,7 +579,7 @@ else{
 }*/
 
 
-
+/*
 }
 else{
   echo "\n";
@@ -560,7 +616,7 @@ else {
 
 }
 
-
+*/
 //p567a0ahttps://res.cloudinary.com/parkiate-ki/image/upload/v1653182389/autos/entrada/placa/zxjygwpqbd5q9wadxfw5.jpg
 
 //https://res.cloudinary.com/parkiate-ki/image/upload/v1653182390/autos/entrada/vehiculo/ewrypv9irsp1akim1xxc.jpg

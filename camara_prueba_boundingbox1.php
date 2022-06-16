@@ -48,13 +48,14 @@ $uploader = $cloudinary->uploadApi();
 
 include('dbcon.php');
 
+/*
+//$id_parqueo ='F7B816'; // '2CE369'; //$_GET['id_parqueo']; //'2CE369'
+
 
 $id_parqueo ='2CE369'; //$_GET['id_parqueo']; //'2CE369'
 
 
 
-
-/*
 $query12 = "select id_firebase from parqueo where id_parqueo='$id_parqueo'";
 
 
@@ -77,39 +78,40 @@ $id_firebase='';
               }
 
 
-    $ref_tabla="/Parking_Status/".$id_firebase."/"."salida"."/estado";
+    $ref_tabla="/Parking_Status/".$id_firebase."/"."sensor2"."/estado"; 
 
     
     $status = $database->getReference($ref_tabla)->getValue();
 
+    $id_parqueo ='F7B816';
+
 
 if(str_contains($status, '1'))
-{
-*/
-$received = file_get_contents('http://192.168.1.11/picture');
+{*/
+/*
+$received = file_get_contents('http://192.168.1.15/picture'); 
 
 
-$img = 'placa_parqueo.jpeg';
+$img = 'placa_p1.jpeg';   
 file_put_contents($img, $received);
 
-
-//$fakeurl='https://res.cloudinary.com/parkiate-ki/image/upload/v1654611891/autos/entrada/vehiculo/ousjminchv11pivfgyiu.jpg';
+////////////////////////////*
 // CREATE FILE READY TO UPLOAD WITH CURL
-$file = realpath('placa_parqueo.jpeg');
-
-//$file = realpath($fakeurl);
-
+$file = realpath('placa_p1.jpeg');  
 if (function_exists('curl_file_create')) { // php 5.5+
   $cFile = curl_file_create($file);
 } else {
   $cFile = '@' . realpath($file);
 }
 
+
 //ADD PARAMETER IN REQUEST LIKE regions
 $data = array(
     'upload' => $cFile,
     'regions' => 'gp', //gt
-    'camera_id' => 'camara_parqueo', // Optional , camara_salida
+    'camera_id' => 'camara_parqueo2', // Optional , camara_salida 
+    'config' => '{"detection_mode":"vehicle"}',
+//    'config' => '"{\"region\":\"strict\"}"',
 );
 
 // Prepare new cURL resource
@@ -161,92 +163,126 @@ curl_close($ch);
 
 print_r($response);
 
-//variable del boundix box de la placa 
 
-//if(!($response->results[0]===null)){
- 
+$arreglo_autos=$response->results;
+
+$arrLength = count($arreglo_autos);
+
+echo "\n";
+echo $arrLength;
 
 
-  ///////////////////TODO:////////////////////*
+for($i = 0; $i < $arrLength; $i++) {
+
+
+  echo "------------------------------------------------------------";
+  echo "\n";
+  print_r($response->results[$i]->vehicle->box);
+  echo "\n";
+
+
+  $xmin_auto =$response->results[$i]->vehicle->box->xmin;
+  $ymin_auto =$response->results[$i]->vehicle->box->ymin;
+  $xmax_auto =$response->results[$i]->vehicle->box->xmax;
+  $ymax_auto=$response->results[$i]->vehicle->box->ymax;
   
-$xmin_placa =$response->results[0]->box->xmin;
-$ymin_placa =$response->results[0]->box->ymin;
-$xmax_placa =$response->results[0]->box->xmax;
-$ymax_placa=$response->results[0]->box->ymax;
+  
+  
+  $x_a=$xmin_auto; 
+  $y_a= $ymin_auto;
+  $w_a= $xmax_auto-$xmin_auto;
+  $h_a= $ymax_auto-$ymin_auto;
+  
+  
+  $response_auto=json_encode($uploader->upload($img,['folder' => 'autos/parqueo/1/prueba1','width' => $w_a, 'height' => $h_a, 'crop' => 'crop' , 'x' => $x_a, 'y' => $y_a]));
+  
+  
+  
+  $imagen_auto = json_decode($response_auto);
+  $imagen_auto =$imagen_auto->secure_url;
+  
+  echo "\n";
+  echo $imagen_auto;
+  
+  echo "------------------------------------------------------------";
 
-
-$x=$xmin_placa; 
-$y= $ymin_placa;
-$w= $xmax_placa-$xmin_placa;
-$h= $ymax_placa-$ymin_placa;
-
-
-//PLACA DETECTADA
-
-
-$placa_detectada=$response->results[0]->plate;
-
-$placa_detectada = strtoupper($placa_detectada);
-
-
-//1.Comprar longitud , si es 6 pasar al punto 2 sino pasar al punto 3
-//2.COMPARAR CON si sigue la expresion regular "000AAA" , SI ES ASI AGREGAR "P" ELSE QUE SIGA IGUAL y pasar al punto 3
-//3DESPUES COMPARAR CANTIDAD DE CARACTERES , si es 7 agregar en correccion N , sino agregar S
-
-
-//[A-Z]{3}|[0-9]{5}
-
-$placa_necesita_correccion='';
-
-//configurar algunas cosas....
-
-
-$xmin_auto =$response->results[0]->vehicle->box->xmin;
-$ymin_auto =$response->results[0]->vehicle->box->ymin;
-$xmax_auto =$response->results[0]->vehicle->box->xmax;
-$ymax_auto=$response->results[0]->vehicle->box->ymax;
-
-
-
-$x_a=$xmin_auto; 
-$y_a= $ymin_auto;
-$w_a= $xmax_auto-$xmin_auto;
-$h_a= $ymax_auto-$ymin_auto;
-
-//EJEMPLO DE CROPPING CON TRANSFORMACIONS DE CLOUDINARY
-//https://res.cloudinary.com/demo/image/upload/c_crop,h_200,w_300,x_355,y_410/brown_sheep.jpg
+  
+  }
+*/
 
 
 
 
-
-//$uploader->upload($img,['folder' => 'autos/salida/'],['public_id'=>'blackberry']);
-
-
-//referecnia para transformaciones
-//https://cloudinary.com/documentation/transformations_on_upload
+  
+$received = file_get_contents('http://192.168.1.19/picture'); 
 
 
-$response_full=json_encode($uploader->upload($img,['folder' => 'autos/entrada/full']));
-$response_placa=json_encode($uploader->upload($img,['folder' => 'autos/entrada/placa','width' => $w, 'height' => $h, 'crop' => 'crop' , 'x' => $x, 'y' => $y]));
-$response_auto=json_encode($uploader->upload($img,['folder' => 'autos/entrada/vehiculo','width' => $w_a, 'height' => $h_a, 'crop' => 'crop' , 'x' => $x_a, 'y' => $y_a]));
-
-
-$imagen_full = json_decode($response_full);
-$imagen_full=$imagen_full->secure_url;
-
-
-$imagen_placa = json_decode($response_placa);
-$imagen_placa=$imagen_placa->secure_url;
+$img = 'placa_p1.jpeg';   
+file_put_contents($img, $received);
 
 
 
-$imagen_auto = json_decode($response_auto);
-$imagen_auto =$imagen_auto->secure_url;
+//TODAS:
+//1172	525	1589	703
+//842	487	1170	715
+
+//485	500	795	712
+
+//34	533	460	726
+
+//1108	605	1513	799
+
+//809	573	1106	800
+
+//455	593	724	790
+
+//29	582	417	780
 
 
+//////////////////// lAS DE ESTA CAMARA
+
+
+
+//1108	605	1513	799
+
+//809	573	1106	800
+
+//455	593	724	790
+
+//29	582	417	780
+
+
+
+$arrays = [[1108, 605,1513,799], [809, 573,1106,800], [455, 593,724,790],[29,582,417,780]];
  
+foreach ($arrays as list($xmin_auto, $ymin_auto,$xmax_auto,$ymax_auto)) {
+  $x_a=$xmin_auto; 
+  $y_a= $ymin_auto;
+  $w_a= $xmax_auto-$xmin_auto;
+  $h_a= $ymax_auto-$ymin_auto;
+  
+  
+  $response_auto=json_encode($uploader->upload($img,['folder' => 'autos/parqueo/vacios/','width' => $w_a, 'height' => $h_a, 'crop' => 'crop' , 'x' => $x_a, 'y' => $y_a]));
+  
+  
+  
+  $imagen_auto = json_decode($response_auto);
+  $imagen_auto =$imagen_auto->secure_url;
+  
+  echo "\n";
+  echo $imagen_auto;
+  
+  echo "------------------------------------------------------------";
+}
+
+
+
+
+
+
 ?>
+
+
 
 
 

@@ -93,7 +93,7 @@ else{
 
 $id_parqueo=$_COOKIE["id_parqueo"];
 //ID_FIREBASE
-$query = "select id_placa_entrada,foto_auto_entrada,deteccion_entrada,hora_deteccion_entrada,error_entrada,deteccion_entrada_correcion from placas_entrada where hora_deteccion_entrada =(select max(hora_deteccion_entrada) from placas_entrada) AND id_parqueo='$id_parqueo'";
+$query = "select id_placa_entrada,foto_auto_entrada,deteccion_entrada,hora_deteccion_entrada from placas_entrada where hora_deteccion_entrada =(select max(hora_deteccion_entrada) from placas_entrada) AND id_parqueo='$id_parqueo'";
 //                       $query = "select * from prospectos_template";
 
 $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
@@ -105,8 +105,7 @@ $id_placa_entrada='';
 $foto_auto_entrada1='';
 $deteccion_entrada='';
 $hora_deteccion_entrada='';
-$error_entrada='';
-$deteccion_entrada_correcion='';
+
 
 $tuplasaafectadas_placa1 = pg_affected_rows($result);
 
@@ -117,15 +116,14 @@ while ($row = pg_fetch_row($result)) {
      $foto_auto_entrada1=$row[1];
      $deteccion_entrada=$row[2];
      $hora_deteccion_entrada=$row[3];
-     $error_entrada=$row[4];
-     $deteccion_entrada_correcion=$row[5];
+
  
 }
 
 pg_free_result($result);
 
 
-$query = "select id_placa_salida,foto_auto_salida,deteccion_salida,hora_deteccion_salida,error_salida,deteccion_salida_correcion from placas_salida where hora_deteccion_salida = (select max(hora_deteccion_salida) from placas_salida) AND id_parqueo='$id_parqueo'";
+$query = "select id_placa_salida,foto_auto_salida,deteccion_salida,hora_deteccion_salida from placas_salida where hora_deteccion_salida = (select max(hora_deteccion_salida) from placas_salida) AND id_parqueo='$id_parqueo'";
 //                       $query = "select * from prospectos_template";
 
 $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
@@ -133,8 +131,7 @@ $id_placa_salida='';
 $foto_auto_salida1='';
 $deteccion_salida='';
 $hora_deteccion_salida='';
-$error_salida='';
-$deteccion_salida_correcion='';
+
 
 
 while ($row = pg_fetch_row($result)) { 
@@ -142,8 +139,7 @@ while ($row = pg_fetch_row($result)) {
      $foto_auto_salida1=$row[1];
      $deteccion_salida=$row[2];
      $hora_deteccion_salida=$row[3];
-     $error_salida=$row[4];
-     $deteccion_salida_correcion=$row[5];
+
  
 }
 
@@ -1269,7 +1265,7 @@ else{
                   ?>  
 
                   <div class="col-xs-4 col-xs-offset-8">
-                  <form action="editar_placa.php" method="get">
+                  <form action="entrada.php" method="get">
 
 
       
@@ -1283,7 +1279,7 @@ if($tuplasaafectadas_placa1>0){
   echo '>
 <input type="hidden" name="entrada_salida" value="E">
 
-              <button class="btn btn-sm btn-theme04">CORREGIR/VER DETALLES</button>
+              <button class="btn btn-sm btn-theme04">VER FOTOS DE ENTRADA</button>
               </form>
               ';
 
@@ -1301,7 +1297,7 @@ if($tuplasaafectadas_placa1>0){
 if($tuplasaafectadas_placa1>0){
 
   
-
+/*
   if($deteccion_entrada_correcion!='NA'){
     echo '<h3 style="color:yellow;" >Placa:';
     echo  $deteccion_entrada_correcion;
@@ -1332,9 +1328,12 @@ if($tuplasaafectadas_placa1>0){
 
 
 
-  }
+  }*/
 
+  echo '<h3 style="color:yellow;" >Placa:';
 
+  echo $deteccion_entrada;
+  echo '</h3>';
 
 }
 else{
@@ -1417,7 +1416,7 @@ else{
                   
                   <?php
 if($tuplasaafectadas_placa2>0){
-  echo'<form action="editar_placa.php" method="get">
+  echo'<form action="salida.php" method="get">
 
 
   <input type="hidden" name="id_placa_entrada" value=';
@@ -1425,7 +1424,7 @@ if($tuplasaafectadas_placa2>0){
   echo $id_placa_salida; 
   echo '>
   <input type="hidden" name="entrada_salida" value="S">
-  <button class="btn btn-sm btn-theme04">CORREGIR/VER DETALLES</button>
+  <button class="btn btn-sm btn-theme04">VER FOTOS DE SALIDA</button>
 
   </form>';
 
@@ -1455,7 +1454,7 @@ else{
                     <?php
                     if($tuplasaafectadas_placa2>0){
                  
-
+/*
   if($deteccion_salida_correcion!='NA'){
     echo '<h3 style="color:yellow;" >Placa:';
     echo  $deteccion_salida_correcion;
@@ -1487,7 +1486,13 @@ else{
 
 
   }
+*/
 
+
+echo '<h3 style="color:yellow;" >Placa:';
+
+echo $deteccion_salida;
+echo '</h3>';
 
 
 

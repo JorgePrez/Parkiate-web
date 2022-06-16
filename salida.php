@@ -290,11 +290,7 @@ else{
            <th><b>Placa Obtenida</b></th>
           <!-- <th>Prospectos</th> -->
           <th><b>Placa</b></th>
-          <th><b> ¿Error en la placa?
-          </b></th>
-
-          <th><b> Editar placa
-          </b></th>
+     
           <th><b>Auto</b></th>
 
           <th><b>Foto tomada</b></th>
@@ -348,9 +344,8 @@ else{
              $deteccion_entrada= $row[3];
              $id_parqueo=$row[4];
              $completo_entrada = $row[5];
-             $error_entrada = $row[6]; 
-             $deteccion_entrada_correccion=$row[7];
-             $foto_placa_entrada=$row[8];
+ 
+             $foto_placa_entrada=$row[6];
              $contador = $contador+1;
 
 
@@ -359,7 +354,7 @@ else{
 
    */ 
         
-        if (str_contains($error_entrada, 'N') AND ($deteccion_entrada_correccion=='NA')) {
+     /*   if (str_contains($error_entrada, 'N') AND ($deteccion_entrada_correccion=='NA')) {
               echo	"<tr class='gradeA'>";
              
             }else if (str_contains($error_entrada, 'S') AND ($deteccion_entrada_correccion=='NA')){
@@ -368,7 +363,10 @@ else{
             }
             else{
               echo	"<tr class='gradeC'>";
-            }
+            }*/
+
+            echo	"<tr class='gradeA'>";
+
 
             
 
@@ -423,7 +421,7 @@ else{
 
         //comprobando si hubo correción , si lo hubo mostrar esa.
 
-       if($deteccion_entrada_correccion!='NA'){
+      /* if($deteccion_entrada_correccion!='NA'){
          echo	"<td>
 
         <h4> <span class='label label-default'>  
@@ -444,7 +442,18 @@ else{
         
         
         </td>";
-       }
+       }*/
+
+
+       echo	"<td>
+
+       <h4> <span class='label label-default'>  
+       $deteccion_entrada
+              </span>
+              </h4>
+       
+       
+       </td>";
        //  echo	"<td>$deteccion_entrada</td>";
          /*echo	"<td>$foto_placa_entrada</td>";*/
        /* echo	"<td>         
@@ -452,9 +461,18 @@ else{
          </td>";
          
                   <a class='fancybox' href=$foto_placa_entrada><img class='img-responsive' src='https://res.cloudinary.com/parkiate-ki/image/upload/v1653994130/autos/entrada/full/qf36r1h5ofqwbvhqa58z.jpg' width='100px' height='100px' alt=''></a>
+*/
 
-         */
-         echo	"<td> 
+
+echo	"<td> 
+<div class='photo'>
+<a class='fancybox' href=$foto_placa_entrada><img class='img-responsive' src=$foto_placa_entrada alt=''></a>
+</div>
+</td>";
+
+
+   /*      
+      echo	"<td> 
          <div class='photo'>
          <a class='fancybox' href=$foto_placa_entrada><img class='img-responsive' src=$foto_placa_entrada alt=''></a>
        </div>
@@ -508,12 +526,12 @@ Necesita correción (posiblemente)
        </h4>
 
        </td>";
-      }
+      }*/
 
-      echo	"<td>";
+    //  echo	"<td>";
       ?>
 
-
+<!--
 
 <form action="editar_placa.php" method="get">
 
@@ -527,9 +545,11 @@ Necesita correción (posiblemente)
     <button class='btn btn-primary btn-xs'><i class='fa fa-pencil'></i></button>
 
      </form>
+    -->
      
+
      <?php 
-    echo "</td>";
+   // echo "</td>";
 
 
 

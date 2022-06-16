@@ -248,25 +248,49 @@ else{
               
     <?php
 
-$id_placa_entrada=$_GET["id_placa_entrada"];
+$id_entrada_salida=$_GET["id_entrada_salida"];
 
-$entrada_salida=$_GET["entrada_salida"];
+echo $id_entrada_salida;
+//Obtener todos los datos con el id_entrada_salida
 
+
+$query = "select id_deteccion_entrada,id_deteccion_salida,deteccion_entrada_salida,existe_error from placas_entrada_salida where id_entrada_salida='$id_entrada_salida' AND id_parqueo='$id_parqueo'";
+   //                       $query = "select * from prospectos_template";
+
+
+   $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
+   $id_deteccion_entrada='';
+   $id_entrada_salida='';
+   $deteccion_entrada_salida='';
+   $existe_error='';
+
+
+   while ($row = pg_fetch_row($result)) {
+      $id_deteccion_entrada=$row[0];
+      $id_deteccion_salida=$row[1];
+      $deteccion_entrada_salida=$row[2];
+      $existe_error= $row[3];
+   }
+
+
+$id_placa_entrada=$id_deteccion_entrada;
+
+/*
 $camara='';
 
 if (str_contains($entrada_salida, 'E')){
 
   $camara='entrada';
-
+*/
  // $query = "select * from parqueo where id_parqueo='$id_parqueo'";
  $query= "select * from placas_entrada where id_placa_entrada='$id_placa_entrada' AND id_parqueo='$id_parqueo'"; 
 
-}
-else{
+//}
+/*else{
   $query = "select * from placas_salida where id_placa_salida='$id_placa_entrada' AND id_parqueo='$id_parqueo'";
 
   $camara='salida';
-}
+}*/
 
 
 $result = pg_query($conn, $query) or die('ERROR : ' . pg_last_error());
@@ -276,8 +300,7 @@ $foto_auto = '';
 $deteccion= '';
 $id_parqueo1='';
 $completo = '';
-$error = ''; 
-$deteccion_correccion='';
+
 $foto_placa='';
 
            
@@ -291,9 +314,8 @@ while ($row = pg_fetch_row($result)) {
         $deteccion= $row[3];
         $id_parqueo1=$row[4];
         $completo =$row[5];
-        $error = $row[6]; 
-        $deteccion_correccion=$row[7];
-        $foto_placa=$row[8];
+
+        $foto_placa=$row[6];
 }
 
 
@@ -307,6 +329,8 @@ $hora_min_entrada = $separada3[0]. ':'.$separada3[1];
 
 $fecha_formato_entrada = $separada2[2].'/'.$separada2[1];
 
+$id_entrada_salida=$_GET["id_entrada_salida"];
+
 ?>
     <!--sidebar end-->
     <!-- **********************************************************************************************************************************************************
@@ -315,7 +339,7 @@ $fecha_formato_entrada = $separada2[2].'/'.$separada2[1];
     <!--main content start-->
     <section id="main-content">
       <section class="wrapper">
-        <h3><i class="fa fa-angle-right"></i> Información de Foto con ID: <?php echo $id_placa1;?> </h3>
+        <h3><i class="fa fa-angle-right"></i> Información de Foto con ID: <?php echo $id_entrada_salida;?> </h3>
   
   
           <!-- COMPLEX TO DO LIST -->
@@ -385,22 +409,20 @@ $fecha_formato_entrada = $separada2[2].'/'.$separada2[1];
               <div class="panel-body">
               <?php
 
-if (str_contains($entrada_salida, 'E')){
-  echo '<form role="form" class="form-horizontal style-form" action="formularios/m_entrada.php" method="get">';
+
+  echo '<form role="form" class="form-horizontal style-form" action="formularios/modificar_placa.php" method="get">';
 
 
-}else{
-  echo '<form role="form" class="form-horizontal style-form" action="formularios/m_salida.php" method="get">';
 
-}
+
 
 
 $mensaje='';
 $valor_mostrado='';
                 
-       if (str_contains($error, 'N') AND ($deteccion_correccion=='NA')) {
 
-        echo '<div class="form-group has-success">';  
+if($existe_error=='N'){       
+echo '<div class="form-group has-success">';  
 
         $mensaje='La placa cumple con el formato por lo que parece estar bien, 
         si en caso no lo estuviera puedes introducir la placa correcta con ayuda de las fotos de arriba';
@@ -409,19 +431,11 @@ $valor_mostrado='';
 
 
 
-}else if (str_contains($error, 'S') AND ($deteccion_correccion=='NA')){
+}else {
 
   echo '<div class="form-group has-error">';  
-  $mensaje='Posiblemetne hay algún error, puedes escribir la placa correcta con ayuda de las fotos de arriba';
+  $mensaje='Hay algún error, puedes escribir la placa correcta con ayuda de las fotos de arriba';
   $valor_mostrado= $deteccion;
-
-}
-else{
-
-  echo '<div class="form-group has-warning">';  
-  $mensaje='Esta placa ya ha sido corregida por tí';
-  $valor_mostrado=$deteccion_correccion;
-
 
 }
 
@@ -444,7 +458,7 @@ else{
                     </div>
                   </div>
                
-                  <input type="hidden" name="id_placa_corr" value="<?php echo $id_placa1; ?>">
+                  <input type="hidden" name="id_placa_corr" value="<?php echo $id_entrada_salida; ?>">
 
                   <div class=" add-task-row">
 

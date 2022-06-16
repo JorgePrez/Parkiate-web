@@ -344,15 +344,14 @@ else{
             $id_auto=$row[0];
             $placa=$row[1];
             $numero_visitas = $row[2];
-            $modelo_auto= $row[3];
-            $foto_delante=$row[4];
-            $foto_atras = $row[5];
-            $id_usuario_app = $row[7]; 
+            $foto_delante=$row[3];
+            $foto_atras = $row[4];
+            $id_usuario_app = $row[5]; 
 
 
 
 
-$querinterno = "select hora_deteccion_entrada,dentro_fuera from placas_entrada where hora_deteccion_entrada =(select max(hora_deteccion_entrada) from placas_entrada WHERE id_parqueo='$id_parqueo' AND (deteccion_entrada = '$placa' OR deteccion_entrada_correcion='$placa') )";
+$querinterno = "select hora_deteccion_entrada,dentro_fuera from placas_entrada where hora_deteccion_entrada =(select max(hora_deteccion_entrada) from placas_entrada WHERE id_parqueo='$id_parqueo' AND (deteccion_entrada = '$placa') )";
 
 
 
