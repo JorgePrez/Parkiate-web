@@ -94,11 +94,47 @@ $id_firebase='';
 if(str_contains($status, '1'))
 {
 
-$received = file_get_contents('http://192.168.1.7/picture'); 
+//$received = file_get_contents('http://192.168.1.7/picture'); 
+
+$url = 
+//'https://res.cloudinary.com/parkiate-ki/image/upload/v1655505257/autos/entrada/vehiculo/jne4f3z9apldjvtrvt2y.jpg';
+'http://192.168.1.7/picture';
+// Initialize the cURL session
+$ch = curl_init($url);
+
+// Initialize directory name where
+// file will be save
+$dir = './';
+
+// Use basename() function to return
+// the base name of file
+$file_name = basename('placa_salida_p.jpeg');
+
+// Save file into file location
+$save_file_loc = $dir . $file_name;
+
+// Open file
+$fp = fopen($save_file_loc, 'wb');
+
+// It set an option for a cURL transfer
+curl_setopt($ch, CURLOPT_FILE, $fp);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+
+// Perform a cURL session
+curl_exec($ch);
+
+// Closes a cURL session and frees all resources
+curl_close($ch);
+
+// Close file
+fclose($fp);
 
 
-$img = 'placa_salida_p.jpeg';   
-file_put_contents($img, $received);
+
+
+
+//$img = 'placa_salida_p.jpeg';   
+//file_put_contents($img, $received);
 
 
 // CREATE FILE READY TO UPLOAD WITH CURL
@@ -399,6 +435,7 @@ $ultimaplaca='';
 pg_free_result($resultadoplacaexiste1);
 
 
+$img= $file;
 
 if(!($placa_detectada==$ultimaplaca)){
 
@@ -762,7 +799,27 @@ $tuplasaafectadas = pg_affected_rows($result);
 pg_free_result($result);
  
 
+//SI NINGUNA PLACA COINCIDE (EN OTRAS PALABRAS PARQUEO VACIO POR EJEMPLO)
 
+if(!(strlen($placaprovisional)>0)){
+
+  echo 'Warning: No hay placa que coincida';
+
+  //Borrar la que ya existe....
+
+
+  $query = "DELETE FROM placas_salida WHERE id_parqueo='$id_parqueo' AND id_placa_salida='$id_placa_salida'";
+  if($resultadoeliminar = pg_query($query)){
+    echo "Data Deleted Successfully.";
+  }
+  else{
+    echo "Error.";
+  }
+  
+  pg_free_result($resultadoeliminar);
+  
+
+}
 
 
 }
@@ -770,6 +827,8 @@ pg_free_result($result);
 
 }
 else{
+  echo "\n";
+
   echo 'Warning: Foto repetida';
 
 }
@@ -779,6 +838,8 @@ else{
 //Comprobar si existe un auto con la placa detectada, sino crear uno
 }
 else{
+  echo "\n";
+
   echo "Warning: en la foto no hay ninguna placa";
 
 }
@@ -786,6 +847,8 @@ else{
 
 }
 else {
+
+  echo "\n";
 
   echo "Warning: No hay nada en la imagen";
 

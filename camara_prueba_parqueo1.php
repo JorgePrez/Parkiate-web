@@ -88,16 +88,67 @@ $id_firebase='';
 
 if(str_contains($status, '1'))
 {*/
+  // Initialize a file URL to the variable
+  $url = 
+  //'https://res.cloudinary.com/parkiate-ki/image/upload/v1655505257/autos/entrada/vehiculo/jne4f3z9apldjvtrvt2y.jpg';
+// 'http://192.168.1.18/picture';
 
-$received = file_get_contents('http://192.168.1.19/picture'); 
+//'http://192.168.1.15/picture';
+
+ 'http://192.168.1.30/picture'; 
 
 
-$img = 'placa_p1.jpeg';   
-file_put_contents($img, $received);
+ /*
+ 
+ A LITTLE NOTE:
+
+xmin -- = inicio de imagen mas hacia -
+ymin -- =inicio de imagen mas hacia arriba
+
+ 
+ 
+ */
+
+ //805 calls
+
+  // Initialize the cURL session
+  $ch = curl_init($url);
+  
+  // Initialize directory name where
+  // file will be save
+  $dir = './';
+  
+  // Use basename() function to return
+  // the base name of file
+  $file_name = basename('archivito.jpeg');
+  
+  // Save file into file location
+  $save_file_loc = $dir . $file_name;
+  
+  // Open file
+  $fp = fopen($save_file_loc, 'wb');
+  
+  // It set an option for a cURL transfer
+  curl_setopt($ch, CURLOPT_FILE, $fp);
+  curl_setopt($ch, CURLOPT_HEADER, 0);
+  
+  // Perform a cURL session
+  curl_exec($ch);
+  
+  // Closes a cURL session and frees all resources
+  //curl_close($ch);
+  
+  // Close file
+  fclose($fp);
+
+
+
+
+
 
 
 // CREATE FILE READY TO UPLOAD WITH CURL
-$file = realpath('placa_p1.jpeg');  
+$file = realpath('archivito.jpeg'); 
 if (function_exists('curl_file_create')) { // php 5.5+
   $cFile = curl_file_create($file);
 } else {
@@ -109,9 +160,9 @@ if (function_exists('curl_file_create')) { // php 5.5+
 $data = array(
     'upload' => $cFile,
     'regions' => 'gp', //gt
-    'camera_id' => 'camara_parqueo1', // Optional , camara_salida 
-  //  'config' => '{"detection_mode":"vehicle"}',
-   'config' => '{"mode":"redaction"}',
+    'camera_id' => 'camara_parqueo', // Optional , camara_salida 
+    'config' => '{"detection_mode":"vehicle"}',
+  // 'config' => '{"mode":"redaction"}',
 //    'config' => '"{\"region\":\"strict\"}"',
 );
 
@@ -173,13 +224,18 @@ echo "\n";
 echo $arrLength;
 
 
+
+$img= $file;
+
+
+
 for($i = 0; $i < $arrLength; $i++) {
 
 
   echo "------------------------------------------------------------";
   echo "\n";
   print_r($response->results[$i]->vehicle->box);
-  echo "\n";
+  //echo "\n";
 
 
   $xmin_auto =$response->results[$i]->vehicle->box->xmin;
@@ -195,17 +251,23 @@ for($i = 0; $i < $arrLength; $i++) {
   $h_a= $ymax_auto-$ymin_auto;
   
   
-  $response_auto=json_encode($uploader->upload($img,['folder' => 'autos/parqueo/1/prueba1','width' => $w_a, 'height' => $h_a, 'crop' => 'crop' , 'x' => $x_a, 'y' => $y_a]));
+  $response_auto=json_encode($uploader->upload($img,['folder' => 'autos/parqueo/megapruebas','width' => $w_a, 'height' => $h_a, 'crop' => 'crop' , 'x' => $x_a, 'y' => $y_a]));
   
   
   
   $imagen_auto = json_decode($response_auto);
   $imagen_auto =$imagen_auto->secure_url;
   
-  echo "\n";
+//  echo "\n";
   echo $imagen_auto;
-  
+  echo "\n";
   echo "------------------------------------------------------------";
+  echo "\n";
+  echo "\n";
+  echo "\n";
+
+
+  
 
   
   }

@@ -2,7 +2,9 @@
 #include "FirebaseESP32.h"
 
 //#include <ESP8266WiFi.h>   //node mcu
+//#include <WiFi.h>
 
+//#include "time.h"
 
 
 
@@ -15,6 +17,15 @@
 
 
 FirebaseData data_park;
+
+//para el timestamp
+
+//const char* ntpServer = "pool.ntp.org";
+
+//const long  gmtOffset_sec = 21600;
+//const int   daylightOffset_sec = 3600;
+
+
 
 //Espacio1
 const int trigPin1 = 14;
@@ -144,10 +155,40 @@ long duration5;
 float distanceCm5;
 float distanceInch5;
 
+int timestamp;
 
+
+/*4444444444444444444444444
+bool 1pasodelibreacupado=false;
+bool 2pasodelibreacupado=false;
+bool 3pasodelibreacupado=false;
+bool 4pasodelibreacupado=false;
+*/
+
+
+/*
+unsigned long getTime() {
+  time_t now;
+  struct tm timeinfo;
+  if (!getLocalTime(&timeinfo)) {
+    //Serial.println("Failed to obtain time");
+    return(0);
+  }
+  time(&now);
+  return now;
+}*/
 
 void setup() {
+
+  // Init and get the time
+
+
+  
   Serial.begin(115200); // Starts the serial communication
+
+  //  configTime(0, 0, ntpServer);
+
+
   pinMode(trigPin1, OUTPUT); // Sets the trigPin as an Output
   pinMode(echoPin1, INPUT); // Sets the echoPin as an Input
 
@@ -194,6 +235,13 @@ void setup() {
 }
 
 void loop() {
+
+  
+//   timestamp = getTime();
+  //  Serial.print ("time: ");
+  //  Serial.println (timestamp);
+
+  
   // Clears the trigPin
   digitalWrite(trigPin1, LOW);
   delayMicroseconds(2);
@@ -236,7 +284,7 @@ void loop() {
 
   }
 
-  if (distanceCm1 > 10) {                        //if distance is greater than 6cm then off led 
+    if (distanceCm1 > 10){                     //if distance is greater than 6cm then off led 
         Serial.println("1:Available ");
 
                   Firebase.setBool(data_park,doc1, true );  // send bool to firebase
@@ -293,7 +341,7 @@ void loop() {
 
   }
 
-  if (distanceCm2 > 10) {                        //if distance is greater than 6cm then off led 
+   if (distanceCm2 > 10) {                        //if distance is greater than 6cm then off led 
         Serial.println("2_Available ");
 
                   Firebase.setBool(data_park,doc2, true );  // send bool to firebase
@@ -354,7 +402,7 @@ void loop() {
 
   }
 
-  if (distanceCm3 > 10) {                        //if distance is greater than 6cm then off led 
+   if (distanceCm3 > 10) {                        //if distance is greater than 6cm then off led 
         Serial.println("3_Available ");
 
                   Firebase.setBool(data_park,doc3, true );  // send bool to firebase
@@ -407,7 +455,7 @@ void loop() {
 
   }
 
-  if (distanceCm4 > 10) {                        //if distance is greater than 6cm then off led 
+ if (distanceCm4 > 10) {                        //if distance is greater than 6cm then off led 
         Serial.println("4_Available ");
 
                   Firebase.setBool(data_park,doc4, true );  // send bool to firebase
@@ -479,6 +527,40 @@ void loop() {
 
 
 
+}
+
+void printLocalTime(){
+  struct tm timeinfo;
+  if(!getLocalTime(&timeinfo)){
+    Serial.println("Failed to obtain time");
+    return;
+  }
+  Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
+  Serial.print("Day of week: ");
+  Serial.println(&timeinfo, "%A");
+  Serial.print("Month: ");
+  Serial.println(&timeinfo, "%B");
+  Serial.print("Day of Month: ");
+  Serial.println(&timeinfo, "%d");
+  Serial.print("Year: ");
+  Serial.println(&timeinfo, "%Y");
+  Serial.print("Hour: ");
+  Serial.println(&timeinfo, "%H");
+  Serial.print("Hour (12 hour format): ");
+  Serial.println(&timeinfo, "%I");
+  Serial.print("Minute: ");
+  Serial.println(&timeinfo, "%M");
+  Serial.print("Second: ");
+  Serial.println(&timeinfo, "%S");
+
+  Serial.println("Time variables");
+  char timeHour[3];
+  strftime(timeHour,3, "%H", &timeinfo);
+  Serial.println(timeHour);
+  char timeWeekDay[10];
+  strftime(timeWeekDay,10, "%A", &timeinfo);
+  Serial.println(timeWeekDay);
+  Serial.println();
 }
 
 

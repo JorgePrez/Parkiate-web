@@ -77,24 +77,110 @@ $id_firebase='';
               }
 
 
-    $ref_tabla="/Parking_Status/".$id_firebase."/"."entrada"."/estado";
+              $ref_tabla1="/Parking_Status/".$id_firebase."/estado";
+
+    
+              $encendido = $database->getReference($ref_tabla1)->getValue();
+          
+              echo "valor de encendido:";
+              echo $encendido;
+              echo "\n";
+          //if(str_contains($status, '1'))
+          
+
+          while((str_contains($encendido, '1')))
+
+{
+
+
+  echo "valor de encendido:";
+  echo $encendido;
+  echo "\n";
+
+
+  $ref_tabla1="/Parking_Status/".$id_firebase."/estado";
+
+    
+  $encendido = $database->getReference($ref_tabla1)->getValue();
+
+
+    $ref_tabla="/Parking_Status/".$id_firebase."/"."sensor2"."/estado";
 
     
     $status = $database->getReference($ref_tabla)->getValue();
 
 
-if(str_contains($status, '1'))
+    echo "NADA-----------------";
+
+
+
+if((str_contains($status, '1')))
+
 {
 
-$received = file_get_contents('http://192.168.1.12/picture');
+  echo "HAY AUTO, PROCESANDO FOTO";
 
 
-$img = 'placa_entrada.jpeg';
-file_put_contents($img, $received);
+  echo "\n";
+
+
+  $ref_tabla1="/Parking_Status/".$id_firebase."/estado";
+
+    
+  $encendido = $database->getReference($ref_tabla1)->getValue();
+
+
+//
+//$received = file_get_contents('http://192.168.1.12/picture');
+
+
+//$img = 'placa_entrada_p.jpeg';
+//file_put_contents($img, $received);
+
+//Obteniendo archivo como descargar como CURL
+
+  // Initialize a file URL to the variable
+  $url = 
+  //'https://res.cloudinary.com/parkiate-ki/image/upload/v1655505257/autos/entrada/vehiculo/jne4f3z9apldjvtrvt2y.jpg';
+  'http://192.168.1.7/picture';
+  // Initialize the cURL session
+  $ch = curl_init($url);
+  
+  // Initialize directory name where
+  // file will be save
+  $dir = './';
+  
+  // Use basename() function to return
+  // the base name of file
+  $file_name = basename('archivito.jpeg');
+  
+  // Save file into file location
+  $save_file_loc = $dir . $file_name;
+  
+  // Open file
+  $fp = fopen($save_file_loc, 'wb');
+  
+  // It set an option for a cURL transfer
+  curl_setopt($ch, CURLOPT_FILE, $fp);
+  curl_setopt($ch, CURLOPT_HEADER, 0);
+  
+  // Perform a cURL session
+  curl_exec($ch);
+  
+  // Closes a cURL session and frees all resources
+  //curl_close($ch);
+  
+  // Close file
+  fclose($fp);
+
+
+
+
+
 
 
 // CREATE FILE READY TO UPLOAD WITH CURL
-$file = realpath('placa_entrada.jpeg');
+$file = realpath('archivito.jpeg');
 if (function_exists('curl_file_create')) { // php 5.5+
   $cFile = curl_file_create($file);
 } else {
@@ -104,8 +190,10 @@ if (function_exists('curl_file_create')) { // php 5.5+
 //ADD PARAMETER IN REQUEST LIKE regions
 $data = array(
     'upload' => $cFile,
-    //'regions' => 'gp', //gt
-    'camera_id' => 'camara_entrada', // Optional , camara_salida
+    'regions' => 'gp', //gt
+    'camera_id' => 'camara_salida', // Optional , camara_salida
+   // 'config' => '{"mode":"redaction"}',
+
 );
 
 // Prepare new cURL resource
@@ -142,10 +230,23 @@ $result = curl_exec($ch);
 
 $response = json_decode($result);
 
-//print_r($response);
+print_r($response);
 
 
-curl_close($ch);
+
+
+}
+
+else{
+
+  echo "no hay auto, nada que procesar";
+}
+
+
+}
+
+//curl_close($ch); TODO:
+
 
 //print_r($response->results[0]);
 //DEL RESPONSE NECESITO: 
@@ -156,7 +257,7 @@ curl_close($ch);
 
 
 //variable del boundix box de la placa 
- 
+ /*
 $xmin_placa =$response->results[0]->box->xmin;
 $ymin_placa =$response->results[0]->box->ymin;
 $xmax_placa =$response->results[0]->box->xmax;
@@ -209,7 +310,7 @@ $h_a= $ymax_auto-$ymin_auto;
 //referecnia para transformaciones
 //https://cloudinary.com/documentation/transformations_on_upload
 
-
+$img= $file;
 $response_placa=json_encode($uploader->upload($img,['folder' => 'autos/entrada/full','width' => $w, 'height' => $h, 'crop' => 'crop' , 'x' => $x, 'y' => $y]));
 $response_auto=json_encode($uploader->upload($img,
 ['folder' => 'autos/entrada/vehiculo',
@@ -235,6 +336,17 @@ $imagen_auto = json_decode($response_auto);
 $imagen_auto =$imagen_auto->secure_url;
 
 
+echo "\n";
+
+echo $imagen_placa;
+echo "\n";
+
+echo $imagen_auto;
+
+
+*/
+////}
+/*
  
 $key = '';
 $pattern = '1234567890ABCDEFGH123456789';
@@ -267,7 +379,7 @@ else {
 
 
 }
-
+*/
 
 //p567a0ahttps://res.cloudinary.com/parkiate-ki/image/upload/v1653182389/autos/entrada/placa/zxjygwpqbd5q9wadxfw5.jpg
 

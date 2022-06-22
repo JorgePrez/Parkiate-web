@@ -88,12 +88,51 @@ $id_firebase='';
 
 if(str_contains($status, '1'))
 {
-
+/*
 $received = file_get_contents('http://192.168.1.13/picture'); 
 
 
 $img = 'placa_entrada_p.jpeg';   
-file_put_contents($img, $received);
+file_put_contents($img, $received);*/
+
+
+
+$url = 
+//'https://res.cloudinary.com/parkiate-ki/image/upload/v1655505257/autos/entrada/vehiculo/jne4f3z9apldjvtrvt2y.jpg';
+'http://192.168.1.13/picture';
+// Initialize the cURL session
+$ch = curl_init($url);
+
+// Initialize directory name where
+// file will be save
+$dir = './';
+
+// Use basename() function to return
+// the base name of file
+$file_name = basename('placa_entrada_p.jpeg');
+
+// Save file into file location
+$save_file_loc = $dir . $file_name;
+
+// Open file
+$fp = fopen($save_file_loc, 'wb');
+
+// It set an option for a cURL transfer
+curl_setopt($ch, CURLOPT_FILE, $fp);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+
+// Perform a cURL session
+curl_exec($ch);
+
+// Closes a cURL session and frees all resources
+curl_close($ch);
+
+// Close file
+fclose($fp);
+
+
+
+
 
 
 // CREATE FILE READY TO UPLOAD WITH CURL
@@ -391,6 +430,9 @@ echo $placa_necesita_correccion;
 
 //referecnia para transformaciones
 //https://cloudinary.com/documentation/transformations_on_upload
+
+$img= $file;
+
 
 $response_full=json_encode($uploader->upload($img,['folder' => 'autos/entrada/full']));
 $response_placa=json_encode($uploader->upload($img,['folder' => 'autos/entrada/placa','width' => $w, 'height' => $h, 'crop' => 'crop' , 'x' => $x, 'y' => $y]));
