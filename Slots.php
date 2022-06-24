@@ -59,17 +59,18 @@ else{
   <link href="img/favicon1.png" rel="icon">
   <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Bootstrap core CSS -->
-  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ <!-- Bootstrap core CSS -->
+ <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!--external css-->
   <link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+  <link href="lib/fancybox/jquery.fancybox.css" rel="stylesheet" />
   <link href="lib/advanced-datatable/css/demo_page.css" rel="stylesheet" />
   <link href="lib/advanced-datatable/css/demo_table.css" rel="stylesheet" />
   <link rel="stylesheet" href="lib/advanced-datatable/css/DT_bootstrap.css" />
   <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
-
+  <script src="lib/jquery/jquery.min.js"></script>
 </head>
 
 <body>
@@ -280,6 +281,10 @@ else{
                     <th>Estado</th>   <!-- ocupado o libbre-->
                     <th>Editar</th>
 
+                    <th>Foto Slot</th>
+                    <th>Placa</th>
+
+
 
                     
 
@@ -346,6 +351,8 @@ pg_free_result($result);
                        $estado= '';
                        $reservas='';
                        $id_firebase_slot='';
+                       $auto_slot_img='';
+                       $placa_slot='';
 
                        $contador=0;
 
@@ -368,6 +375,8 @@ pg_free_result($result);
                         $estado= $row[3];
                         $reservas= $row[4];
                         $id_firebase_slot=$row[5];
+                        $auto_slot_img=$row[6];
+                        $placa_slot=$row[7];
                         $contador = $contador+1;
 
                   
@@ -474,6 +483,11 @@ pg_free_result($result);
                       echo	"<td><span class='badge bg-success'>LIBRE</span>
                       </td>";
 
+                    //  $queriesas= "UPDATE slots SET placa_slot='Vacio' WHERE id_slot='$id_slot'";
+
+
+                    //  $resultadosa = pg_query($conn, $queriesas) or die('ERROR : ' . pg_last_error());
+
 
 
                     }
@@ -503,6 +517,40 @@ pg_free_result($result);
                     
                     /*<button class="btn btn-primary btn-xs fa fa-pencil"></button>*/
 
+
+
+                    echo	"<td> 
+                    <a class='fancybox' href=$auto_slot_img><img class='img-responsive' src=$auto_slot_img width='75px' height='auto' alt=''></a>
+             
+                    </td>"; 
+                    
+                    
+                    
+                    
+
+                    if(str_contains($status, '1'))
+                    {
+                      echo	"<td><span class='badge bg-success'>VACIO</span>
+                      </td>";
+
+                     
+
+
+
+                    }
+                    else{
+
+                      echo	"<td><span class='badge'>";
+
+                      echo  $placa_slot;
+                      
+                      echo "</span>
+                      </td>";
+                                          
+
+                    }
+
+            
 
 
                             
@@ -629,17 +677,26 @@ pg_free_result($result);
   <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.js"></script>
             -->
 
-            <script src="lib/jquery/jquery.min.js"></script>
-  <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.js"></script>
+            <script src="lib/fancybox/jquery.fancybox.js"></script>
+ <!--  <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.js"></script> -->   <!-- QUITE ESTA-->
+
+
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>
   <script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
   <script src="lib/jquery.scrollTo.min.js"></script>
   <script src="lib/jquery.nicescroll.js" type="text/javascript"></script>
   <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.dataTables.js"></script>
   <script type="text/javascript" src="lib/advanced-datatable/js/DT_bootstrap.js"></script>
-
   <!--common script for all pages-->
   <script src="lib/common-scripts.js"></script>
+
+
+  <script type="text/javascript">
+    $(function() {
+      //    fancybox
+      jQuery(".fancybox").fancybox();
+    });
+  </script>
   <!--script for this page-->
   <script type="text/javascript">
     /* Formating function for row details */
