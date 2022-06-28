@@ -89,6 +89,9 @@ $ref_tabla1="/Parking_Status/".$id_firebase."/camara_salida/activado";
 $activado = $database->getReference($ref_tabla1)->getValue();
 
 
+echo "CAMARA DE SALIDA ACTIVADA:";
+echo "\n";
+
 
 while((str_contains($activado, '1')))
 
@@ -98,9 +101,6 @@ while((str_contains($activado, '1')))
   $id_parqueo ='86BE48';
 
 
-
-echo "CAMARA ACTIVADA:";
-echo "\n";
 
 
 $ref_tabla1="/Parking_Status/".$id_firebase."/camara_salida/activado";
